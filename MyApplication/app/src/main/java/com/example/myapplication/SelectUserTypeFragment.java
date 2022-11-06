@@ -4,12 +4,16 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+
+import com.example.myapplication.databinding.FragmentSelectUserTypeBinding;
 import android.widget.RadioButton;
 
 import com.example.myapplication.databinding.FragmentSelectUserTypeBinding;
