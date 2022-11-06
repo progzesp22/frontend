@@ -7,8 +7,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private final String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
+    private static final int REQUEST_PERMISSIONS = 200;
 
 
     @Override
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
 
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
     }
 
     @Override

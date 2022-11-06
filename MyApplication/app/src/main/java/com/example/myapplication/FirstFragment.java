@@ -50,6 +50,10 @@ public class FirstFragment extends Fragment implements SensorEventListener {
         binding.buttonFirst.setOnClickListener(view1 ->
                 NavHostFragment.findNavController(FirstFragment.this)
                 .navigate(R.id.action_FirstFragment_to_SecondFragment));
+
+        binding.button2.setOnClickListener(view1 ->
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_requestDemoFragment3));
     }
 
     @Override
