@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_requestDemoFragment3"
+            app:destination="@id/requestDemoFragment3" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -23,6 +26,15 @@
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/requestDemoFragment3"
+        android:name="com.example.myapplication.RequestDemoFragment"
+        android:label="fragment_request_demo"
+        tools:layout="@layout/fragment_request_demo" >
+        <action
+            android:id="@+id/action_requestDemoFragment3_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
