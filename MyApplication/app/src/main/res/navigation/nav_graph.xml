@@ -17,5 +17,14 @@
         android:id="@+id/listTasksFragment2"
         android:name="com.example.myapplication.ListTasksFragment"
         android:label="fragment_list_tasks"
-        tools:layout="@layout/fragment_list_tasks" />
+        tools:layout="@layout/fragment_list_tasks" >
+        <action
+            android:id="@+id/action_answerTask"
+            app:destination="@id/taskAnswerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAnswerFragment"
+        android:name="com.example.myapplication.TaskAnswerFragment"
+        android:label="fragment_task_answer"
+        tools:layout="@layout/fragment_task_answer" />
 </navigation>

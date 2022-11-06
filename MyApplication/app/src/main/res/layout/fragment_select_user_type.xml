@@ -51,21 +51,13 @@
             android:layout_marginTop="32dp"
             android:autofillHints=""
             android:ems="10"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="@string/name"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/editTextTextPersonName"
-            android:text="@string/user"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName" />
 
         <RadioGroup
             android:id="@+id/gmModeRadio"

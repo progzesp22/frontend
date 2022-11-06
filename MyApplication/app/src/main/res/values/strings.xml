@@ -21,4 +21,10 @@
     <string name="edit_tasks">Edycja zadań</string>
     <string name="accept_tasks">Akceptacja zgłoszeń</string>
     <string name="name">Nazwa użytkownika</string>
+    <string name="title">Tytuł</string>
+    <string name="content">Treść</string>
+    <string name="answer">Odpowiedź</string>
+    <string name="answer_verb">Odpowiedz</string>
+    <string name="tasks_list">lista zadań</string>
+    <string name="refresh">odśwież</string>
 </resources>
