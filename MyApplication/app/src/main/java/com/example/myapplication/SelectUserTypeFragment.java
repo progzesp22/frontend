@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -13,56 +14,17 @@ import android.widget.RadioButton;
 
 import com.example.myapplication.databinding.FragmentSelectUserTypeBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SelectUserTypeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SelectUserTypeFragment extends Fragment {
     private FragmentSelectUserTypeBinding binding;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public SelectUserTypeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SelectUserTypeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SelectUserTypeFragment newInstance(String param1, String param2) {
-        SelectUserTypeFragment fragment = new SelectUserTypeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSelectUserTypeBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -72,7 +34,7 @@ public class SelectUserTypeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.usertypeRadio.setOnCheckedChangeListener((group, checkedId) -> {
-            RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
+            RadioButton checkedRadioButton = group.findViewById(checkedId);
             boolean gm = checkedRadioButton == binding.gmRadioButton;
 
             if(gm){
@@ -83,11 +45,30 @@ public class SelectUserTypeFragment extends Fragment {
         });
 
         binding.startButton.setOnClickListener(view1 -> {
-            int checkedRadioButtonId = binding.usertypeRadio.getCheckedRadioButtonId();
-            if(checkedRadioButtonId == R.id.playerRadioButton){
+            UserModel model = new ViewModelProvider(requireActivity()).get(UserModel.class);
+            updateModel(model);
+
+            if(model.getUserType() == UserModel.UserType.PLAYER){
                 NavHostFragment.findNavController(this).navigate(R.id.action_playerSelected);
             }
-
         });
+    }
+
+    private void updateModel(UserModel model){
+        model.setUsername(binding.editTextTextPersonName.getText().toString());
+
+        int checkedRadioButtonId = binding.usertypeRadio.getCheckedRadioButtonId();
+        if(checkedRadioButtonId == R.id.playerRadioButton){
+            model.setUserType(UserModel.UserType.PLAYER);
+        } else if(checkedRadioButtonId == R.id.gmRadioButton){
+            model.setUserType(UserModel.UserType.GM);
+        }
+
+        checkedRadioButtonId = binding.gmModeRadio.getCheckedRadioButtonId();
+        if(checkedRadioButtonId == R.id.gmAcceptRadioButton){
+            model.setMasterMode(UserModel.MasterMode.ACCEPT);
+        } else if(checkedRadioButtonId == R.id.gmEditRadioButton){
+            model.setMasterMode(UserModel.MasterMode.EDIT);
+        }
     }
 }
