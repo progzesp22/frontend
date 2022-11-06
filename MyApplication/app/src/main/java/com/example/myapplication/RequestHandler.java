@@ -24,7 +24,7 @@ import org.json.JSONObject;
  * @author Kamil Włodarski
  */
 public class RequestHandler {
-    private static RequestHandler instance;
+    private static volatile RequestHandler instance;
     private RequestQueue requestQueue;
 
     /**
@@ -48,9 +48,13 @@ public class RequestHandler {
      * @param context required for first time initialization
      * @return singleton instance of this class
      */
-    public static synchronized RequestHandler getInstance(Context context) {
+    public static RequestHandler getInstance(Context context) {
         if (instance == null) {
-            instance = new RequestHandler(context);
+            synchronized (RequestHandler.class) {
+                if (instance == null) {
+                    instance = new RequestHandler(context);
+                }
+            }
         }
         return instance;
     }
@@ -179,7 +183,7 @@ public class RequestHandler {
                             Response.ErrorListener errorListener){
         JSONObject json = new JSONObject();
         try {
-            json.put("approve", approve); // TODO: check if JSONObject can handle boolean values properly
+            json.put("approve", approve);
         } catch (JSONException e) {
             e.printStackTrace();
         }
