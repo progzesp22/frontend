@@ -39,7 +39,7 @@ public class SelectUserTypeFragment extends Fragment {
 
             if(gm){
                 binding.gmModeRadio.setVisibility(View.VISIBLE);
-            } else{
+            } else {
                 binding.gmModeRadio.setVisibility(View.INVISIBLE);
             }
         });
@@ -48,8 +48,16 @@ public class SelectUserTypeFragment extends Fragment {
             UserModel model = new ViewModelProvider(requireActivity()).get(UserModel.class);
             updateModel(model);
 
-            if(model.getUserType() == UserModel.UserType.PLAYER){
+            if (model.getUserType() == UserModel.UserType.PLAYER){
                 NavHostFragment.findNavController(this).navigate(R.id.action_playerSelected);
+            }
+            else if (model.getUserType() == UserModel.UserType.GM){
+                if(model.getMasterMode() == UserModel.MasterMode.ACCEPT){
+                    NavHostFragment.findNavController(this).navigate(R.id.action_GMAcceptSelected);
+                }
+                else if (model.getMasterMode() == UserModel.MasterMode.EDIT){
+                    NavHostFragment.findNavController(this).navigate(R.id.action_GMEditSelected);
+                }
             }
         });
     }
