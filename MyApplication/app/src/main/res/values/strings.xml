@@ -27,6 +27,7 @@
     <string name="answer_verb">Odpowiedz</string>
     <string name="tasks_list">lista zadań</string>
     <string name="refresh">odśwież</string>
+    <string name="save_changes">Zapisz zmiany</string>
     <string name="textView">Example tasks</string>
     <string name="buttonPost">post task</string>
     <string name="buttonGet">get tasks</string>

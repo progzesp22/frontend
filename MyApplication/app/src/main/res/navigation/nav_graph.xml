@@ -12,6 +12,13 @@
         <action
             android:id="@+id/action_playerSelected"
             app:destination="@id/listTasksFragment2" />
+        <action
+            android:id="@+id/action_GMAcceptSelected"
+            app:destination="@id/GMlistTasksFragment" />
+        <action
+            android:id="@+id/action_GMEditSelected"
+            app:destination="@id/GMlistTasksFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/listTasksFragment2"
@@ -22,6 +29,20 @@
             android:id="@+id/action_answerTask"
             app:destination="@id/taskAnswerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/GMlistTasksFragment"
+        android:name="com.example.myapplication.GMListTasksFragment"
+        android:label="GMfragment_list_tasks"
+        tools:layout="@layout/fragment_gm_list_tasks" >
+        <action
+            android:id="@+id/action_editTask"
+            app:destination="@id/GMTaskEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/GMTaskEditFragment"
+        android:name="com.example.myapplication.GMTaskEditFragment"
+        android:label="fragment_gm_task_edit"
+        tools:layout="@layout/fragment_gm_task_edit" />
     <fragment
         android:id="@+id/taskAnswerFragment"
         android:name="com.example.myapplication.TaskAnswerFragment"
