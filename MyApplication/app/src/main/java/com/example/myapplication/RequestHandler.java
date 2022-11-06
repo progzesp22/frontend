@@ -32,16 +32,7 @@ public class RequestHandler {
      */
     private final String url = "http://130.61.232.251:8080/rest/";
 
-    private RequestHandler(Context ctx){
-        requestQueue = getRequestQueue(ctx);
-    }
-
-    private RequestQueue getRequestQueue(Context ctx) {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
-        }
-        return requestQueue;
-    }
+    private RequestHandler(){}
 
     /**
      * no public constructor because this class is a singleton.
@@ -52,7 +43,8 @@ public class RequestHandler {
         if (instance == null) {
             synchronized (RequestHandler.class) {
                 if (instance == null) {
-                    instance = new RequestHandler(context);
+                    instance = new RequestHandler();
+                    instance.requestQueue = Volley.newRequestQueue(context);
                 }
             }
         }
