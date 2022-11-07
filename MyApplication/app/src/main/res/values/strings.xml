@@ -31,4 +31,5 @@
     <string name="add_task">Dodaj zadanie</string>
     <string name="accept_task">Zaakceptuj</string>
     <string name="decline_task">Odrzuć</string>
+    <string name="team">Drużyna</string>
 </resources>
