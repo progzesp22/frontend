@@ -5,22 +5,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
 
         requestHandler = RequestHandler.getInstance(getApplicationContext());
+
+        TasksModel model = new ViewModelProvider(this).get(TasksModel.class);
+        model.refreshTasks();
     }
 
     @Override

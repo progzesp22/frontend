@@ -36,11 +36,37 @@ public class GMTaskCheckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        Task task = model.getActiveTask();
+        AnswerModel model = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
+        TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
-        if(task == null) return;
+        Answer answer = model.getActiveAnswer();
+
+        if (answer == null) return;
+        Task task = taskModel.getById(answer.getTaskId());
+        if (task == null) return;
+
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
+        binding.answerText.setText(answer.getAnswer());
+        binding.accept.setOnClickListener(view1 -> {
+            MainActivity.requestHandler.checkAnswer(answer.getId(), true, response -> {
+                Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
+                model.refreshAnswers();
+                NavHostFragment.findNavController(this).navigateUp();
+            }, error -> {
+                Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
+            });
+        });
+
+        binding.decline.setOnClickListener(view1 -> {
+            MainActivity.requestHandler.checkAnswer(answer.getId(), false, response -> {
+                Toast.makeText(getContext(), "Odrzucono", Toast.LENGTH_SHORT).show();
+                model.refreshAnswers();
+                NavHostFragment.findNavController(this).navigateUp();
+            }, error -> {
+                Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
+            });
+        });
     }
+
 }

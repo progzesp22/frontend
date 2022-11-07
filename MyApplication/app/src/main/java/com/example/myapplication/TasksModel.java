@@ -15,8 +15,8 @@ public class TasksModel extends ViewModel {
     private MutableLiveData<List<Task>> tasks;
     private Task activeTask;
 
-    public LiveData<List<Task>> getTasks(){
-        if(tasks == null){
+    public LiveData<List<Task>> getTasks() {
+        if (tasks == null) {
             tasks = new MutableLiveData<>();
             fetchTasks();
         }
@@ -24,20 +24,34 @@ public class TasksModel extends ViewModel {
         return tasks;
     }
 
-    public void refreshTasks(){
-        if(tasks == null){
+    public void refreshTasks() {
+        if (tasks == null) {
             tasks = new MutableLiveData<>();
         }
 
         fetchTasks();
     }
 
-    public void setActiveTask(Task task){
+    public void setActiveTask(Task task) {
         activeTask = task;
     }
 
-    public Task getActiveTask(){
+    public Task getActiveTask() {
         return activeTask;
+    }
+
+    public Task getById(int id) {
+        if (tasks == null || tasks.getValue() == null) {
+            return null;
+        }
+
+        for (Task task : tasks.getValue()) {
+            if (task.getId() == id) {
+                return task;
+            }
+        }
+
+        return null;
     }
 
     private void fetchTasks() {
@@ -56,4 +70,5 @@ public class TasksModel extends ViewModel {
             Log.e("TasksModel", "Error fetching tasks: " + error.toString());
         });
     }
+
 }

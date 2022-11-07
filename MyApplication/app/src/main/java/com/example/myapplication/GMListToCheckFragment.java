@@ -34,23 +34,30 @@ public class GMListToCheckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(requireActivity(), this::displayTasks);
+        AnswerModel model = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
+        model.getUncheckedAnswers().observe(requireActivity(), this::displayAnswers);
 
-        binding.refreshTasks.setOnClickListener(view1 -> model.refreshTasks());
+        binding.refreshAnswerActionButton.setOnClickListener(view1 -> model.refreshAnswers()); // TODO: rename
     }
 
-    private void displayTasks(List<Task> tasks){
-        binding.tasksLayout.removeAllViews();
+    private void displayAnswers(List<Answer> answers) {
+        binding.tasksLayout.removeAllViews(); // TODO: rename
+        AnswerModel model = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
+        TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
-        for(Task task : tasks){
-            TaskView taskView = new TaskView(getContext(), task);
-            taskView.setOnClick(view -> {
-                TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-                model.setActiveTask(task);
-                NavHostFragment.findNavController(this).navigate(R.id.action_checkTask);
+
+        for (Answer answer : answers) {
+            Task task = taskModel.getById(answer.getTaskId());
+            if (task == null) {
+                continue;
+            }
+
+            AnswerView answerView = new AnswerView(getContext(), task.getName());
+            answerView.setOnClick(view -> {
+                model.setActiveAnswer(answer);
+                NavHostFragment.findNavController(this).navigate(R.id.action_checkTask); // TODO: rename to check answer
             });
-            binding.tasksLayout.addView(taskView);
+            binding.tasksLayout.addView(answerView);
         }
     }
 }
