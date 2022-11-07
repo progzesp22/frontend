@@ -6,7 +6,7 @@
     tools:context=".ListTasksFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/refreshTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -18,7 +18,7 @@
         android:focusable="true" />
 
     <ScrollView
-        android:id="@+id/refreshTasks"
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/tasks_list">

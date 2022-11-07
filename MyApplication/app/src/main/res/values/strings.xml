@@ -31,4 +31,6 @@
     <string name="buttonPost">post task</string>
     <string name="buttonGet">get tasks</string>
     <string name="demo">Demo</string>
+    <string name="server_error">Błąd komunikacji z serwerem, spróbuj ponownie</string>
+    <string name="server_success">Wysłano</string>
 </resources>

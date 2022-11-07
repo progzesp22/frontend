@@ -49,8 +49,9 @@ public class TasksModel extends ViewModel {
                 e.printStackTrace();
             }
 
-            this.tasks.setValue(tasks); // może to powinien być post?
+            this.tasks.postValue(tasks);
         }, error -> {
+            // TODO: how to handle this?
         });
     }
 }
