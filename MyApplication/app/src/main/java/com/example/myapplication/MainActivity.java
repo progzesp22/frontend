@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private final String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
     private static final int REQUEST_PERMISSIONS = 200;
+    public static RequestHandler requestHandler;
 
 
     @Override
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
+
+        requestHandler = RequestHandler.getInstance(getApplicationContext());
     }
 
     @Override

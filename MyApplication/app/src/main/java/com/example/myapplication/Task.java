@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import org.json.JSONObject;
+
 public class Task {
     private final int id;
     private final String name;
@@ -23,4 +25,11 @@ public class Task {
         return description;
     }
 
+    static public Task fromJson(JSONObject json){
+        try {
+            return new Task(json.getInt("id"), json.getString("name"), json.getString("description"));
+        } catch (Exception e){
+            return null;
+        }
+    }
 }
