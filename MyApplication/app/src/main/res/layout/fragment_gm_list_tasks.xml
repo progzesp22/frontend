@@ -6,16 +6,16 @@
     tools:context=".GMListTasksFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/addTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
-        android:contentDescription="@string/refresh"
-        android:src="@android:drawable/stat_notify_sync"
-        android:focusable="true" />
+        android:contentDescription="@string/add_task"
+        android:focusable="true"
+        android:src="@android:drawable/ic_input_add" />
 
     <ScrollView
         android:id="@+id/refreshTasks"

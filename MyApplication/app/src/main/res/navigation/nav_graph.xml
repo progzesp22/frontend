@@ -37,7 +37,15 @@
         <action
             android:id="@+id/action_editTask"
             app:destination="@id/GMTaskEditFragment" />
+        <action
+            android:id="@+id/action_addTask"
+            app:destination="@id/GMTaskAddFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/GMTaskAddFragment"
+        android:name="com.example.myapplication.GMTaskAddFragment"
+        android:label="GMfragment_add_task"
+        tools:layout="@layout/fragment_gm_task_add" />
     <fragment
         android:id="@+id/GMTaskEditFragment"
         android:name="com.example.myapplication.GMTaskEditFragment"

@@ -28,4 +28,5 @@
     <string name="tasks_list">lista zadań</string>
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
+    <string name="add_task">Dodaj zadanie</string>
 </resources>
