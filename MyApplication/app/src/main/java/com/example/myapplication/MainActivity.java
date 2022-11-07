@@ -1,36 +1,26 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioButton;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private final String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
+    private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
     private static final int REQUEST_PERMISSIONS = 200;
     public static RequestHandler requestHandler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

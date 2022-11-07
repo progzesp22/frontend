@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -51,7 +53,7 @@ public class TasksModel extends ViewModel {
 
             this.tasks.postValue(tasks);
         }, error -> {
-            // TODO: how to handle this?
+            Log.e("TasksModel", "Error fetching tasks: " + error.toString());
         });
     }
 }
