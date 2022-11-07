@@ -1,22 +1,17 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.myapplication.databinding.FragmentListTasksBinding;
-import com.example.myapplication.databinding.FragmentTaskAnswerBinding;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Objects;
+import com.example.myapplication.databinding.FragmentTaskAnswerBinding;
 
 
 public class TaskAnswerFragment extends Fragment {
@@ -46,7 +41,7 @@ public class TaskAnswerFragment extends Fragment {
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
         Task task = model.getActiveTask();
 
-        if(task == null) return;
+        if (task == null) return;
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
         binding.answerButton.setOnClickListener(view1 -> {

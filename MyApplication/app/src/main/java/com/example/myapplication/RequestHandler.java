@@ -150,7 +150,7 @@ public class RequestHandler {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PUT, url + "tasks/" + taskId, json, responseCallback,
+                (Request.Method.PATCH, url + "tasks/" + taskId, json, responseCallback,
                         errorListener);
 
         requestQueue.add(jsonObjectRequest);
