@@ -29,4 +29,6 @@
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="add_task">Dodaj zadanie</string>
+    <string name="accept_task">Zaakceptuj</string>
+    <string name="decline_task">Odrzuć</string>
 </resources>
