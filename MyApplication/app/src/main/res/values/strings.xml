@@ -29,6 +29,8 @@
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="add_task">Dodaj zadanie</string>
+    <string name="accept_task">Zaakceptuj</string>
+    <string name="decline_task">Odrzuć</string>
     <string name="textView">Example tasks</string>
     <string name="buttonPost">post task</string>
     <string name="buttonGet">get tasks</string>
