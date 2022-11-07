@@ -3,38 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
+    app:startDestination="@id/selectUserTypeFragment">
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.myapplication.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/selectUserTypeFragment"
+        android:name="com.example.myapplication.SelectUserTypeFragment"
+        android:label="fragment_select_user_type"
+        tools:layout="@layout/fragment_select_user_type" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
-            android:id="@+id/action_FirstFragment_to_requestDemoFragment3"
-            app:destination="@id/requestDemoFragment3" />
+            android:id="@+id/action_playerSelected"
+            app:destination="@id/listTasksFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.myapplication.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/listTasksFragment2"
+        android:name="com.example.myapplication.ListTasksFragment"
+        android:label="fragment_list_tasks"
+        tools:layout="@layout/fragment_list_tasks" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_answerTask"
+            app:destination="@id/taskAnswerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/requestDemoFragment3"
-        android:name="com.example.myapplication.RequestDemoFragment"
-        android:label="fragment_request_demo"
-        tools:layout="@layout/fragment_request_demo" >
-        <action
-            android:id="@+id/action_requestDemoFragment3_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        android:id="@+id/taskAnswerFragment"
+        android:name="com.example.myapplication.TaskAnswerFragment"
+        android:label="fragment_task_answer"
+        tools:layout="@layout/fragment_task_answer" />
 </navigation>

@@ -2,11 +2,10 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,16 +14,13 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private final String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
+    private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
     private static final int REQUEST_PERMISSIONS = 200;
-
+    public static RequestHandler requestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
+
+        requestHandler = RequestHandler.getInstance(getApplicationContext());
     }
 
     @Override
@@ -73,4 +68,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }

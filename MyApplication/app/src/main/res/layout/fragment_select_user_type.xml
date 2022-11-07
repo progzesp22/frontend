@@ -14,7 +14,8 @@
             android:id="@+id/usertypeRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            android:checkedButton="@id/playerRadioButton"
+            app:layout_constraintBottom_toTopOf="@+id/startButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
@@ -34,7 +35,7 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -50,38 +51,33 @@
             android:layout_marginTop="32dp"
             android:autofillHints=""
             android:ems="10"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="@string/name"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/editTextTextPersonName"
-            android:text="@string/user"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName" />
-
         <RadioGroup
+            android:id="@+id/gmModeRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            android:checkedButton="@id/gmEditRadioButton"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/startButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/usertypeRadio">
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/gmEditRadioButton"
                 android:layout_width="197dp"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_tasks" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/gmAcceptRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/accept_tasks" />
