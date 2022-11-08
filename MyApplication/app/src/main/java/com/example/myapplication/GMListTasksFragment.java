@@ -35,7 +35,8 @@ public class GMListTasksFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(requireActivity(), this::displayTasks);
+        model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
+        model.refreshTasks();
 
         binding.addTask.setOnClickListener(view1 ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_addTask) );

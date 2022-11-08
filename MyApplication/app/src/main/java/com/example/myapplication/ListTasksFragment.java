@@ -38,7 +38,8 @@ public class ListTasksFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(requireActivity(), this::displayTasks);
+        model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
+        model.refreshTasks();
 
         binding.refreshTasks.setOnClickListener(view1 -> model.refreshTasks());
     }

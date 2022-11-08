@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
 
         requestHandler = RequestHandler.getInstance(getApplicationContext());
-
-        TasksModel model = new ViewModelProvider(this).get(TasksModel.class);
-        model.refreshTasks();
     }
 
     @Override

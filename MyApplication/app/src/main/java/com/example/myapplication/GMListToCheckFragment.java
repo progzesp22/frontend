@@ -34,10 +34,21 @@ public class GMListToCheckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AnswerModel model = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
-        model.getUncheckedAnswers().observe(requireActivity(), this::displayAnswers);
+        AnswerModel answerModel = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
+        answerModel.getUncheckedAnswers().observe(getViewLifecycleOwner(), this::displayAnswers);
 
-        binding.refreshAnswerActionButton.setOnClickListener(view1 -> model.refreshAnswers()); // TODO: rename
+        TasksModel tasksModel = new ViewModelProvider((requireActivity())).get(TasksModel.class);
+        tasksModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+            List<Answer> answers = answerModel.getUncheckedAnswers().getValue();
+            if(answers != null){
+                displayAnswers(answers);
+            }
+        });
+
+        tasksModel.refreshTasks();
+        answerModel.refreshAnswers();
+
+        binding.refreshAnswerActionButton.setOnClickListener(view1 -> answerModel.refreshAnswers()); // TODO: rename
     }
 
     private void displayAnswers(List<Answer> answers) {
