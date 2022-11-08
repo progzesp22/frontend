@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.myapplication.databinding.FragmentTaskAnswerBinding;
+import com.example.myapplication.databinding.FragmentGmTaskEditBinding;
 
 
-public class TaskAnswerFragment extends Fragment {
-    private FragmentTaskAnswerBinding binding;
+public class GMTaskEditFragment extends Fragment {
+    private FragmentGmTaskEditBinding binding;
 
 
-    public TaskAnswerFragment() {
+    public GMTaskEditFragment() {
         // Required empty public constructor
     }
 
@@ -31,7 +32,7 @@ public class TaskAnswerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentTaskAnswerBinding.inflate(inflater, container, false);
+        binding = FragmentGmTaskEditBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -44,17 +45,24 @@ public class TaskAnswerFragment extends Fragment {
         if (task == null) return;
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
-        binding.answerButton.setOnClickListener(view1 -> {
-            int user_id = 7;
-            MainActivity.requestHandler.postAnswer(
+
+        binding.button.setOnClickListener(view1 -> {
+            MainActivity.requestHandler.putTask(
                     task.getId(),
-                    user_id,
-                    binding.answerText.getText().toString(),
+                    binding.titleText.getText().toString(),
+                    binding.descriptionText.getText().toString(),
+                    1,
+                    "TEXT",
                     response -> {
-                        Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();
+                        model.refreshTasks();
+                        Toast.makeText(getContext(), "Zmieniono", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigateUp();
                     },
-                    error -> Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_LONG).show());
+                    error -> {
+                        Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
+                        Log.e("GMTaskEditFragment", error.toString());
+                    }
+            );
         });
     }
 }

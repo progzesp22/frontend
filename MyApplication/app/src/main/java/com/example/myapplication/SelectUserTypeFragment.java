@@ -6,10 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+
+import com.example.myapplication.databinding.FragmentSelectUserTypeBinding;
 import android.widget.RadioButton;
 
 import com.example.myapplication.databinding.FragmentSelectUserTypeBinding;
@@ -39,7 +44,7 @@ public class SelectUserTypeFragment extends Fragment {
 
             if(gm){
                 binding.gmModeRadio.setVisibility(View.VISIBLE);
-            } else{
+            } else {
                 binding.gmModeRadio.setVisibility(View.INVISIBLE);
             }
         });
@@ -48,8 +53,16 @@ public class SelectUserTypeFragment extends Fragment {
             UserModel model = new ViewModelProvider(requireActivity()).get(UserModel.class);
             updateModel(model);
 
-            if(model.getUserType() == UserModel.UserType.PLAYER){
+            if (model.getUserType() == UserModel.UserType.PLAYER){
                 NavHostFragment.findNavController(this).navigate(R.id.action_playerSelected);
+            }
+            else if (model.getUserType() == UserModel.UserType.GM){
+                if(model.getMasterMode() == UserModel.MasterMode.ACCEPT){
+                    NavHostFragment.findNavController(this).navigate(R.id.action_GMAcceptSelected);
+                }
+                else if (model.getMasterMode() == UserModel.MasterMode.EDIT){
+                    NavHostFragment.findNavController(this).navigate(R.id.action_GMEditSelected);
+                }
             }
         });
     }

@@ -1,27 +1,24 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.example.myapplication.databinding.FragmentGmListTasksBinding;
 
-import com.example.myapplication.databinding.FragmentListTasksBinding;
-
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 
-public class ListTasksFragment extends Fragment {
-    FragmentListTasksBinding binding;
+public class GMListTasksFragment extends Fragment {
+    FragmentGmListTasksBinding binding;
 
-    public ListTasksFragment() {
+    public GMListTasksFragment() {
         // Required empty public constructor
     }
 
@@ -30,7 +27,7 @@ public class ListTasksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentListTasksBinding.inflate(inflater, container, false);
+        binding = FragmentGmListTasksBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -41,7 +38,8 @@ public class ListTasksFragment extends Fragment {
         model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
         model.refreshTasks();
 
-        binding.refreshTasks.setOnClickListener(view1 -> model.refreshTasks());
+        binding.addTask.setOnClickListener(view1 ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_addTask) );
     }
 
     private void displayTasks(List<Task> tasks){
@@ -52,7 +50,7 @@ public class ListTasksFragment extends Fragment {
             taskView.setOnClick(view -> {
                 TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
                 model.setActiveTask(task);
-                NavHostFragment.findNavController(this).navigate(R.id.action_answerTask);
+                NavHostFragment.findNavController(this).navigate(R.id.action_editTask);
             });
             binding.tasksLayout.addView(taskView);
         }

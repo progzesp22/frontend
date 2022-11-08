@@ -12,6 +12,14 @@
         <action
             android:id="@+id/action_playerSelected"
             app:destination="@id/listTasksFragment2" />
+        <action
+            android:id="@+id/action_GMAcceptSelected"
+            app:destination="@id/GMListToAcceptFragment" />
+
+        <action
+            android:id="@+id/action_GMEditSelected"
+            app:destination="@id/GMlistTasksFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/listTasksFragment2"
@@ -22,6 +30,42 @@
             android:id="@+id/action_answerTask"
             app:destination="@id/taskAnswerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/GMlistTasksFragment"
+        android:name="com.example.myapplication.GMListTasksFragment"
+        android:label="GMfragment_list_tasks"
+        tools:layout="@layout/fragment_gm_list_tasks" >
+        <action
+            android:id="@+id/action_editTask"
+            app:destination="@id/GMTaskEditFragment" />
+        <action
+            android:id="@+id/action_addTask"
+            app:destination="@id/GMTaskAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/GMListToAcceptFragment"
+        android:name="com.example.myapplication.GMListToCheckFragment"
+        android:label="GMfragment_list_to_accept"
+        tools:layout="@layout/fragment_gm_list_to_accept" >
+        <action
+            android:id="@+id/action_checkTask"
+            app:destination="@id/GMTaskCheckFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/GMTaskAddFragment"
+        android:name="com.example.myapplication.GMTaskAddFragment"
+        android:label="GMfragment_add_task"
+        tools:layout="@layout/fragment_gm_task_add" />
+    <fragment
+        android:id="@+id/GMTaskCheckFragment"
+        android:name="com.example.myapplication.GMTaskCheckFragment"
+        android:label="GMfragment_check_task"
+        tools:layout="@layout/fragment_gm_task_check" />
+    <fragment
+        android:id="@+id/GMTaskEditFragment"
+        android:name="com.example.myapplication.GMTaskEditFragment"
+        android:label="fragment_gm_task_edit"
+        tools:layout="@layout/fragment_gm_task_edit" />
     <fragment
         android:id="@+id/taskAnswerFragment"
         android:name="com.example.myapplication.TaskAnswerFragment"

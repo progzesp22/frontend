@@ -40,6 +40,20 @@ public class TasksModel extends ViewModel {
         return activeTask;
     }
 
+    public Task getById(int id) {
+        if (tasks == null || tasks.getValue() == null) {
+            return null;
+        }
+
+        for (Task task : tasks.getValue()) {
+            if (task.getId() == id) {
+                return task;
+            }
+        }
+
+        return null;
+    }
+
     private void fetchTasks() {
         MainActivity.requestHandler.getTasks(response -> {
             List<Task> tasks = new LinkedList<>();
@@ -56,4 +70,5 @@ public class TasksModel extends ViewModel {
             Log.e("TasksModel", "Error fetching tasks: " + error.toString());
         });
     }
+
 }
