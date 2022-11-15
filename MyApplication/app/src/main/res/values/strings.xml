@@ -25,6 +25,7 @@
     <string name="content">Treść</string>
     <string name="answer">Odpowiedź</string>
     <string name="answer_verb">Odpowiedz</string>
+    <string name="scan_qr">Skanuj kod QR / Kreskowy</string>
     <string name="tasks_list">lista zadań</string>
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
