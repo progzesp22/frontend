@@ -48,7 +48,6 @@ public class TaskAnswerFragment extends Fragment {
             int user_id = 7;
             MainActivity.requestHandler.postAnswer(
                     task.getId(),
-                    user_id,
                     binding.answerText.getText().toString(),
                     response -> {
                         Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();

@@ -47,12 +47,12 @@ public class GMTaskEditFragment extends Fragment {
         binding.descriptionText.setText(task.getDescription());
 
         binding.button.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.putTask(
-                    task.getId(),
-                    binding.titleText.getText().toString(),
-                    binding.descriptionText.getText().toString(),
-                    1,
-                    "TEXT",
+
+            task.setName(binding.titleText.getText().toString());
+            task.setDescription(binding.descriptionText.getText().toString());
+
+            MainActivity.requestHandler.patchTask(
+                    task,
                     response -> {
                         model.refreshTasks();
                         Toast.makeText(getContext(), "Zmieniono", Toast.LENGTH_SHORT).show();

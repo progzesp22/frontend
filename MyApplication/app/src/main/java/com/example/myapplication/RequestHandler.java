@@ -54,6 +54,19 @@ public class RequestHandler {
         return instance;
     }
 
+    public void postUserLogin(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("login", username);
+            jsonBody.put("hasło", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "user/login", jsonBody, listener, errorListener);
+        requestQueue.add(request);
+    }
+
+
     /**
      * Send GET request for all tasks. Tasks are returned as JSONArray.
      *
@@ -67,22 +80,27 @@ public class RequestHandler {
         requestQueue.add(jsonArrayRequest);
     }
 
+    public void getTasks(Long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url + "tasks?gameId=" + gameId, null, responseCallback, errorListener);
+
+        requestQueue.add(jsonArrayRequest);
+    }
+
     /**
      * Send POST request with new Answer. For response format see documentation.
      * This method will evolve to be more generic once we go to implement more than plaintext tasks.
      *
      * @param taskId           for which task is this answer
-     * @param userId           identifier for a user (for now it isn't validated in any way on server side)
      * @param response         what is the actual answer to the task (for now it is just a String)
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
-    public void postAnswer(int taskId, int userId, String response, Response.Listener<JSONObject> responseCallback,
+    public void postAnswer(long taskId, String response, Response.Listener<JSONObject> responseCallback,
                            Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
         try {
             json.put("taskId", taskId);
-            json.put("userId", userId);
             json.put("response", response);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -97,22 +115,20 @@ public class RequestHandler {
     /**
      * Send POST request with a new Task. Should be available only to Game Master.
      *
-     * @param name             Short name for a task
-     * @param description      longer more detailed description
-     * @param type             for now available types are: PHOTO, LOCALIZATION, QR_CODE, TEXT (the only one
-     *                         that is really supported is TEXT, also this parameter should be an enum)
-     * @param gameId           to which game this task belongs to (game needs to actually exist on server side)
-     * @param responseCallback what should be done with response data when it arrives
+     * @param task             task to be added
+     * @param responseCallback what should be done with response data when it arrive    s
      * @param errorListener    what should be done with any errors when they occur
      */
-    public void postTask(String name, String description, String type, int gameId, Response.Listener<JSONObject> responseCallback,
+    public void postTask(Task task, Response.Listener<JSONObject> responseCallback,
                          Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
         try {
-            json.put("name", name);
-            json.put("description", description);
-            json.put("gameId", gameId);
-            json.put("taskType", type);
+            json.put("name", task.getName());
+            json.put("description", task.getDescription());
+            json.put("gameId", task.getGameId());
+            json.put("type", task.getType());
+            JSONArray jsonPrerequsiteTasks = new JSONArray(task.getPrerequisiteTasks());
+            json.put("prerequisiteTasks", jsonPrerequsiteTasks);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -128,29 +144,23 @@ public class RequestHandler {
      * For all i know you have to supply all parameters because the old task is being replaced be the
      * new one not changed. TODO: validate that statement and maybe change the code accordingly
      *
-     * @param taskId           what task we want to edits
-     * @param name             Short name for a task
-     * @param description      longer more detailed description
-     * @param type             for now available types are: PHOTO, LOCALIZATION, QR_CODE, TEXT (the only one
-     *                         that is really supported is TEXT, also this parameter should be an enum)
-     * @param gameId           to which game this task belongs to (game needs to actually exist on server side)
+     * @param task             task to be edited
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
-    public void putTask(int taskId, String name, String description, int gameId, String type, Response.Listener<JSONObject> responseCallback,
-                        Response.ErrorListener errorListener) {
+    public void patchTask(Task task, Response.Listener<JSONObject> responseCallback,
+                          Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
         try {
-            json.put("name", name);
-            json.put("description", description);
-            json.put("gameId", gameId);
-            json.put("taskType", type);
+            json.put("name", task.getName());
+            json.put("description", task.getDescription());
+            json.put("type", task.getType());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PATCH, url + "tasks/" + taskId, json, responseCallback,
+                (Request.Method.PATCH, url + "tasks/" + task.getId(), json, responseCallback,
                         errorListener);
 
         requestQueue.add(jsonObjectRequest);
@@ -162,13 +172,32 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
-    public void getUncheckedAnswers(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
+    public void getAnswers(Boolean filterUnchecked, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "answers/unchecked", null, responseCallback,
+                (Request.Method.GET, url + "answers?filter=" + (filterUnchecked ? "unchecked" : "all"), null, responseCallback,
                         errorListener);
 
         requestQueue.add(jsonArrayRequest);
+    }
+
+    public void getAnswers(long gameId, Boolean filterUnchecked, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url + "answers?gameId=" + gameId + "&filter=" + (filterUnchecked ? "unchecked" : "all"),
+                        null, responseCallback,
+                        errorListener);
+
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void getAnswer(long answerId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url + "answers/" + answerId, null, responseCallback,
+                        errorListener);
+
+        requestQueue.add(jsonObjectRequest);
     }
 
     /**

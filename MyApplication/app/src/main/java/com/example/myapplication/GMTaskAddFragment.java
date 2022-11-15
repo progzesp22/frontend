@@ -42,11 +42,17 @@ public class GMTaskAddFragment extends Fragment {
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
         binding.button.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.postTask(
+            Task newTask = new Task(
+                    Task.UNNOWN_ID,
                     binding.titleText.getText().toString(),
                     binding.descriptionText.getText().toString(),
-                    "TEXT",
-                    1,
+                    1, // Hardcoded game ID for now
+                    Task.TaskType.TEXT,
+                    null
+            );
+
+            MainActivity.requestHandler.postTask(
+                    newTask,
                     response -> {
                         Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();
                         model.refreshTasks();
