@@ -48,11 +48,17 @@ public class GMTaskEditFragment extends Fragment {
 
         binding.button.setOnClickListener(view1 -> {
 
-            task.setName(binding.titleText.getText().toString());
-            task.setDescription(binding.descriptionText.getText().toString());
+            Task editedTask = new Task(
+                    task.getId(),
+                    binding.titleText.getText().toString(),
+                    binding.descriptionText.getText().toString(),
+                    task.getGameId(),
+                    task.getType(),
+                    task.getPrerequisiteTasks()
+            );
 
             MainActivity.requestHandler.patchTask(
-                    task,
+                    editedTask,
                     response -> {
                         model.refreshTasks();
                         Toast.makeText(getContext(), "Zmieniono", Toast.LENGTH_SHORT).show();

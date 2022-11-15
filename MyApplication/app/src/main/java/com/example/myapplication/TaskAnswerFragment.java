@@ -45,7 +45,6 @@ public class TaskAnswerFragment extends Fragment {
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
         binding.answerButton.setOnClickListener(view1 -> {
-            int user_id = 7;
             MainActivity.requestHandler.postAnswer(
                     task.getId(),
                     binding.answerText.getText().toString(),

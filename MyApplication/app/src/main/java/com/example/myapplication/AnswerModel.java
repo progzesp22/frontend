@@ -41,7 +41,7 @@ public class AnswerModel extends ViewModel {
     }
 
     private void fetch() {
-        MainActivity.requestHandler.getUncheckedAnswers(response -> {
+        MainActivity.requestHandler.getAnswers(true, response -> {
             List<Answer> answers = new LinkedList<>();
             try {
                 for (int i = 0; i < response.length(); i++) {
