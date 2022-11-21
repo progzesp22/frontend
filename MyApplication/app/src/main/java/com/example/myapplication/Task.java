@@ -3,6 +3,7 @@ package com.example.myapplication;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Task {
 
@@ -12,16 +13,18 @@ public class Task {
     private String name;
     private String description;
     private TaskType type;
-    private final ArrayList<Task> prerequisites;
+    private final List<Task> prerequisites;
+    private final List<Answer> answers;
     private final long gameId;
 
-    public Task(long id, String name, String description, long gameId, TaskType type, ArrayList<Task> prerequisites) {
+    public Task(long id, String name, String description, long gameId, TaskType type, List<Task> prerequisites) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.gameId = gameId;
         this.type = type;
         this.prerequisites = prerequisites;
+        this.answers = new ArrayList<>();
     }
 
     public long getId() {
@@ -69,8 +72,12 @@ public class Task {
         this.type = type;
     }
 
-    public ArrayList<Task> getPrerequisiteTasks() {
+    public List<Task> getPrerequisiteTasks() {
         return prerequisites;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
     public enum TaskType {
@@ -80,4 +87,6 @@ public class Task {
         NAV_POS,
         AUDIO
     }
+
+
 }

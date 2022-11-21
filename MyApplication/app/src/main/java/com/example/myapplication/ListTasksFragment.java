@@ -1,21 +1,18 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.myapplication.databinding.FragmentListTasksBinding;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ListTasksFragment extends Fragment {
@@ -39,15 +36,15 @@ public class ListTasksFragment extends Fragment {
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
         model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
-        model.refreshTasks();
+        model.refresh();
 
-        binding.refreshTasks.setOnClickListener(view1 -> model.refreshTasks());
+        binding.refreshTasks.setOnClickListener(view1 -> model.refresh());
     }
 
-    private void displayTasks(List<Task> tasks){
+    private void displayTasks(List<Task> tasks) {
         binding.tasksLayout.removeAllViews();
 
-        for(Task task : tasks){
+        for (Task task : tasks) {
             TaskView taskView = new TaskView(getContext(), task);
             taskView.setOnClick(view -> {
                 TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);

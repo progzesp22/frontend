@@ -34,26 +34,21 @@ public class GMListToCheckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AnswerModel answerModel = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
-        answerModel.getUncheckedAnswers().observe(getViewLifecycleOwner(), this::displayAnswers);
-
         TasksModel tasksModel = new ViewModelProvider((requireActivity())).get(TasksModel.class);
         tasksModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
-            List<Answer> answers = answerModel.getUncheckedAnswers().getValue();
-            if(answers != null){
+            List<Answer> answers = tasksModel.getUncheckedAnswers();
+            if (answers != null) {
                 displayAnswers(answers);
             }
         });
 
-        tasksModel.refreshTasks();
-        answerModel.refreshAnswers();
+        tasksModel.refresh();
 
-        binding.refreshAnswerActionButton.setOnClickListener(view1 -> answerModel.refreshAnswers()); // TODO: rename
+        binding.refreshAnswerActionButton.setOnClickListener(view1 -> tasksModel.refresh()); // TODO: rename
     }
 
     private void displayAnswers(List<Answer> answers) {
         binding.tasksLayout.removeAllViews(); // TODO: rename
-        AnswerModel model = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
         TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
 
@@ -65,7 +60,7 @@ public class GMListToCheckFragment extends Fragment {
 
             AnswerView answerView = new AnswerView(getContext(), task.getName());
             answerView.setOnClick(view -> {
-                model.setActiveAnswer(answer);
+                taskModel.setActiveAnswer(answer);
                 NavHostFragment.findNavController(this).navigate(R.id.action_checkTask); // TODO: rename to check answer
             });
             binding.tasksLayout.addView(answerView);

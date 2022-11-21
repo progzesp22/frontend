@@ -60,7 +60,7 @@ public class GMTaskEditFragment extends Fragment {
             MainActivity.requestHandler.patchTask(
                     editedTask,
                     response -> {
-                        model.refreshTasks();
+                        model.refresh();
                         Toast.makeText(getContext(), "Zmieniono", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigateUp();
                     },

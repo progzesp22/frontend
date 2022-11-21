@@ -55,7 +55,7 @@ public class GMTaskAddFragment extends Fragment {
                     newTask,
                     response -> {
                         Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();
-                        model.refreshTasks();
+                        model.refresh();
                         NavHostFragment.findNavController(this).navigateUp();
                     },
                     error -> {

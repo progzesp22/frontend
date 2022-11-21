@@ -58,7 +58,7 @@ public class RequestHandler {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("login", username);
-            jsonBody.put("hasło", password);
+            jsonBody.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
