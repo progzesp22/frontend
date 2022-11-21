@@ -28,10 +28,12 @@ public class RequestHandler {
     private static volatile RequestHandler instance;
     private RequestQueue requestQueue;
 
+    public static final long GAME_ID = 2;
+
     /**
      * Url to a server handling requests.
      */
-    private final String url = "http://130.61.232.251:8080/rest/";
+    private final String url = "http://144.24.171.255:8080/rest/";
 
     private RequestHandler() {
     }

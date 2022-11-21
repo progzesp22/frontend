@@ -46,7 +46,7 @@ public class GMTaskAddFragment extends Fragment {
                     Task.UNNOWN_ID,
                     binding.titleText.getText().toString(),
                     binding.descriptionText.getText().toString(),
-                    1, // Hardcoded game ID for now
+                    RequestHandler.GAME_ID, // Hardcoded game ID for now
                     Task.TaskType.TEXT,
                     null
             );
