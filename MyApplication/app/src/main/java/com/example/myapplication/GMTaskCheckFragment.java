@@ -50,7 +50,7 @@ public class GMTaskCheckFragment extends Fragment {
         binding.descriptionText.setText(task.getDescription());
         binding.answerText.setText(answer.getAnswer());
         binding.accept.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.checkAnswer(answer.getId(), true, response -> {
+            MainActivity.requestHandler.patchAnswer(answer.getId(), true, response -> {
                 Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
                 taskModel.refresh();
                 NavHostFragment.findNavController(this).navigateUp();
@@ -60,7 +60,7 @@ public class GMTaskCheckFragment extends Fragment {
         });
 
         binding.decline.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.checkAnswer(answer.getId(), false, response -> {
+            MainActivity.requestHandler.patchAnswer(answer.getId(), false, response -> {
                 Toast.makeText(getContext(), "Odrzucono", Toast.LENGTH_SHORT).show();
                 taskModel.refresh();
                 NavHostFragment.findNavController(this).navigateUp();
