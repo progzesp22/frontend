@@ -171,4 +171,18 @@ public class TasksModel extends ViewModel {
 
         return uncheckedAnswers;
     }
+
+    public List<Answer> getAnswers() {
+        List<Answer> answers = new ArrayList<>();
+
+        if (tasks == null || tasks.getValue() == null) {
+            return answers;
+        }
+
+        for (Task task : tasks.getValue()) {
+            answers.addAll(task.getAnswers());
+        }
+
+        return answers;
+    }
 }
