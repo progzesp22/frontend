@@ -14,6 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.databinding.FragmentGmTaskAddBinding;
 
+import java.util.ArrayList;
+
 
 public class GMTaskAddFragment extends Fragment {
     private FragmentGmTaskAddBinding binding;
@@ -42,14 +44,20 @@ public class GMTaskAddFragment extends Fragment {
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
         binding.button.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.postTask(
+            Task newTask = new Task(
+                    Task.UNKNOWN_ID,
                     binding.titleText.getText().toString(),
                     binding.descriptionText.getText().toString(),
-                    "TEXT",
-                    1,
+                    RequestHandler.GAME_ID, // Hardcoded game ID for now
+                    Task.TaskType.TEXT,
+                    new ArrayList<>()
+            );
+
+            MainActivity.requestHandler.postTask(
+                    newTask,
                     response -> {
                         Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();
-                        model.refreshTasks();
+                        model.refresh();
                         NavHostFragment.findNavController(this).navigateUp();
                     },
                     error -> {

@@ -47,14 +47,20 @@ public class GMTaskEditFragment extends Fragment {
         binding.descriptionText.setText(task.getDescription());
 
         binding.button.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.putTask(
+
+            Task editedTask = new Task(
                     task.getId(),
                     binding.titleText.getText().toString(),
                     binding.descriptionText.getText().toString(),
-                    1,
-                    "TEXT",
+                    task.getGameId(),
+                    task.getType(),
+                    task.getPrerequisiteTasks()
+            );
+
+            MainActivity.requestHandler.patchTask(
+                    editedTask,
                     response -> {
-                        model.refreshTasks();
+                        model.refresh();
                         Toast.makeText(getContext(), "Zmieniono", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigateUp();
                     },

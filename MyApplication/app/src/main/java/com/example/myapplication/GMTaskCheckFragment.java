@@ -38,10 +38,9 @@ public class GMTaskCheckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AnswerModel model = new ViewModelProvider(requireActivity()).get(AnswerModel.class);
         TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
-        Answer answer = model.getActiveAnswer();
+        Answer answer = taskModel.getActiveAnswer();
 
         if (answer == null) return;
         Task task = taskModel.getById(answer.getTaskId());
@@ -51,9 +50,9 @@ public class GMTaskCheckFragment extends Fragment {
         binding.descriptionText.setText(task.getDescription());
         binding.answerText.setText(answer.getAnswer());
         binding.accept.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.checkAnswer(answer.getId(), true, response -> {
+            MainActivity.requestHandler.patchAnswer(answer.getId(), true, response -> {
                 Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
-                model.refreshAnswers();
+                taskModel.refresh();
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
                 Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
@@ -61,9 +60,9 @@ public class GMTaskCheckFragment extends Fragment {
         });
 
         binding.decline.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.checkAnswer(answer.getId(), false, response -> {
+            MainActivity.requestHandler.patchAnswer(answer.getId(), false, response -> {
                 Toast.makeText(getContext(), "Odrzucono", Toast.LENGTH_SHORT).show();
-                model.refreshAnswers();
+                taskModel.refresh();
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
                 Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();

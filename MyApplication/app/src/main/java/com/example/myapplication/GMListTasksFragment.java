@@ -36,16 +36,16 @@ public class GMListTasksFragment extends Fragment {
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
         model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
-        model.refreshTasks();
+        model.refresh();
 
         binding.addTask.setOnClickListener(view1 ->
-                NavHostFragment.findNavController(this).navigate(R.id.action_addTask) );
+                NavHostFragment.findNavController(this).navigate(R.id.action_addTask));
     }
 
-    private void displayTasks(List<Task> tasks){
+    private void displayTasks(List<Task> tasks) {
         binding.tasksLayout.removeAllViews();
 
-        for(Task task : tasks){
+        for (Task task : tasks) {
             TaskView taskView = new TaskView(getContext(), task);
             taskView.setOnClick(view -> {
                 TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
