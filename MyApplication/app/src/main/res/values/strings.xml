@@ -43,4 +43,5 @@
     <string name="save">Zapisz</string>
     <string name="share">Udostępnij</string>
     <string name="QR_image">Kod QR</string>
+    <string name="QRgenerationSuccess">Wygenerowano kod QR</string>
 </resources>

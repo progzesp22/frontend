@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,9 +8,10 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.databinding.FragmentGmQrGeneratorBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
@@ -19,11 +19,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Objects;
 
 
 public class GMqrGeneratorFragment extends Fragment {
@@ -50,10 +45,10 @@ public class GMqrGeneratorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MultiFormatWriter mWriter = new MultiFormatWriter();
-        BitMatrix mMatrix = null;
+        BitMatrix mMatrix;
         Bitmap mBitmap = null;
         try {
-            mMatrix = mWriter.encode(String.valueOf(Math.random()), BarcodeFormat.QR_CODE, 400,400);
+            mMatrix = mWriter.encode(String.valueOf(Math.random()), BarcodeFormat.QR_CODE, 400, 400);
             BarcodeEncoder mEncoder = new BarcodeEncoder();
             mBitmap = mEncoder.createBitmap(mMatrix);
             binding.imageView.setImageBitmap(mBitmap);
@@ -63,8 +58,8 @@ public class GMqrGeneratorFragment extends Fragment {
         }
 
         binding.imageView.setVisibility(View.VISIBLE);
-        binding.titleText.setText("Wygenerowano kod QR");
-        Bitmap finalMBitmap = mBitmap;
+        binding.titleText.setText(R.string.QRgenerationSuccess);
+        final Bitmap finalMBitmap = mBitmap;
         binding.share.setOnClickListener(view1 -> {
             String path = MediaStore.Images.Media.insertImage(view.getContext().getContentResolver(), finalMBitmap, "Image Description", null);
             Uri uri = Uri.parse(path);
@@ -75,7 +70,7 @@ public class GMqrGeneratorFragment extends Fragment {
         });
 
         binding.save.setOnClickListener(view1 -> {
-            MediaStore.Images.Media.insertImage(view.getContext().getApplicationContext().getContentResolver(), finalMBitmap, "Test" , "Test");
+            MediaStore.Images.Media.insertImage(view.getContext().getApplicationContext().getContentResolver(), finalMBitmap, "Test", "Test");
             Snackbar mySnackbar = Snackbar.make(view, "Zapisano QR", 750);
             mySnackbar.show();
 
