@@ -63,6 +63,9 @@ public class SelectUserTypeFragment extends Fragment {
                 else if (model.getMasterMode() == UserModel.MasterMode.EDIT){
                     NavHostFragment.findNavController(this).navigate(R.id.action_GMEditSelected);
                 }
+                else if (model.getMasterMode() == UserModel.MasterMode.INVITE) {
+                    NavHostFragment.findNavController(this).navigate(R.id.action_generate_QR);
+                }
             }
         });
     }
@@ -82,6 +85,8 @@ public class SelectUserTypeFragment extends Fragment {
             model.setMasterMode(UserModel.MasterMode.ACCEPT);
         } else if(checkedRadioButtonId == R.id.gmEditRadioButton){
             model.setMasterMode(UserModel.MasterMode.EDIT);
+        } else if (checkedRadioButtonId == R.id.gmGenerateQR) {
+            model.setMasterMode(UserModel.MasterMode.INVITE);
         }
     }
 }

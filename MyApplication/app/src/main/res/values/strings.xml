@@ -20,6 +20,7 @@
     <string name="user">Użytkownik</string>
     <string name="edit_tasks">Edycja zadań</string>
     <string name="accept_tasks">Akceptacja zgłoszeń</string>
+    <string name="generate_qr">Wygeneruj QR</string>
     <string name="name">Nazwa użytkownika</string>
     <string name="title">Tytuł</string>
     <string name="content">Treść</string>
@@ -39,4 +40,8 @@
     <string name="demo">Demo</string>
     <string name="server_error">Błąd komunikacji z serwerem, spróbuj ponownie</string>
     <string name="server_success">Wysłano</string>
+    <string name="save">Zapisz</string>
+    <string name="share">Udostępnij</string>
+    <string name="QR_image">Kod QR</string>
+    <string name="QRgenerationSuccess">Wygenerowano kod QR</string>
 </resources>

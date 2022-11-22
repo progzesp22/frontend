@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_GMEditSelected"
             app:destination="@id/GMlistTasksFragment" />
+        <action
+            android:id="@+id/action_generate_QR"
+            app:destination="@id/GMqrGeneratorFragment" />
 
     </fragment>
     <fragment
@@ -61,6 +64,11 @@
         android:name="com.example.myapplication.GMTaskCheckFragment"
         android:label="GMfragment_check_task"
         tools:layout="@layout/fragment_gm_task_check" />
+    <fragment
+        android:id="@+id/GMqrGeneratorFragment"
+        android:name="com.example.myapplication.GMqrGeneratorFragment"
+        android:label="GMfragment_qr_generator"
+        tools:layout="@layout/fragment_gm_qr_generator" />
     <fragment
         android:id="@+id/GMTaskEditFragment"
         android:name="com.example.myapplication.GMTaskEditFragment"

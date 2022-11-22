@@ -11,6 +11,7 @@ public class UserModel extends ViewModel {
     public enum MasterMode{
         EDIT,
         ACCEPT,
+        INVITE
     }
 
 
