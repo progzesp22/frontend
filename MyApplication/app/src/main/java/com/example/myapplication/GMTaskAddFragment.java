@@ -14,6 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.databinding.FragmentGmTaskAddBinding;
 
+import java.util.ArrayList;
+
 
 public class GMTaskAddFragment extends Fragment {
     private FragmentGmTaskAddBinding binding;
@@ -43,12 +45,12 @@ public class GMTaskAddFragment extends Fragment {
 
         binding.button.setOnClickListener(view1 -> {
             Task newTask = new Task(
-                    Task.UNNOWN_ID,
+                    Task.UNKNOWN_ID,
                     binding.titleText.getText().toString(),
                     binding.descriptionText.getText().toString(),
                     RequestHandler.GAME_ID, // Hardcoded game ID for now
                     Task.TaskType.TEXT,
-                    null
+                    new ArrayList<>()
             );
 
             MainActivity.requestHandler.postTask(

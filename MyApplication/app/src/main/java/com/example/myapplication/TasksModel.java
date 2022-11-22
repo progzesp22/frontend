@@ -42,7 +42,7 @@ public class TasksModel extends ViewModel {
         return activeTask;
     }
 
-    public Task getById(int id) {
+    public Task getById(long id) {
         if (tasks == null || tasks.getValue() == null) {
             return null;
         }
@@ -66,9 +66,6 @@ public class TasksModel extends ViewModel {
             try {
                 for (int i = 0; i < response.length(); i++) {
                     Task parsedTask = Task.fromJson(response.getJSONObject(i));
-                    if (parsedTask == null) {
-                        continue;
-                    }
 
                     boolean found = false;
                     for (Task task : currentTasks) {
@@ -107,9 +104,6 @@ public class TasksModel extends ViewModel {
             try {
                 for (int i = 0; i < response.length(); i++) {
                     Answer parsedAnswer = Answer.fromJson(response.getJSONObject(i));
-                    if (parsedAnswer == null) {
-                        continue;
-                    }
 
                     boolean taskFound = false;
                     for (Task task : currentTasks) {
@@ -120,7 +114,8 @@ public class TasksModel extends ViewModel {
                             for (Answer answer : answers) {
                                 if (answer.getId() == parsedAnswer.getId()) {
                                     answerFound = true;
-                                    // We don't update the answer here, because it's not possible to change an answer yet
+                                    answer.setApproved(parsedAnswer.isApproved());
+                                    answer.setChecked(parsedAnswer.isChecked());
                                     break;
                                 }
                             }

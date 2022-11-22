@@ -24,7 +24,7 @@
         android:contentDescription="@string/tasks_list">
 
         <LinearLayout
-            android:id="@+id/tasksLayout"
+            android:id="@+id/answers_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

@@ -1,27 +1,26 @@
 package com.example.myapplication;
 
-import android.util.Log;
-
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Answer {
-    private final int id;
+    private final long id;
     private final String answer;
-    private final int taskId;
-    //    private final int userId;
+    private final long taskId;
+    private final long userId;
     private boolean approved;
     private boolean checked;
 
-    public Answer(int id, String answer, int taskId, /*int userId,*/ boolean approved, boolean checked) {
+    public Answer(long id, String answer, long taskId, long userId, boolean approved, boolean checked) {
         this.id = id;
         this.answer = answer;
         this.taskId = taskId;
-//        this.userId = userId;
+        this.userId = userId;
         this.approved = approved;
         this.checked = checked;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -29,27 +28,22 @@ public class Answer {
         return answer;
     }
 
-    public int getTaskId() {
+    public long getTaskId() {
         return taskId;
     }
 
-//    public int getUserId() {
-//        return userId;
-//    }
+    public long getUserId() {
+        return userId;
+    }
 
-    static public Answer fromJson(JSONObject json) {
-        try {
-            return new Answer(
-                    json.getInt("id"),
-                    json.getString("response"),
-                    json.getInt("taskId"),
-                    // json.getInt("userId"),
-                    json.getBoolean("approved"),
-                    json.getBoolean("checked"));
-        } catch (Exception e) {
-            Log.e("Answer", "Parsing error: " + e.getMessage());
-            return null;
-        }
+    static public Answer fromJson(JSONObject json) throws JSONException {
+        return new Answer(
+                json.getInt("id"),
+                json.getString("response"),
+                json.getInt("taskId"),
+                json.getInt("userId"),
+                json.getBoolean("approved"),
+                json.getBoolean("checked"));
     }
 
     public boolean isApproved() {

@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Task {
 
-    public static final long UNNOWN_ID = Long.MIN_VALUE;
+    public static final long UNKNOWN_ID = Long.MIN_VALUE;
 
     private final long id;
     private String name;
@@ -47,17 +48,13 @@ public class Task {
         this.description = description;
     }
 
-    static public Task fromJson(JSONObject json) {
-        try {
-            return new Task(json.getInt("id"),
-                    json.getString("name"),
-                    json.getString("description"),
-                    json.getInt("gameId"),
-                    TaskType.valueOf(json.getString("type")),
-                    null); // TODO: parse prerequisites
-        } catch (Exception e) {
-            return null;
-        }
+    static public Task fromJson(JSONObject json) throws JSONException {
+        return new Task(json.getInt("id"),
+                json.getString("name"),
+                json.getString("description"),
+                json.getInt("gameId"),
+                TaskType.valueOf(json.getString("type")),
+                new ArrayList<>()); // TODO: parse prerequisites
     }
 
     public long getGameId() {

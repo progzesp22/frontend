@@ -44,11 +44,11 @@ public class GMListToCheckFragment extends Fragment {
 
         tasksModel.refresh();
 
-        binding.refreshAnswerActionButton.setOnClickListener(view1 -> tasksModel.refresh()); // TODO: rename
+        binding.refreshAnswerActionButton.setOnClickListener(view1 -> tasksModel.refresh());
     }
 
     private void displayAnswers(List<Answer> answers) {
-        binding.tasksLayout.removeAllViews(); // TODO: rename
+        binding.answersLayout.removeAllViews();
         TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
 
@@ -61,9 +61,9 @@ public class GMListToCheckFragment extends Fragment {
             AnswerView answerView = new AnswerView(getContext(), task.getName());
             answerView.setOnClick(view -> {
                 taskModel.setActiveAnswer(answer);
-                NavHostFragment.findNavController(this).navigate(R.id.action_checkTask); // TODO: rename to check answer
+                NavHostFragment.findNavController(this).navigate(R.id.action_checkAnswer);
             });
-            binding.tasksLayout.addView(answerView);
+            binding.answersLayout.addView(answerView);
         }
     }
 }

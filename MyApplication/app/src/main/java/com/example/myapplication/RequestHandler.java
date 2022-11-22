@@ -212,7 +212,7 @@ public class RequestHandler {
      * @param errorListener    what should be done with any errors when they occur
      */
 
-    public void patchAnswer(int answerId, Boolean approved, Response.Listener<JSONObject> responseCallback,
+    public void patchAnswer(long answerId, Boolean approved, Response.Listener<JSONObject> responseCallback,
                             Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
         try {
