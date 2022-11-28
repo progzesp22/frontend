@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/selectUserTypeFragment"
+            android:title="@string/menu_nav_user_login" />
+
+
+        <item android:title="@string/nav_menu_player">
+            <menu>
+                <item
+                    android:id="@+id/listTasksFragment"
+                    android:title="@string/menu_nav_player_tasks" />
+            </menu>
+        </item>
+
+        <item android:title="@string/nav_menu_GM">
+            <menu>
+                <item
+                    android:id="@+id/GMlistTasksFragment"
+                    android:title="@string/menu_nav_gm_tasks" />
+                <item
+                    android:id="@+id/GMListToAcceptFragment"
+                    android:title="@string/menu_nav_gm_list_to_accept" />
+                <item
+                     android:id="@+id/GMqrGeneratorFragment"
+                    android:title="@string/menu_nav_gm_qr_generator" />
+            </menu>
+        </item>
+
+    </group>
+
+
+</menu>

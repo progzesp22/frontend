@@ -7,12 +7,16 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.progzesp22.scoutout.databinding.ActivityMainBinding;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,10 +36,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        Set<Integer> topLevelDestinations = getTopLevelDestinations();
+
+
+        appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
+
+        setupHamburgerMenu(navController);
 
         final boolean mock_requests = false;
         if(mock_requests){
@@ -43,6 +53,45 @@ public class MainActivity extends AppCompatActivity {
         } else{
             requestHandler = new RequestHandler(getApplicationContext());
         }
+    }
+
+    private Set<Integer> getTopLevelDestinations() {
+        HashSet<Integer> set = new HashSet<>();
+        set.add(R.id.selectUserTypeFragment); // user login fragment
+        set.add(R.id.listTasksFragment); // player tasks fragment
+        set.add(R.id.GMlistTasksFragment); // GM tasks fragment
+        set.add(R.id.GMqrGeneratorFragment); // GM players fragment
+        set.add(R.id.GMListToAcceptFragment); // GM players fragment
+        return set;
+    }
+
+    private void setupHamburgerMenu(NavController navController) {
+        binding.navView.setCheckedItem(R.id.selectUserTypeFragment);
+
+        binding.navView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.selectUserTypeFragment) {
+                navController.navigate(R.id.selectUserTypeFragment);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (item.getItemId() == R.id.listTasksFragment) {
+                navController.navigate(R.id.listTasksFragment);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (item.getItemId() == R.id.GMlistTasksFragment) {
+                navController.navigate(R.id.GMlistTasksFragment);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (item.getItemId() == R.id.GMqrGeneratorFragment) {
+                navController.navigate(R.id.GMqrGeneratorFragment);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (item.getItemId() == R.id.GMListToAcceptFragment) {
+                navController.navigate(R.id.GMListToAcceptFragment);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            return true;
+        });
     }
 
     @Override
