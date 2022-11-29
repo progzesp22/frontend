@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
     private static final int REQUEST_PERMISSIONS = 200;
-    public static RequestHandler requestHandler;
+    public static RequestInterface requestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
 
-        requestHandler = RequestHandler.getInstance(getApplicationContext());
+        final boolean mock_requests = true;
+        if(mock_requests){
+            requestHandler = new MockRequestHandler();
+        } else{
+            requestHandler = new RequestHandler(getApplicationContext());
+        }
     }
 
     @Override

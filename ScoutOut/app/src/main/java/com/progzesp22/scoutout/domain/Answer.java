@@ -37,16 +37,25 @@ public class Answer {
     }
 
     static public Answer fromJson(JSONObject json) throws JSONException {
-        // temporary fix for null userId in json
+        // temporary fix for null userId and response in json
         long userId;
+        String response;
+
         try {
             userId = json.getInt("userId");
         } catch (JSONException e) {
             userId = -1;
         }
+
+        try {
+            response = json.getString("response");
+        } catch (JSONException e) {
+            response = "";
+        }
+
         return new Answer(
                 json.getInt("id"),
-                json.getString("response"),
+                response,
                 json.getInt("taskId"),
                 userId,
                 json.getBoolean("approved"),
