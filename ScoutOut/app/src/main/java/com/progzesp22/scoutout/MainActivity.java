@@ -85,25 +85,17 @@ public class MainActivity extends AppCompatActivity {
         binding.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.selectUserTypeFragment) {
                 navController.navigate(R.id.selectUserTypeFragment);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
             } else if (item.getItemId() == R.id.listTasksFragment) {
                 navController.navigate(R.id.listTasksFragment);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
             } else if (item.getItemId() == R.id.GMlistTasksFragment) {
                 navController.navigate(R.id.GMlistTasksFragment);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
             } else if (item.getItemId() == R.id.GMqrGeneratorFragment) {
                 navController.navigate(R.id.GMqrGeneratorFragment);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
             } else if (item.getItemId() == R.id.GMListToAcceptFragment) {
                 navController.navigate(R.id.GMListToAcceptFragment);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
             }
+
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
     }
