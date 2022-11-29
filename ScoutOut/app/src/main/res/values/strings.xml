@@ -26,6 +26,12 @@
     <string name="content">Treść</string>
     <string name="answer">Odpowiedź</string>
     <string name="answer_verb">Odpowiedz</string>
+    <string name="game_description">Opis gry</string>
+    <string name="game_start_automatically">Automatyczny start gry</string>
+    <string name="game_start_hour">Godzina rozpoczęcia gry</string>
+    <string name="game_end_condition">Warunek zakończenia gry:</string>
+    <string name="game_end_with_time">Ustalona godzina zakończenia</string>
+    <string name="game_end_with_points">Ustalona liczba punktów</string>
     <string name="scan_qr">Skanuj kod QR / Kreskowy</string>
     <string name="tasks_list">lista zadań</string>
     <string name="refresh">odśwież</string>
