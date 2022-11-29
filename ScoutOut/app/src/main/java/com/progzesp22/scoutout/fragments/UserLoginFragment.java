@@ -1,16 +1,15 @@
 package com.progzesp22.scoutout.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RadioButton;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentUserLoginBinding;
@@ -50,7 +49,9 @@ public class UserLoginFragment extends Fragment {
             UserModel model = new ViewModelProvider(requireActivity()).get(UserModel.class);
             updateModel(model);
 
-            if (model.getUserType() == UserModel.UserType.PLAYER) {
+            UserModel.UserType userType = model.getUserType().getValue();
+
+            if (userType == UserModel.UserType.PLAYER) {
                 NavHostFragment.findNavController(this).navigate(R.id.action_playerSelected);
             }
         });

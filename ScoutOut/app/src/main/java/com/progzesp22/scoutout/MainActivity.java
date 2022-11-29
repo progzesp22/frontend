@@ -8,12 +8,14 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.progzesp22.scoutout.databinding.ActivityMainBinding;
+import com.progzesp22.scoutout.domain.UserModel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -67,6 +69,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupHamburgerMenu(NavController navController) {
         binding.navView.setCheckedItem(R.id.selectUserTypeFragment);
+
+        UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
+
+        userModel.getUserType().observe(this, userType -> {
+            binding.navView.getMenu().clear();
+            binding.navView.inflateMenu(R.menu.drawer_menu);
+            if (userType == UserModel.UserType.PLAYER) {
+                binding.navView.getMenu().findItem(R.id.drawer_menu_GM).setVisible(false);
+            } else if (userType == UserModel.UserType.GM) {
+                binding.navView.getMenu().findItem(R.id.drawer_menu_player).setVisible(false);
+            }
+        });
 
         binding.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.selectUserTypeFragment) {

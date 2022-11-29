@@ -9,7 +9,9 @@
             android:title="@string/menu_nav_user_login" />
 
 
-        <item android:title="@string/nav_menu_player">
+        <item
+            android:title="@string/nav_menu_player"
+            android:id="@+id/drawer_menu_player">
             <menu>
                 <item
                     android:id="@+id/listTasksFragment"
@@ -17,7 +19,9 @@
             </menu>
         </item>
 
-        <item android:title="@string/nav_menu_GM">
+        <item
+            android:title="@string/nav_menu_GM"
+            android:id="@+id/drawer_menu_GM">
             <menu>
                 <item
                     android:id="@+id/GMlistTasksFragment"
