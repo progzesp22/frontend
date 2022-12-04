@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+    <TextView
+        android:id="@+id/LoginScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="130dp"
+        android:layout_marginBottom="220dp"
+        android:textColor = "@color/black"
         android:textSize = "24dp"
-        android:inputType="textEmailAddress"
-        android:text="e-mail address" />
+        android:textStyle="bold|italic"
+        android:text="Register in our application"/>
 
     <EditText
         android:id="@+id/password"
@@ -35,7 +37,7 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="-10dp"
+        android:layout_marginBottom="130dp"
         android:textSize = "24dp"
         android:text="User name" />
 
@@ -44,9 +46,17 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="-120dp"
+        android:layout_marginBottom="-60dp"
         android:background="@drawable/button_border"
         android:text="Register"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="300dp"
+        android:src="@mipmap/Logo" />
 
 
 </FrameLayout>
