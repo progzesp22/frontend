@@ -42,7 +42,7 @@
         android:inputType="textPassword"
         android:text="@string/password_login" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginButton"
         android:layout_width="150dp"
         android:layout_height="60dp"
@@ -62,7 +62,7 @@
         android:textSize = "20sp"
         android:text="@string/or"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"
         android:layout_width="150dp"
         android:layout_height="60dp"
