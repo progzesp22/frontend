@@ -18,18 +18,19 @@
         android:layout_gravity="center"
         android:layout_marginBottom="220dp"
         android:textColor = "@color/black"
-        android:textSize = "24dp"
+        android:textSize = "24sp"
         android:textStyle="bold|italic"
-        android:text="Login to your account"/>
+        android:text="@string/login_to_your_account"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/username"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="130dp"
-        android:textSize = "24dp"
-        android:text="User name" />
+        android:textSize = "24sp"
+        android:inputType="text"
+        android:text="@string/user_name_login" />
 
     <EditText
         android:id="@+id/password"
@@ -37,9 +38,9 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="60dp"
-        android:textSize = "24dp"
+        android:textSize = "24sp"
         android:inputType="textPassword"
-        android:text="Password" />
+        android:text="@string/password_login" />
 
     <Button
         android:id="@+id/loginButton"
@@ -47,8 +48,9 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="-30dp"
-        android:background="@drawable/button_border"
-        android:text="Log in"/>
+        android:textColor="@color/white"
+        android:background="@drawable/button_shape"
+        android:text="@string/log_in"/>
 
     <TextView
         android:id="@+id/textViewOr"
@@ -57,8 +59,8 @@
         android:layout_gravity="center"
         android:layout_marginBottom="-75dp"
         android:textColor = "@color/white"
-        android:textSize = "20dp"
-        android:text="or"/>
+        android:textSize = "20sp"
+        android:text="@string/or"/>
 
     <Button
         android:id="@+id/registerButton"
@@ -66,15 +68,18 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="-120dp"
-        android:background="@drawable/button_border"
-        android:text="Register"/>
+        android:textColor="@color/white"
+        android:background="@drawable/button_shape"
+        android:text="@string/register_in_login"
+        tools:ignore="ExtraText" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <com.google.android.material.imageview.ShapeableImageView
+    android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="300dp"
+        app:shapeAppearanceOverlay="@style/Circular"
         android:src="@mipmap/Logo" />
 
 

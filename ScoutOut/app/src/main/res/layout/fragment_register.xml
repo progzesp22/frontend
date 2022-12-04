@@ -18,9 +18,9 @@
         android:layout_gravity="center"
         android:layout_marginBottom="220dp"
         android:textColor = "@color/black"
-        android:textSize = "24dp"
+        android:textSize = "24sp"
         android:textStyle="bold|italic"
-        android:text="Register in our application"/>
+        android:text="@string/register_in_our_application"/>
 
     <EditText
         android:id="@+id/password"
@@ -28,9 +28,9 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="60dp"
-        android:textSize = "24dp"
+        android:textSize = "24sp"
         android:inputType="textPassword"
-        android:text="Password" />
+        android:text="@string/password" />
 
     <EditText
         android:id="@+id/username"
@@ -38,24 +38,27 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="130dp"
-        android:textSize = "24dp"
-        android:text="User name" />
+        android:textSize = "24sp"
+        android:inputType="text"
+        android:text="@string/user_name" />
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="-60dp"
-        android:background="@drawable/button_border"
-        android:text="Register"/>
+<Button
+    android:id="@+id/registerButton"
+    android:layout_width="150dp"
+    android:layout_height="60dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="-60dp"
+    android:text="@string/register"
+    android:textColor="@color/white"
+    android:background="@drawable/button_shape"/>
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="300dp"
+        app:shapeAppearanceOverlay="@style/Circular"
         android:src="@mipmap/Logo" />
 
 
