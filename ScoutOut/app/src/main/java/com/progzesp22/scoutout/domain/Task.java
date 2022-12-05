@@ -6,17 +6,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task {
+public class Task extends Entity{
 
     public static final long UNKNOWN_ID = Long.MIN_VALUE;
 
-    private final long id;
-    private String name;
-    private String description;
-    private TaskType type;
-    private final List<Task> prerequisites;
-    private final List<Answer> answers;
-    private final long gameId;
+    protected final long id;
+    protected String name;
+    protected String description;
+    protected TaskType type;
+    protected final List<Task> prerequisites;
+    protected final List<Answer> answers;
+    protected final long gameId;
 
     public Task(long id, String name, String description, long gameId, TaskType type, List<Task> prerequisites) {
         this.id = id;

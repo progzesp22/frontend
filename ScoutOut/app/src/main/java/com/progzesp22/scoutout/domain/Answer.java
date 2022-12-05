@@ -3,13 +3,13 @@ package com.progzesp22.scoutout.domain;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Answer {
-    private final long id;
-    private final String answer;
-    private final long taskId;
-    private final long userId;
-    private boolean approved;
-    private boolean checked;
+public class Answer extends Entity{
+    protected final long id;
+    protected final String answer;
+    protected final long taskId;
+    protected final long userId;
+    protected boolean approved;
+    protected boolean checked;
 
     public Answer(long id, String answer, long taskId, long userId, boolean approved, boolean checked) {
         this.id = id;
@@ -77,4 +77,6 @@ public class Answer {
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
+
+
 }

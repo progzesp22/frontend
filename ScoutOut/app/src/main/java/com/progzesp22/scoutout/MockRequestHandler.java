@@ -222,6 +222,7 @@ public class MockRequestHandler implements RequestInterface {
     @Override
     public void postTask(Task task, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         Log.d(TAG, String.format("POST /tasks  payload: %s", task.toString()));
+        Log.d(TAG, task.getDescription());
         try {
             responseCallback.onResponse(new JSONObject("{}"));
         } catch (JSONException e) {
@@ -281,7 +282,7 @@ public class MockRequestHandler implements RequestInterface {
 
     @Override
     public void patchAnswer(long answerId, Boolean approved, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
-        Log.d(TAG, String.format("PATCH /answers/%d", answerId));
+        Log.d(TAG, String.format("PATCH /answers/%d approved: %d", answerId, approved));
         try {
             responseCallback.onResponse(new JSONObject("{}"));
         } catch (JSONException e) {

@@ -5,16 +5,16 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 
-public class Game {
+public class Game extends Entity{
 
-    private long id;
-    private String name;
-    private String gameMaster;
-    private GameState state;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private EndCondition endCondition;
-    private long endScore;
+    protected long id;
+    protected String name;
+    protected String gameMaster;
+    protected GameState state;
+    protected Timestamp startTime;
+    protected Timestamp endTime;
+    protected EndCondition endCondition;
+    protected long endScore;
 
     public Game(long id, String name, String gameMaster, GameState state) {
         this.id = id;
