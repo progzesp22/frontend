@@ -59,7 +59,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="300dp"
         app:shapeAppearanceOverlay="@style/Circular"
-        android:src="@mipmap/Logo" />
+        android:src="@mipmap/logo" />
 
 
 </FrameLayout>

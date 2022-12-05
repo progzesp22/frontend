@@ -11,8 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import kotlin.NotImplementedError;
-
 public class MockRequestHandler implements RequestInterface {
     private static final String TAG = "MockRequestHandler";
 
