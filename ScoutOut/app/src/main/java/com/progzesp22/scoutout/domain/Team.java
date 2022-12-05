@@ -4,13 +4,13 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class Team {
+public class Team extends Entity{
 
-    private long id;
-    private long gameId;
-    private String name;
-    private String creator;
-    private List<String> members;
+    protected long id;
+    protected long gameId;
+    protected String name;
+    protected String creator;
+    protected List<String> members;
 
     public Team(long id, long gameId, String name, String creator, List<String> members) {
         this.id = id;

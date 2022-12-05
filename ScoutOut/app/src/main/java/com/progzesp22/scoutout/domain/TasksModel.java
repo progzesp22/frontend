@@ -19,6 +19,9 @@ public class TasksModel extends ViewModel {
     private Task activeTask;
     private Answer activeAnswer;
 
+    private static final String TAG = "TasksModel";
+
+
     public LiveData<List<Task>> getTasks() {
         if (tasks == null) {
             tasks = new MutableLiveData<>();
@@ -88,7 +91,11 @@ public class TasksModel extends ViewModel {
                 e.printStackTrace();
             }
 
-            tasks.postValue(currentTasks);
+            // postValue executes in main thread, setValue executes in this thread
+            // I am not sure which one to use here
+//            tasks.postValue(currentTasks);
+            tasks.setValue(currentTasks);
+
 
             fetchAnswers(); // fetch answers after we fetch new tasks
 
@@ -102,6 +109,7 @@ public class TasksModel extends ViewModel {
             List<Task> currentTasks = tasks.getValue();
             if (currentTasks == null) {
                 currentTasks = new ArrayList<>(); // this should never happen but just in case
+                Log.e(TAG, "Fetching answers while tasks list doesn't exist");
             }
 
             try {
@@ -137,7 +145,8 @@ public class TasksModel extends ViewModel {
                 e.printStackTrace();
             }
 
-            tasks.postValue(currentTasks);
+//            tasks.postValue(currentTasks);
+            tasks.setValue(currentTasks);
 
         }, error -> {
             Log.e("TasksModel", "Error fetching answers: " + error.toString());

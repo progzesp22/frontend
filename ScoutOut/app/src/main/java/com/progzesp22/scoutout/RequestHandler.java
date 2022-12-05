@@ -29,11 +29,10 @@ import java.util.Map;
  *
  * @author Kamil Włodarski
  */
-public class RequestHandler {
+public class RequestHandler implements RequestInterface {
     private static volatile RequestHandler instance;
-    private RequestQueue requestQueue;
+    private final RequestQueue requestQueue;
 
-    public static final long GAME_ID = 2;
     private static String sessionToken;
 
     /**
@@ -41,28 +40,13 @@ public class RequestHandler {
      */
     private final String url = "http://144.24.171.255:8080/rest/";
 
-    private RequestHandler() {
+    public RequestHandler(Context context) {
+        requestQueue = Volley.newRequestQueue(context);
+
     }
 
-    /**
-     * no public constructor because this class is a singleton.
-     *
-     * @param context required for first time initialization
-     * @return singleton instance of this class
-     */
-    public static RequestHandler getInstance(Context context) {
-        if (instance == null) {
-            synchronized (RequestHandler.class) {
-                if (instance == null) {
-                    instance = new RequestHandler();
-                    instance.requestQueue = Volley.newRequestQueue(context);
-                }
-            }
-        }
-        return instance;
-    }
-
-    public static void setSessionToken(String sessionToken) {
+    @Override
+    public void setSessionToken(String sessionToken) {
         RequestHandler.sessionToken = sessionToken;
     }
 
@@ -73,6 +57,7 @@ public class RequestHandler {
      * @param listener listener that will be called when response is received
      * @param errorListener listener that will be called when error occurs
      */
+    @Override
     public void postUserLogin(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -91,6 +76,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener   callback that will be called when error occurs
      */
+    @Override
     public void getTeams(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url + "teams", null, responseCallback, errorListener){
@@ -111,6 +97,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener   callback that will be called when error occurs
      */
+    @Override
     public void getTeams(long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url + "teams?gameId=" + gameId, null, responseCallback, errorListener){
@@ -130,6 +117,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener  callback that will be called when error occurs
      */
+    @Override
     public void getJoinedTeams(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url + "teams?filter=joined", null, responseCallback, errorListener){
@@ -150,6 +138,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener callback that will be called when error occurs
      */
+    @Override
     public void postTeams(Team team, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -175,6 +164,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener callback that will be called when error occurs
      */
+    @Override
     public void getTeamInfo(long teamId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url + "teams/" + teamId, null, responseCallback, errorListener){
             @Override
@@ -193,6 +183,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener callback that will be called when error occurs
      */
+    @Override
     public void patchTeam(Team team, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -222,6 +213,7 @@ public class RequestHandler {
      * @param responseCallback callback that will be called when response is received
      * @param errorListener callback that will be called when error occurs
      */
+    @Override
     public void postTeamJoin(long teamId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "teams/" + teamId + "/join", null, responseCallback, errorListener){
             @Override
@@ -240,6 +232,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void getTasks(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url + "tasks", null, responseCallback, errorListener){
@@ -255,6 +248,7 @@ public class RequestHandler {
     }
 
 
+    @Override
     public void getTasks(Long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url + "tasks?gameId=" + gameId, null, responseCallback, errorListener){
@@ -278,6 +272,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void postAnswer(long taskId, String response, Response.Listener<JSONObject> responseCallback,
                            Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
@@ -308,6 +303,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrive    s
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void postTask(Task task, Response.Listener<JSONObject> responseCallback,
                          Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
@@ -344,6 +340,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void patchTask(Task task, Response.Listener<JSONObject> responseCallback,
                           Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
@@ -375,6 +372,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void getAnswers(Boolean filterUnchecked, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -391,6 +389,7 @@ public class RequestHandler {
         requestQueue.add(jsonArrayRequest);
     }
 
+    @Override
     public void getAnswers(long gameId, Boolean filterUnchecked, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -408,6 +407,7 @@ public class RequestHandler {
         requestQueue.add(jsonArrayRequest);
     }
 
+    @Override
     public void getAnswer(long answerId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -434,6 +434,7 @@ public class RequestHandler {
      * @param errorListener    what should be done with any errors when they occur
      */
 
+    @Override
     public void patchAnswer(long answerId, Boolean approved, Response.Listener<JSONObject> responseCallback,
                             Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
@@ -465,6 +466,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void postGame(Game game, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
         try {
@@ -501,6 +503,7 @@ public class RequestHandler {
      * @param responseCallback what should be done with response data when it arrives
      * @param errorListener    what should be done with any errors when they occur
      */
+    @Override
     public void getGames(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url + "games", null, responseCallback,
@@ -516,6 +519,7 @@ public class RequestHandler {
         requestQueue.add(jsonArrayRequest);
     }
 
+    @Override
     public void getGame(long gameId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url + "games/" + gameId, null, responseCallback,
@@ -531,6 +535,7 @@ public class RequestHandler {
         requestQueue.add(jsonObjectRequest);
     }
 
+    @Override
     public void patchGame(Game game, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener){
         JSONObject json = new JSONObject();
         try {
