@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import kotlin.NotImplementedError;
+
 /**
  * Request Handler class implemented as singleton. Based on google's Volley library.
  * Allows user to send JSON requests. All networking is done in separate process.
@@ -68,6 +70,11 @@ public class RequestHandler implements RequestInterface {
         }
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "user/login", jsonBody, listener, errorListener);
         requestQueue.add(request);
+    }
+
+    @Override
+    public void postRegister(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        throw new NotImplementedError();
     }
 
     /**

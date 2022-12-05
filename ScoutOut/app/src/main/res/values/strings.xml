@@ -44,4 +44,14 @@
     <string name="share">Udostępnij</string>
     <string name="QR_image">Kod QR</string>
     <string name="QRgenerationSuccess">Wygenerowano kod QR</string>
+    <string name="register_in_our_application">Register in our application</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="user_name">User name</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="user_name_login">User name</string>
+    <string name="password_login">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="or">or</string>
+    <string name="register_in_login">Register</string>
 </resources>

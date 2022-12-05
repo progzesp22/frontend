@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/selectUserTypeFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/selectUserTypeFragment"
         android:name="com.progzesp22.scoutout.fragments.UserLoginFragment"
@@ -79,4 +79,20 @@
         android:name="com.progzesp22.scoutout.fragments.player.PlayerSubmitAnswerFragment"
         android:label="fragment_task_answer"
         tools:layout="@layout/fragment_player_submit_answer" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.progzesp22.scoutout.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_selectUserTypeFragment"
+            app:destination="@id/selectUserTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.progzesp22.scoutout.fragments.RegisterFragment"
+        android:label="RegisterFragment" />
 </navigation>
