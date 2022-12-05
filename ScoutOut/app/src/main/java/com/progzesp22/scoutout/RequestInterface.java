@@ -15,6 +15,8 @@ public interface RequestInterface {
 
     void postUserLogin(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
+    void postRegister(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
     void getTeams(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener);
 
     void getTeams(long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener);

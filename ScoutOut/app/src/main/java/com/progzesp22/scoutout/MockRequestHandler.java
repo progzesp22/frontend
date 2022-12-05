@@ -34,6 +34,16 @@ public class MockRequestHandler implements RequestInterface {
     }
 
     @Override
+    public void postRegister(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        Log.d(TAG, String.format("POST /user/register/ %s %s", username, password));
+        try {
+            listener.onResponse(new JSONObject("{}"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void getTeams(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         Log.d(TAG, "GET /teams");
         try {
