@@ -9,17 +9,9 @@ public class UserModel extends ViewModel {
         GM,
     }
 
-    public enum MasterMode {
-        EDIT,
-        ACCEPT,
-        INVITE
-    }
-
-
     private UserType userType = UserType.PLAYER;
-    private MasterMode masterMode = MasterMode.EDIT;
 
-    private String username = "default";
+    private String username = "";
 
 
     public void setUsername(String username) {
@@ -36,14 +28,6 @@ public class UserModel extends ViewModel {
 
     public UserType getUserType() {
         return userType;
-    }
-
-    public void setMasterMode(MasterMode masterMode) {
-        this.masterMode = masterMode;
-    }
-
-    public MasterMode getMasterMode() {
-        return masterMode;
     }
 }
 

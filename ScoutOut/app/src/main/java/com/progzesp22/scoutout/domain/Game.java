@@ -24,9 +24,20 @@ public class Game extends Entity{
     }
 
     public static Game fromJson(JSONObject json) throws JSONException {
+        String name = "<no name>";
+        String gameMaster = "<no GM>";
+
+        if(json.has("name")){
+            name = json.getString("name");
+        }
+
+        if(json.has("gameMaster")){
+            gameMaster = json.getString("gameMaster");
+        }
+
         Game game = new Game(json.getLong("id"),
-                json.getString("name"),
-                json.getString("gameMaster"),
+                name,
+                gameMaster,
                 GameState.valueOf(json.getString("state")));
 
         if (json.has("startTime")) {
