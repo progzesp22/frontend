@@ -110,7 +110,7 @@ public class Game extends Entity{
         this.endScore = endScore;
     }
 
-    enum GameState {
+    public enum GameState {
         CREATED,
         PENDING,
         STARTED,

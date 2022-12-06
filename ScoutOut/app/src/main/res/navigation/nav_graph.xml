@@ -88,11 +88,16 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_selectUserTypeFragment"
-            app:destination="@id/selectUserTypeFragment" />
+            android:id="@+id/loginSuccesfull"
+            app:destination="@id/userGamesFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.progzesp22.scoutout.fragments.RegisterFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/userGamesFragment"
+        android:name="com.progzesp22.scoutout.fragments.UserGamesFragment"
+        android:label="fragment_user_games"
+        tools:layout="@layout/fragment_user_games" />
 </navigation>
