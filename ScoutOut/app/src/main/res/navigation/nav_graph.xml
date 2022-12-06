@@ -105,6 +105,7 @@
             app:destination="@id/GMlistTasksFragment" />
         <action
             android:id="@+id/joinGame"
-            app:destination="@id/listTasksFragment2" />
+            app:destination="@id/listTasksFragment" />
+
     </fragment>
 </navigation>
