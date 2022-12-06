@@ -7,16 +7,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.domain.Game;
+import com.progzesp22.scoutout.domain.GamesModel;
 
 import java.util.List;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
 
     private final List<Game> localDataSet;
+    private final GamesModel model;
+    private final NavController navController;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView gameName;
@@ -40,11 +46,12 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
             return gameStatus;
         }
         public Button getButton(){return button;}
-
     }
 
-    public GamesAdapter(List<Game> dataSet) {
+    public GamesAdapter(List<Game> dataSet, NavController navController, GamesModel model) {
         localDataSet = dataSet;
+        this.navController = navController;
+        this.model = model;
     }
 
     @NonNull
@@ -65,22 +72,34 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         TextView status = viewHolder.getStatusTextView();
         TextView button = viewHolder.getButton();
 
-
         switch(game.getState()){
             case CREATED:
                 status.setText("configuring");
                 button.setText("edit");
                 button.setVisibility(View.VISIBLE);
+                button.setOnClickListener(view1 -> {
+                    model.setActiveGame(game);
+                    navController.navigate(R.id.editGame);
+                });
                 break;
             case PENDING:
                 status.setText("waiting for players");
                 button.setText("join");
                 button.setVisibility(View.VISIBLE);
+                button.setOnClickListener(view1 -> {
+                    model.setActiveGame(game);
+                    navController.navigate(R.id.joinGame);
+
+                });
                 break;
             case STARTED:
                 status.setText("playing");
                 button.setText("join");
                 button.setVisibility(View.VISIBLE);
+                button.setOnClickListener(view1 -> {
+                    model.setActiveGame(game);
+                    navController.navigate(R.id.joinGame);
+                });
                 break;
             case FINISHED:
                 status.setText("finished");

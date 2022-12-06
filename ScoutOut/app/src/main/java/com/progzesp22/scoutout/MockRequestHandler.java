@@ -313,7 +313,10 @@ public class MockRequestHandler implements RequestInterface {
         Log.d(TAG, "GET /games");
 
         try {
-            responseCallback.onResponse(new JSONArray("[{\"id\": 1234, \"name\": \"Bring back season 4\", \"gameMaster\": \"misos\", \"state\": \"CREATED\"}]"));
+            responseCallback.onResponse(new JSONArray("[" +
+                    "{\"id\": 1234, \"name\": \"Bring back season 4\", \"gameMaster\": \"kris\", \"state\": \"CREATED\"}," +
+                    "{\"id\": 1235, \"name\": \"Zbieram szyszki\", \"gameMaster\": \"misos\", \"state\": \"PENDING\"}," +
+                    "]"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -99,5 +99,12 @@
         android:id="@+id/userGamesFragment"
         android:name="com.progzesp22.scoutout.fragments.UserGamesFragment"
         android:label="fragment_user_games"
-        tools:layout="@layout/fragment_user_games" />
+        tools:layout="@layout/fragment_user_games" >
+        <action
+            android:id="@+id/editGame"
+            app:destination="@id/GMlistTasksFragment" />
+        <action
+            android:id="@+id/joinGame"
+            app:destination="@id/listTasksFragment2" />
+    </fragment>
 </navigation>
