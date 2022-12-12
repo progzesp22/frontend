@@ -1,11 +1,9 @@
 package com.progzesp22.scoutout;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -59,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Wszystkie fragmenty, które mają być widoczne w menu nawigacji powinny zostać tutaj dodane.
+     * Nie jestem pewien co to w 100% robi ale z tego co rozumiem to pozwala aby te ekrany były
+     * traktowane na równi z ekranem startowym.
+     */
     private Set<Integer> getTopLevelDestinations() {
         HashSet<Integer> set = new HashSet<>();
         set.add(R.id.selectUserTypeFragment); // user login fragment
@@ -70,17 +74,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupHamburgerMenu(NavController navController) {
+        // Powinno być ustawione na pierwszy ekran który ma być widoczny po otworzeniu aplikacji
         binding.navView.setCheckedItem(R.id.selectUserTypeFragment);
 
         UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
 
         userModel.getUserType().observe(this, userType -> {
             binding.navView.getMenu().clear();
-            binding.navView.inflateMenu(R.menu.drawer_menu);
-            if (userType == UserModel.UserType.PLAYER) {
-                binding.navView.getMenu().findItem(R.id.drawer_menu_GM).setVisible(false);
+            if (userType == null) {
+                binding.navView.inflateMenu(R.menu.drawer_menu_default);
+            } else if (userType == UserModel.UserType.PLAYER) {
+                binding.navView.inflateMenu(R.menu.drawer_menu_player);
             } else if (userType == UserModel.UserType.GM) {
-                binding.navView.getMenu().findItem(R.id.drawer_menu_player).setVisible(false);
+                binding.navView.inflateMenu(R.menu.drawer_menu_gm);
             }
         });
 
