@@ -1,7 +1,10 @@
 package com.progzesp22.scoutout.domain;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team extends Entity{
@@ -20,12 +23,17 @@ public class Team extends Entity{
         this.members = members;
     }
 
-    public static Team fromJson(JSONObject json) {
-        return new Team(json.optLong("id"),
-                json.optLong("gameId"),
-                json.optString("name"),
-                json.optString("creator"),
-                null); // TODO: parse members
+    public static Team fromJson(JSONObject json) throws JSONException {
+        List<String> members = new ArrayList<>();
+        JSONArray membersJson = json.getJSONArray("members");
+        for (int i = 0; i < membersJson.length(); i++) {
+            members.add(membersJson.getString(i));
+        }
+        return new Team(json.getLong("id"),
+                json.getLong("gameId"),
+                json.getString("name"),
+                json.getString("creator"),
+                members);
     }
 
     public long getId() {
