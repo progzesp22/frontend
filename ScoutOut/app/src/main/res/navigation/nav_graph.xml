@@ -3,7 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/gm_game_fragment">
+    <fragment
+        android:id="@+id/gm_game_fragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMGameFragment"
+        android:label="fragment_gm_game"
+        tools:layout="@layout/fragment_gm_game">
+        >
+
+    </fragment>
+
     <fragment
         android:id="@+id/listTasksFragment"
         android:name="com.progzesp22.scoutout.fragments.player.PlayerTasksFragment"
