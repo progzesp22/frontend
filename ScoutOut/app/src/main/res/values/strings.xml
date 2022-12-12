@@ -54,4 +54,6 @@
     <string name="log_in">Log in</string>
     <string name="or">or</string>
     <string name="register_in_login">Register</string>
+    <string name="add_team">Create</string>
+    <string name="team_name">New team name</string>
 </resources>

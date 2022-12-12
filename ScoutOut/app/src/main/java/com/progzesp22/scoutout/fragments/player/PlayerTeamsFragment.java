@@ -12,6 +12,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTeamsBinding;
 import com.progzesp22.scoutout.domain.Team;
 import com.progzesp22.scoutout.domain.TeamsModel;
@@ -38,7 +39,6 @@ public class PlayerTeamsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
         TeamsModel model = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
         model.getTeams().observe(getViewLifecycleOwner(), this::displayTeams);
         model.refresh();
