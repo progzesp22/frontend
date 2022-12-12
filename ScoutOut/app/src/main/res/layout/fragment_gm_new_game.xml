@@ -1,111 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="fragments.gm.GMNewGameFragment">
 
-
-    <EditText
-        android:id="@+id/titleText"
-        android:layout_width="395dp"
-        android:layout_height="48dp"
-        android:layout_margin="10dp"
-        android:autofillHints=""
-        android:inputType="textMultiLine"
-        android:hint="@string/title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/descriptionText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="3"
-        android:autofillHints=""
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/game_description"
-        android:inputType="textMultiLine" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="67dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/titleText"
+            android:layout_width="395dp"
+            android:layout_height="48dp"
+            android:layout_margin="10dp"
+            android:autofillHints=""
+            android:inputType="textMultiLine"
+            android:hint="@string/title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="24sp" />
 
 
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="14dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/game_start_automatically" />
+
+
+
+
+        <EditText
+            android:id="@+id/descriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="10dp"
+            android:layout_weight="3"
+            android:autofillHints=""
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/game_description"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="14dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/game_start_automatically" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_weight="1"
+                android:text="@string/game_start_hour" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:layout_weight="1"
-            android:text="@string/game_start_hour" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:textSize="16sp"
-        android:text="@string/game_end_condition" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:orientation="horizontal">
-
-        <RadioGroup
-            android:id="@+id/usertypeRadio"
-            android:layout_width="wrap_content"
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@id/playerRadioButton">
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:text="@string/game_end_condition" />
 
-            <RadioButton
-                android:id="@+id/playerRadioButton"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/usertypeRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/endGamePointsButton">
+
+                <RadioButton
+                    android:id="@+id/endGamePointsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/game_end_with_points" />
+
+                <RadioButton
+                    android:id="@+id/endGameTimeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/game_end_with_time" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Pole tekstowe..." />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/infoTaskList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:text="Lista zadań (dodaj zadania)" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:id="@+id/tasks_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/game_end_with_time" />
+                android:orientation="vertical" />
 
-            <RadioButton
-                android:id="@+id/gmRadioButton"
-                android:layout_width="194dp"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addTask"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/game_end_with_points" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Pole tekstowe..." />
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:contentDescription="@string/add_task"
+                android:focusable="true"
+                android:src="@android:drawable/ic_input_add" />
 
 
 
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:text="@string/save_changes" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="10dp"
-        android:text="@string/save_changes" />
-
-
-
-</LinearLayout>
+</ScrollView>
 
