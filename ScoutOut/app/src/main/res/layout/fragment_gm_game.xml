@@ -26,7 +26,7 @@
         android:id="@+id/gm_game_timerGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:constraint_referenced_ids="gm_game_timerCountdownProgressBar, gm_game_timerLabel, gm_game_timerValue" />
 
 
@@ -36,7 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:progress="25"
+        android:progress="0"
+        android:max="100"
         app:layout_constraintEnd_toEndOf="@+id/gm_game_name"
         app:layout_constraintHorizontal_bias="0.62"
         app:layout_constraintStart_toStartOf="@+id/gm_game_name"
@@ -146,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="3"
+        android:text="0"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/gm_game_answersLabel"
         app:layout_constraintEnd_toEndOf="parent"

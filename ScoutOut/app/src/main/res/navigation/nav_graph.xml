@@ -11,6 +11,9 @@
         tools:layout="@layout/fragment_gm_game">
         >
 
+        <action
+            android:id="@+id/action_gm_game_fragment_to_GMListToAcceptFragment"
+            app:destination="@id/GMListToAcceptFragment" />
     </fragment>
 
     <fragment

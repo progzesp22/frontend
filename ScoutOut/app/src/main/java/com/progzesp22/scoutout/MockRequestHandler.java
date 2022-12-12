@@ -139,7 +139,7 @@ public class MockRequestHandler implements RequestInterface {
                     "        \"id\": 1,\n" +
                     "        \"name\": \"Example Task 1\",\n" +
                     "        \"description\": \"Example description 1\",\n" +
-                    "        \"gameId\": 1,\n" +
+                    "        \"gameId\": 1234,\n" +
                     "        \"type\": \"TEXT\",\n" +
                     "        \"prerequisiteTasks\":[]\n" +
                     "    },\n" +
@@ -147,7 +147,7 @@ public class MockRequestHandler implements RequestInterface {
                     "        \"id\": 2,\n" +
                     "        \"name\": \"Example Task 2\",\n" +
                     "        \"description\": \"Example description 2\",\n" +
-                    "        \"gameId\": 1,\n" +
+                    "        \"gameId\": 1234,\n" +
                     "        \"type\": \"PHOTO\",\n" +
                     "        \"prerequisiteTasks\":[]\n" +
                     "    },\n" +
@@ -155,7 +155,7 @@ public class MockRequestHandler implements RequestInterface {
                     "        \"id\": 3,\n" +
                     "        \"name\": \"Example Task 3\",\n" +
                     "        \"description\": \"Example description 3\",\n" +
-                    "        \"gameId\": 1,\n" +
+                    "        \"gameId\": 1234,\n" +
                     "        \"type\": \"QR_CODE\",\n" +
                     "        \"prerequisiteTasks\":[]\n" +
                     "    },\n" +
@@ -190,7 +190,7 @@ public class MockRequestHandler implements RequestInterface {
                     "        \"id\": 1,\n" +
                     "        \"name\": \"Example Task 1\",\n" +
                     "        \"description\": \"Example description 1\",\n" +
-                    "        \"gameId\": 1,\n" +
+                    "        \"gameId\": 1234,\n" +
                     "        \"type\": \"TEXT\",\n" +
                     "        \"prerequisiteTasks\":[]\n" +
                     "    },\n" +
@@ -198,7 +198,7 @@ public class MockRequestHandler implements RequestInterface {
                     "        \"id\": 2,\n" +
                     "        \"name\": \"Example Task 2\",\n" +
                     "        \"description\": \"Example description 2\",\n" +
-                    "        \"gameId\": 1,\n" +
+                    "        \"gameId\": 1234,\n" +
                     "        \"type\": \"PHOTO\",\n" +
                     "        \"prerequisiteTasks\":[]\n" +
                     "    },\n" +
@@ -206,7 +206,7 @@ public class MockRequestHandler implements RequestInterface {
                     "        \"id\": 3,\n" +
                     "        \"name\": \"Example Task 3\",\n" +
                     "        \"description\": \"Example description 3\",\n" +
-                    "        \"gameId\": 1,\n" +
+                    "        \"gameId\": 1234,\n" +
                     "        \"type\": \"QR_CODE\",\n" +
                     "        \"prerequisiteTasks\":[]\n" +
                     "    }\n" +

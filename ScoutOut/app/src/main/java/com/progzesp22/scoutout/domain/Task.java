@@ -77,6 +77,16 @@ public class Task extends Entity{
         return answers;
     }
 
+    public boolean isFinished() {
+        for (Answer answer : answers) {
+            if (answer.isApproved()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public enum TaskType {
         TEXT,
         PHOTO,

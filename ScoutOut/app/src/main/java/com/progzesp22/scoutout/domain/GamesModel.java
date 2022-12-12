@@ -10,6 +10,7 @@ import com.progzesp22.scoutout.MainActivity;
 
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,8 +61,40 @@ public class GamesModel extends ViewModel {
             }
 
             games.setValue(currentGames);
+
+            fetchGameDetails();
         }, error -> {
             Log.e(TAG, "Error fetching Games: " + error.toString());
         });
     }
+
+    private void fetchGameDetails(){
+        List<Game> currentGames = games.getValue();
+
+        if (currentGames == null) {
+            return;
+        }
+
+        for (Game game : currentGames) {
+            MainActivity.requestHandler.getGame(game.getId(), response -> {
+                try {
+                    Game.EndCondition endCondition = Game.EndCondition.valueOf(response.getString("endCondition"));
+                    game.setEndCondition(endCondition);
+                    game.setStartTime(Game.dateFormat.parse(response.getString("startTime")));
+                    if (endCondition == Game.EndCondition.TIME) {
+                        game.setEndTime(Game.dateFormat.parse(response.getString("endTime")));
+                    } else if (endCondition == Game.EndCondition.SCORE) {
+                        game.setEndScore(response.getInt("endScore"));
+                    }
+
+                    games.setValue(currentGames);
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }, error -> {
+                Log.e(TAG, "Error fetching Game details: " + error.toString());
+            });
+        }
+    }
+
 }

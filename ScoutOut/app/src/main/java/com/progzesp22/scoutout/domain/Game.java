@@ -3,7 +3,10 @@ package com.progzesp22.scoutout.domain;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Game extends Entity{
 
@@ -11,10 +14,12 @@ public class Game extends Entity{
     protected String name;
     protected String gameMaster;
     protected GameState state;
-    protected Timestamp startTime;
-    protected Timestamp endTime;
+    protected Date startTime;
+    protected Date endTime;
     protected EndCondition endCondition;
     protected long endScore;
+
+    static public final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault());
 
     public Game(long id, String name, String gameMaster, GameState state) {
         this.id = id;
@@ -40,19 +45,26 @@ public class Game extends Entity{
                 gameMaster,
                 GameState.valueOf(json.getString("state")));
 
-        if (json.has("startTime")) {
-            game.setStartTime(Timestamp.valueOf(json.getString("startTime")));
+        try{
+            if (json.has("startTime")) {
+                game.setStartTime(dateFormat.parse(json.getString("startTime")));
+
+            }
+
+            if (json.has("endCondition")) {
+                EndCondition endCondition = EndCondition.valueOf(json.getString("endCondition"));
+                game.setEndCondition(endCondition);
+                if (endCondition == EndCondition.TIME) {
+                    game.setEndTime(dateFormat.parse(json.getString("endTime")));
+                } else if (endCondition == EndCondition.SCORE) {
+                    game.setEndScore(json.getLong("endScore"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        if (json.has("endCondition")) {
-            EndCondition endCondition = EndCondition.valueOf(json.getString("endCondition"));
-            game.setEndCondition(endCondition);
-            if (endCondition == EndCondition.TIME) {
-                game.setEndTime(Timestamp.valueOf(json.getString("endTime")));
-            } else if (endCondition == EndCondition.SCORE) {
-                game.setEndScore(json.getLong("endScore"));
-            }
-        }
+
 
         return game;
     }
@@ -89,19 +101,19 @@ public class Game extends Entity{
         this.state = state;
     }
 
-    public Timestamp getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
