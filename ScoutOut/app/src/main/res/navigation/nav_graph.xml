@@ -105,6 +105,19 @@
             app:destination="@id/GMlistTasksFragment" />
         <action
             android:id="@+id/joinGame"
+            app:destination="@id/playerTeamsFragment" />
+        <action
+            android:id="@+id/playGame"
             app:destination="@id/listTasksFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/playerTeamsFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.PlayerTeamsFragment"
+        android:label="fragment_player_teams"
+        tools:layout="@layout/fragment_player_teams" >
+        <action
+            android:id="@+id/joinSuccessful"
+            app:destination="@id/playerTeamsFragment"/>
+    </fragment>
+
 </navigation>
