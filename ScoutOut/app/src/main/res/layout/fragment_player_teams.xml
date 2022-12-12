@@ -17,8 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Game name"
-            android:layout_margin="5dp"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
             android:textSize="24sp" />
+        <TextView
+            android:id="@+id/gameMasterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Game master"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,6 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_dark"
                 android:text="Starting time"
                 android:textSize="18sp" />
 
@@ -42,7 +52,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:gravity="right"
+                android:gravity="center"
+                 android:textColor="@android:color/holo_red_dark"
                 android:text="Ending time"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -67,7 +78,7 @@
 
 
             <EditText
-                android:id="@+id/teamName"
+                android:id="@+id/newTeamName"
                 android:layout_width="209dp"
                 android:layout_height="59dp"
                 android:layout_margin="15dp"
@@ -84,7 +95,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/gameButton"
+                android:id="@+id/createTeamButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
@@ -108,6 +119,7 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="vertical"
             tools:itemCount="5"
             tools:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/teams_row" />
