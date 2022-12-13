@@ -47,7 +47,7 @@
 
             <CheckBox
                 android:id="@+id/checkBox2"
-                android:layout_width="14dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/game_start_automatically" />
@@ -68,7 +68,7 @@
             android:background="@android:color/darker_gray"/>
 
         <TextView
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/textViewEndGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -82,19 +82,19 @@
             android:orientation="horizontal">
 
             <RadioGroup
-                android:id="@+id/usertypeRadio"
+                android:id="@+id/endGameRadio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checkedButton="@id/endGamePointsButton">
+                android:checkedButton="@id/endGamePointsRadioButton">
 
                 <RadioButton
-                    android:id="@+id/endGamePointsButton"
+                    android:id="@+id/endGamePointsRadioButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/game_end_with_points" />
 
                 <RadioButton
-                    android:id="@+id/endGameTimeButton"
+                    android:id="@+id/endGameTimeRadioButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="@string/game_end_with_time" />
@@ -102,12 +102,12 @@
 
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textView2"
+            <EditText
+                android:id="@+id/editTextEndCondition"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Pole tekstowe..." />
+                android:text="" />
 
         </LinearLayout>
 
