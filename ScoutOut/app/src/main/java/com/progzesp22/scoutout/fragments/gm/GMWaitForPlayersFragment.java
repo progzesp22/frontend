@@ -1,44 +1,25 @@
 package com.progzesp22.scoutout.fragments.gm;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Looper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.progzesp22.scoutout.AnswerView;
-import com.progzesp22.scoutout.MainActivity;
-import com.progzesp22.scoutout.MockRequestHandler;
-import com.progzesp22.scoutout.R;
-import com.progzesp22.scoutout.RequestInterface;
 import com.progzesp22.scoutout.CustomExpandableListAdapter;
+import com.progzesp22.scoutout.MockRequestHandler;
+import com.progzesp22.scoutout.RequestInterface;
 import com.progzesp22.scoutout.databinding.FragmentGMWaitForPlayersBinding;
 import com.progzesp22.scoutout.domain.Team;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +29,9 @@ public class GMWaitForPlayersFragment extends Fragment {
     private FragmentGMWaitForPlayersBinding binding;
     //TODO: zmienić na odpowiednią klasę
     RequestInterface requestInterface = new MockRequestHandler();
+
     CustomExpandableListAdapter expandableListAdapter;
+
     Timer timer;
     int REFRESH_RATE = 5000;
 
@@ -98,6 +81,7 @@ public class GMWaitForPlayersFragment extends Fragment {
         });
     }
     //TODO: dodać przejście do następnego ekranu
+    //trzeba też dodać timer.cancel(); bo samo przejście do następnego ekranu raczej nie zatrzymuje timera
     private void startButtonPressed(){
         Toast.makeText(getContext(), "Starting game", Toast.LENGTH_SHORT).show();
     }
@@ -121,23 +105,18 @@ public class GMWaitForPlayersFragment extends Fragment {
                                     "An error occurred. Please try again.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    },error->{
-                        Toast.makeText(getContext(),
-                                "An error occurred. Please try again.",
-                                Toast.LENGTH_SHORT).show();
-                            });
+                    },error-> Toast.makeText(getContext(),
+                            "An error occurred. Please try again.",
+                            Toast.LENGTH_SHORT).show());
                 }
             } catch (JSONException e) {
                 Toast.makeText(getContext(),
                         "An error occurred. Please try again.",
                         Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(getContext(),
-                    "An error occurred. Please try again.",
-                    Toast.LENGTH_SHORT).show();
-        });
+        }, error -> Toast.makeText(getContext(),
+                "An error occurred. Please try again.",
+                Toast.LENGTH_SHORT).show());
 
     }
 
