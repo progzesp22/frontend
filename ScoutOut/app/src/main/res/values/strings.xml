@@ -51,6 +51,7 @@
     <string name="share">Udostępnij</string>
     <string name="QR_image">Kod QR</string>
     <string name="QRgenerationSuccess">Wygenerowano kod QR</string>
+    <string name="create_game">Tworzenie gry</string>
     <string name="nav_header_title">Nawigacja</string>
     <string name="menu_home">home</string>
     <string name="menu_nav_user_login">login</string>
