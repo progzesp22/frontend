@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
 
-        final boolean mock_requests = true;
+        final boolean mock_requests = false;
         if(mock_requests){
             requestHandler = new MockRequestHandler();
         } else{

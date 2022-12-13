@@ -18,7 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +40,8 @@ public class RequestHandler implements RequestInterface {
     /**
      * Url to a server handling requests.
      */
-    private final String url = "http://144.24.171.255:8080/rest/";
+    private final String url = "http://connect.knowak.xyz:2138/";
+    private final String urlRest = url + "rest/";
 
     public RequestHandler(Context context) {
         requestQueue = Volley.newRequestQueue(context);
@@ -69,7 +69,7 @@ public class RequestHandler implements RequestInterface {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://144.24.171.255:8080/user/login", jsonBody, listener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "user/login", jsonBody, listener, errorListener);
         requestQueue.add(request);
     }
 
@@ -101,7 +101,7 @@ public class RequestHandler implements RequestInterface {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new MyJsonRequest(Request.Method.POST, "http://144.24.171.255:8080/user/register", jsonBody, listener, errorListener);
+        JsonObjectRequest request = new MyJsonRequest(Request.Method.POST, url + "user/register", jsonBody, listener, errorListener);
         requestQueue.add(request);
     }
 
@@ -114,7 +114,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getTeams(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "teams", null, responseCallback, errorListener){
+                (Request.Method.GET, urlRest + "teams", null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -135,7 +135,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getTeams(long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "teams?gameId=" + gameId, null, responseCallback, errorListener){
+                (Request.Method.GET, urlRest + "teams?gameId=" + gameId, null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -155,7 +155,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getJoinedTeams(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "teams?filter=joined", null, responseCallback, errorListener){
+                (Request.Method.GET, urlRest + "teams?filter=joined", null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -182,7 +182,7 @@ public class RequestHandler implements RequestInterface {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "teams", jsonBody, responseCallback, errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlRest + "teams", jsonBody, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -201,7 +201,7 @@ public class RequestHandler implements RequestInterface {
      */
     @Override
     public void getTeamInfo(long teamId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url + "teams/" + teamId, null, responseCallback, errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlRest + "teams/" + teamId, null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -231,7 +231,7 @@ public class RequestHandler implements RequestInterface {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, url + "teams/" + team.getId(), jsonBody, responseCallback, errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, urlRest + "teams/" + team.getId(), jsonBody, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -250,7 +250,7 @@ public class RequestHandler implements RequestInterface {
      */
     @Override
     public void postTeamJoin(long teamId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "teams/" + teamId + "/join", null, responseCallback, errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, urlRest + "teams/" + teamId + "/join", null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -270,7 +270,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getTasks(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "tasks", null, responseCallback, errorListener){
+                (Request.Method.GET, urlRest + "tasks", null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = super.getHeaders();
@@ -286,7 +286,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getTasks(Long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "tasks?gameId=" + gameId, null, responseCallback, errorListener){
+                (Request.Method.GET, urlRest + "tasks?gameId=" + gameId, null, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -319,7 +319,7 @@ public class RequestHandler implements RequestInterface {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url + "answers", json, responseCallback, errorListener){
+                (Request.Method.POST, urlRest + "answers", json, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -354,7 +354,7 @@ public class RequestHandler implements RequestInterface {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url + "tasks", json, responseCallback, errorListener){
+                (Request.Method.POST, urlRest + "tasks", json, responseCallback, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -388,7 +388,7 @@ public class RequestHandler implements RequestInterface {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PATCH, url + "tasks/" + task.getId(), json, responseCallback,
+                (Request.Method.PATCH, urlRest + "tasks/" + task.getId(), json, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -411,7 +411,7 @@ public class RequestHandler implements RequestInterface {
     public void getAnswers(Boolean filterUnchecked, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "answers?filter=" + (filterUnchecked ? "unchecked" : "all"), null, responseCallback,
+                (Request.Method.GET, urlRest + "answers?filter=" + (filterUnchecked ? "unchecked" : "all"), null, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -428,7 +428,7 @@ public class RequestHandler implements RequestInterface {
     public void getAnswers(long gameId, Boolean filterUnchecked, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "answers?gameId=" + gameId + "&filter=" + (filterUnchecked ? "unchecked" : "all"),
+                (Request.Method.GET, urlRest + "answers?gameId=" + gameId + "&filter=" + (filterUnchecked ? "unchecked" : "all"),
                         null, responseCallback,
                         errorListener){
             @Override
@@ -446,7 +446,7 @@ public class RequestHandler implements RequestInterface {
     public void getAnswer(long answerId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url + "answers/" + answerId, null, responseCallback,
+                (Request.Method.GET, urlRest + "answers/" + answerId, null, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -481,7 +481,7 @@ public class RequestHandler implements RequestInterface {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PATCH, url + "answers/" + answerId, json, responseCallback,
+                (Request.Method.PATCH, urlRest + "answers/" + answerId, json, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -519,7 +519,7 @@ public class RequestHandler implements RequestInterface {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url + "games", json, responseCallback,
+                (Request.Method.POST, urlRest + "games", json, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -541,7 +541,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getGames(Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, url + "games", null, responseCallback,
+                (Request.Method.GET, urlRest + "games", null, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -557,7 +557,7 @@ public class RequestHandler implements RequestInterface {
     @Override
     public void getGame(long gameId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url + "games/" + gameId, null, responseCallback,
+                (Request.Method.GET, urlRest + "games/" + gameId, null, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -588,7 +588,7 @@ public class RequestHandler implements RequestInterface {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PATCH, url + "games/" + game.getId(), json, responseCallback,
+                (Request.Method.PATCH, urlRest + "games/" + game.getId(), json, responseCallback,
                         errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
