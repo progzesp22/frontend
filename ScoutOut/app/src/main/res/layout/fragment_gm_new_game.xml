@@ -107,8 +107,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="14sp"
                 android:text=""
-                android:hint="Wprowadź liczbę"/>
+                android:hint="@string/enter_endscore"
+                android:inputType="text" />
 
         </LinearLayout>
 
@@ -124,7 +126,7 @@
             android:layout_margin="10dp"
             android:ems="10"
             android:textSize="18sp"
-            android:text="Lista zadań (dodaj zadania)" />
+            android:text="@string/tasks_list" />
 
         <FrameLayout
             android:layout_width="match_parent"

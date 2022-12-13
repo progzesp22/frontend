@@ -33,7 +33,7 @@
     <string name="game_end_with_time">Ustalona godzina zakończenia</string>
     <string name="game_end_with_points">Ustalona liczba punktów</string>
     <string name="scan_qr">Skanuj kod QR / Kreskowy</string>
-    <string name="tasks_list">lista zadań</string>
+    <string name="tasks_list">Lista zadań:</string>
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="add_task">Dodaj zadanie</string>
@@ -44,6 +44,7 @@
     <string name="buttonPost">post task</string>
     <string name="buttonGet">get tasks</string>
     <string name="demo">Demo</string>
+    <string name="enter_endscore">Wprowadź liczbę</string>
     <string name="server_error">Błąd komunikacji z serwerem, spróbuj ponownie</string>
     <string name="server_success">Wysłano</string>
     <string name="save">Zapisz</string>

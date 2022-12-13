@@ -45,7 +45,7 @@ public class GMNewGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final EditText gameEndTimeEditText = requireView().findViewById(R.id.editTextEndCondition);
-        final TextView gameStartTextView = getView().findViewById((R.id.gameStartTextView));
+        final TextView gameStartTextView = requireView().findViewById((R.id.gameStartTextView));
         final RadioButton pointsButton = requireView().findViewById(R.id.endGamePointsRadioButton);
         final RadioButton timeButton = requireView().findViewById(R.id.endGameTimeRadioButton);
         final CheckBox autoStartButton = requireView().findViewById(R.id.gameStartTime);
@@ -55,6 +55,7 @@ public class GMNewGameFragment extends Fragment {
         binding.gameStartTime.setOnCheckedChangeListener((group, checkedId) -> {
             if (autoStartButton.isChecked()) {
                 DialogFragment newFragment = new SelectDateTimeFragment(gameStartTextView);
+                assert getFragmentManager() != null;
                 newFragment.show(getFragmentManager(), "DatePicker");
             }
         });
@@ -70,6 +71,7 @@ public class GMNewGameFragment extends Fragment {
                 gameEndTimeEditText.getText().clear();
                 gameEndTimeEditText.setHint("");
                 DialogFragment newFragment = new SelectDateTimeFragment(gameEndTimeEditText);
+                assert getFragmentManager() != null;
                 newFragment.show(getFragmentManager(), "DatePicker");
                 gameEndTimeEditText.setEnabled(false);
             } else {
@@ -85,7 +87,12 @@ public class GMNewGameFragment extends Fragment {
             gameTitle = gameTitleEditText.getText().toString();
             gameDescription = gameDescriptionEditText.getText().toString();
             if(autoStartButton.isChecked()) {
-                startTime = Timestamp.valueOf(gameStartTextView.getText().toString());
+                try {
+                    startTime = Timestamp.valueOf(gameStartTextView.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Nieprawidłowy format daty rozpoczęcia!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
             else {
                 startTime = new Timestamp(System.currentTimeMillis());
@@ -96,10 +103,31 @@ public class GMNewGameFragment extends Fragment {
                 Toast.makeText(getContext(), "Podaj tytuł gry!", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(getContext(), "Poggers", Toast.LENGTH_SHORT).show();
+                if(pointsButton.isChecked()){
+                    String temp = gameEndTimeEditText.getText().toString();
+                    if (!temp.isEmpty()) {
+                        try {
+                            endScore = Integer.parseInt(temp);
+                        } catch(NumberFormatException e) {
+                            Toast.makeText(getContext(), "Nieprawidłowa liczba punktów!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    else {
+                        Toast.makeText(getContext(), "Nie podałeś liczby punktów!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                else {
+                    try {
+                        endTime = Timestamp.valueOf(gameEndTimeEditText.getText().toString());
+                    } catch(Exception e) {
+                        Toast.makeText(getContext(), "Nieprawidłowy format daty zakończenia!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                Toast.makeText(getContext(), "Poprawnie wypełniony formularz.", Toast.LENGTH_SHORT).show();
             }
-
-
         });
     }
 }
