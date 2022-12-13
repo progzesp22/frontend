@@ -52,14 +52,6 @@ public class UserLoginFragment extends Fragment {
 
             if (model.getUserType() == UserModel.UserType.PLAYER) {
                 NavHostFragment.findNavController(this).navigate(R.id.action_playerSelected);
-            } else if (model.getUserType() == UserModel.UserType.GM) {
-                if (model.getMasterMode() == UserModel.MasterMode.ACCEPT) {
-                    NavHostFragment.findNavController(this).navigate(R.id.action_GMAcceptSelected);
-                } else if (model.getMasterMode() == UserModel.MasterMode.EDIT) {
-                    NavHostFragment.findNavController(this).navigate(R.id.action_GMEditSelected);
-                } else if (model.getMasterMode() == UserModel.MasterMode.INVITE) {
-                    NavHostFragment.findNavController(this).navigate(R.id.action_generate_QR);
-                }
             }
         });
     }
@@ -72,15 +64,6 @@ public class UserLoginFragment extends Fragment {
             model.setUserType(UserModel.UserType.PLAYER);
         } else if (checkedRadioButtonId == R.id.gmRadioButton) {
             model.setUserType(UserModel.UserType.GM);
-        }
-
-        checkedRadioButtonId = binding.gmModeRadio.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.gmAcceptRadioButton) {
-            model.setMasterMode(UserModel.MasterMode.ACCEPT);
-        } else if (checkedRadioButtonId == R.id.gmEditRadioButton) {
-            model.setMasterMode(UserModel.MasterMode.EDIT);
-        } else if (checkedRadioButtonId == R.id.gmGenerateQR) {
-            model.setMasterMode(UserModel.MasterMode.INVITE);
         }
     }
 }

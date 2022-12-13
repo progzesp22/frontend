@@ -3,6 +3,7 @@ package com.progzesp22.scoutout;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,10 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-
-import kotlin.NotImplementedError;
 
 /**
  * Request Handler class implemented as singleton. Based on google's Volley library.
@@ -63,18 +64,45 @@ public class RequestHandler implements RequestInterface {
     public void postUserLogin(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("login", username);
+            jsonBody.put("username", username);
             jsonBody.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "user/login", jsonBody, listener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://144.24.171.255:8080/user/login", jsonBody, listener, errorListener);
         requestQueue.add(request);
+    }
+
+
+    /**
+     * Converts empty responses to "{}"
+     */
+    private static class MyJsonRequest extends JsonObjectRequest {
+        public MyJsonRequest(int method, String url, JSONObject obj, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
+            super(method, url, obj, listener, errorListener);
+        }
+
+        @Override
+        protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+            if (response.data.length == 0) {
+                byte[] responseData = "{}".getBytes(StandardCharsets.UTF_8);
+                response = new NetworkResponse(response.statusCode, responseData, response.headers, response.notModified);
+            }
+            return super.parseNetworkResponse(response);
+        }
     }
 
     @Override
     public void postRegister(String username, String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        throw new NotImplementedError();
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new MyJsonRequest(Request.Method.POST, "http://144.24.171.255:8080/user/register", jsonBody, listener, errorListener);
+        requestQueue.add(request);
     }
 
     /**
