@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -15,11 +15,15 @@ import java.util.Calendar;
 
 
 public class SelectDateTimeFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    EditText dob;
+    TextView dob;
+    public SelectDateTimeFragment (TextView dob) {
+        super();
+        this.dob = dob;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        dob = (EditText) requireActivity().findViewById(R.id.editTextEndCondition);
         final Calendar calendar = Calendar.getInstance();
         int yy = calendar.get(Calendar.YEAR);
         int mm = calendar.get(Calendar.MONTH);
@@ -31,11 +35,14 @@ public class SelectDateTimeFragment extends DialogFragment implements DatePicker
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
         int mMinute = c.get(Calendar.MINUTE);
-
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                 (view1, hourOfDay, minute) -> {
-                    String txt = dd+"/"+(mm+1)+"/"+yy+"-"+hourOfDay + ":" + minute;
+                    String hourString = String.valueOf(hourOfDay);
+                    if(hourOfDay < 10) hourString = "0"+hourString;
+                    String minuteString = String.valueOf(minute);
+                    if(minute < 10) minuteString = "0"+minuteString;
+                    String txt = yy+"-"+(mm+1)+"-"+dd+" "+ hourString + ":" + minuteString + ":00";
                     dob.setText(txt);
                 }, mHour, mMinute, false);
         timePickerDialog.show();
