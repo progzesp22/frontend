@@ -64,6 +64,7 @@
     <string name="register_in_our_application">Register in our application</string>
     <string name="password">password</string>
     <string name="register">Register</string>
+    <string name="task_score_info">Liczba punktów za zadanie: </string>
     <string name="user_name">user name</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="log_in">Log in</string>
