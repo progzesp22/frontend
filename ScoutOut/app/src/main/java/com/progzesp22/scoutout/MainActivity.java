@@ -32,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final boolean mock_requests = false;
+        if(mock_requests){
+            requestHandler = new MockRequestHandler();
+        } else{
+            requestHandler = new RequestHandler(getApplicationContext());
+        }
+
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -49,12 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupHamburgerMenu(navController);
 
-        final boolean mock_requests = false;
-        if(mock_requests){
-            requestHandler = new MockRequestHandler();
-        } else{
-            requestHandler = new RequestHandler(getApplicationContext());
-        }
+
     }
 
 
