@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Task extends Entity{
 
-    public static final long UNKNOWN_ID = Long.MIN_VALUE;
 
     protected final long id;
     protected String name;

@@ -16,7 +16,7 @@ public class Game extends Entity{
     protected GameState state;
     protected Date startTime;
     protected Date endTime;
-    protected EndCondition endCondition;
+    protected EndCondition endCondition = EndCondition.MANUAL;
     protected long endScore;
 
     static public final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault());
@@ -107,6 +107,10 @@ public class Game extends Entity{
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public String getStartTimeString(){
+        return dateFormat.format(startTime);
     }
 
     public Date getEndTime() {

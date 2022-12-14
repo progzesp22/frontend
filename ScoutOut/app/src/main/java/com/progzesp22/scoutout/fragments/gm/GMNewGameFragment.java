@@ -18,12 +18,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.SelectDateTimeFragment;
 import com.progzesp22.scoutout.databinding.FragmentGmNewGameBinding;
+import com.progzesp22.scoutout.domain.Entity;
+import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.TasksAdapter;
+import com.progzesp22.scoutout.domain.UserModel;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -92,51 +96,61 @@ public class GMNewGameFragment extends Fragment {
         binding.addTask.setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task));
 
         binding.saveGameButton.setOnClickListener((group)-> {
-
             gameTitle = gameTitleEditText.getText().toString();
             gameDescription = gameDescriptionEditText.getText().toString();
+
+            UserModel userModel = new ViewModelProvider(requireActivity()).get(UserModel.class);
+            String gmUsername = userModel.getUsername();
+
+            Game game = new Game(Entity.UNKNOWN_ID, gameTitle, gmUsername, Game.GameState.CREATED);
+            game.setEndCondition(Game.EndCondition.TASKS);
+
+
             if(autoStartButton.isChecked()) {
                 try {
                     startTime = Timestamp.valueOf(gameStartTextView.getText().toString());
+                    game.setStartTime(startTime);
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Nieprawidłowy format daty rozpoczęcia!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
-            else {
-                startTime = new Timestamp(System.currentTimeMillis());
-            }
 
 
             if(gameTitle.isEmpty()) {
                 Toast.makeText(getContext(), "Podaj tytuł gry!", Toast.LENGTH_SHORT).show();
+                return;
             }
-            else {
-                if(pointsButton.isChecked()){
-                    String temp = gameEndTimeEditText.getText().toString();
-                    if (!temp.isEmpty()) {
-                        try {
-                            endScore = Integer.parseInt(temp);
-                        } catch(NumberFormatException e) {
-                            Toast.makeText(getContext(), "Nieprawidłowa liczba punktów!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-                    else {
-                        Toast.makeText(getContext(), "Nie podałeś liczby punktów!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                else if (timeButton.isChecked()){
+
+            if(pointsButton.isChecked()){
+                String temp = gameEndTimeEditText.getText().toString();
+                if (!temp.isEmpty()) {
                     try {
-                        endTime = Timestamp.valueOf(gameEndTimeEditText.getText().toString());
-                    } catch(Exception e) {
-                        Toast.makeText(getContext(), "Nieprawidłowy format daty zakończenia!", Toast.LENGTH_SHORT).show();
+                        endScore = Integer.parseInt(temp);
+                    } catch(NumberFormatException e) {
+                        Toast.makeText(getContext(), "Nieprawidłowa liczba punktów!", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                Toast.makeText(getContext(), "Poprawnie wypełniony formularz.", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(getContext(), "Nie podałeś liczby punktów!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+            else if (timeButton.isChecked()){
+                try {
+                    endTime = Timestamp.valueOf(gameEndTimeEditText.getText().toString());
+                } catch(Exception e) {
+                    Toast.makeText(getContext(), "Nieprawidłowy format daty zakończenia!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            MainActivity.requestHandler.postGame(game, response -> {
+                Toast.makeText(getContext(), "Zapisano grę", Toast.LENGTH_SHORT).show();
+            }, error -> {
+                Toast.makeText(getContext(), "Błąd zapisywania gry!", Toast.LENGTH_SHORT).show();
+            });
+
         });
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);

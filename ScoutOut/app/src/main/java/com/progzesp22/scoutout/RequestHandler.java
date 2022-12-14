@@ -41,7 +41,7 @@ public class RequestHandler implements RequestInterface {
      * Url to a server handling requests.
      */
     private final String url = "http://connect.knowak.xyz:2138/";
-    private final String urlRest = url + "rest/";
+    private final String urlRest = url;
 
     public RequestHandler(Context context) {
         requestQueue = Volley.newRequestQueue(context);
@@ -506,7 +506,7 @@ public class RequestHandler implements RequestInterface {
         JSONObject json = new JSONObject();
         try {
             json.put("name", game.getName());
-            json.put("startTime", game.getStartTime());
+            json.put("startTime", game.getStartTimeString());
             json.put("endCondition", game.getEndCondition());
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
