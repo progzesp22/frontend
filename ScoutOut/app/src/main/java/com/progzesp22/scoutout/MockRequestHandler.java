@@ -64,7 +64,7 @@ public class MockRequestHandler implements RequestInterface {
         try {
             responseCallback.onResponse(new JSONArray("[\n" +
                     "    {\"id\": 1, \"gameId\": 2, \"name\": \"Mundo's Overlords\"},\n" +
-                    "    {\"id\": 3, \"gameId\": 2, \"name\": \"Janna's Owls\"},\n" +
+                    "    {\"id\": 3, \"gameId\": 2, \"name\": \"Janna's Owls\"}\n" +
                     "]"));
         } catch (JSONException e) {
             e.printStackTrace();

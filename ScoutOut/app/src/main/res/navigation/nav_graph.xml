@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/GMWaitForPlayersFragment">
     <fragment
         android:id="@+id/selectUserTypeFragment"
         android:name="com.progzesp22.scoutout.fragments.UserLoginFragment"
@@ -108,4 +108,9 @@
             app:destination="@id/listTasksFragment" />
 
     </fragment>
+    <fragment
+        android:id="@+id/GMWaitForPlayersFragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMWaitForPlayersFragment"
+        android:label="fragment_g_m_wait_for_players"
+        tools:layout="@layout/fragment_g_m_wait_for_players" />
 </navigation>
