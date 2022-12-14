@@ -13,13 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.SelectDateTimeFragment;
 import com.progzesp22.scoutout.databinding.FragmentGmNewGameBinding;
+import com.progzesp22.scoutout.domain.Task;
+import com.progzesp22.scoutout.domain.TasksModel;
+import com.progzesp22.scoutout.TasksAdapter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class GMNewGameFragment extends Fragment {
     Timestamp startTime;
@@ -52,11 +59,12 @@ public class GMNewGameFragment extends Fragment {
         final EditText gameTitleEditText = requireView().findViewById(R.id.titleText);
         final EditText gameDescriptionEditText = requireView().findViewById(R.id.descriptionText);
 
+        binding.tasksList.setLayoutManager(new LinearLayoutManager(requireContext()));
+
         binding.gameStartTime.setOnCheckedChangeListener((group, checkedId) -> {
             if (autoStartButton.isChecked()) {
                 DialogFragment newFragment = new SelectDateTimeFragment(gameStartTextView);
-                assert getFragmentManager() != null;
-                newFragment.show(getFragmentManager(), "DatePicker");
+                newFragment.show(requireFragmentManager(), "DatePicker");
             }
         });
 
@@ -71,8 +79,7 @@ public class GMNewGameFragment extends Fragment {
                 gameEndTimeEditText.getText().clear();
                 gameEndTimeEditText.setHint("");
                 DialogFragment newFragment = new SelectDateTimeFragment(gameEndTimeEditText);
-                assert getFragmentManager() != null;
-                newFragment.show(getFragmentManager(), "DatePicker");
+                newFragment.show(requireFragmentManager(), "DatePicker");
                 gameEndTimeEditText.setEnabled(false);
             } else {
                 gameEndTimeEditText.setVisibility(View.INVISIBLE);
@@ -133,5 +140,16 @@ public class GMNewGameFragment extends Fragment {
                 Toast.makeText(getContext(), "Poprawnie wypełniony formularz.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
+        model.refresh();
+    }
+
+    public void displayTasks(List<Task> tasks){
+        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        NavController navController = NavHostFragment.findNavController(this);
+
+        binding.tasksList.setAdapter(new TasksAdapter(tasks, navController, model));
     }
 }

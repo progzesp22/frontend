@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -141,24 +142,24 @@
             android:layout_height="match_parent"
             >
 
-            <LinearLayout
-                android:id="@+id/tasks_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addTask"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="20dp"
                 android:clickable="true"
-                android:contentDescription="@string/add_task"
-                android:focusable="true"
                 android:src="@android:drawable/ic_input_add" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tasksList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="5"
+                tools:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/task_row" >
+
+            </androidx.recyclerview.widget.RecyclerView>/>
 
 
         </FrameLayout>
