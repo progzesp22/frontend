@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import java.lang.reflect.Field;
 
 public abstract class Entity {
+    public static final long UNKNOWN_ID = Long.MIN_VALUE;
+
+
     @NonNull
     public String toString(){
         StringBuilder result = new StringBuilder();

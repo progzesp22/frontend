@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.progzesp22.scoutout.R;
-import com.progzesp22.scoutout.RequestHandler;
 import com.progzesp22.scoutout.databinding.FragmentGmAddTaskBinding;
+import com.progzesp22.scoutout.domain.Entity;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.MainActivity;
@@ -50,10 +50,10 @@ public class GMAddTaskFragment extends Fragment {
 
         binding.button.setOnClickListener(view1 -> {
             Task newTask = new Task(
-                    Task.UNKNOWN_ID,
+                    Entity.UNKNOWN_ID,
                     binding.titleText.getText().toString(),
                     binding.descriptionText.getText().toString(),
-                    RequestHandler.GAME_ID, // Hardcoded game ID for now
+                    Entity.UNKNOWN_ID, // Hardcoded game ID for now
                     Task.TaskType.TEXT,
                     new ArrayList<>()
             );
