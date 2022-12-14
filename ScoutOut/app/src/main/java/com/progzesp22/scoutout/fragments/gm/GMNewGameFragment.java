@@ -89,9 +89,7 @@ public class GMNewGameFragment extends Fragment {
             }
         });
 
-        binding.addTask.setOnClickListener(view1 -> {
-                NavHostFragment.findNavController(this).navigate(R.id.action_addTask);
-        });
+        binding.addTask.setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task));
 
         binding.saveGameButton.setOnClickListener((group)-> {
 

@@ -26,18 +26,6 @@
             app:destination="@id/taskAnswerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/GMlistTasksFragment"
-        android:name="com.progzesp22.scoutout.fragments.gm.GMTasksFragment"
-        android:label="GMfragment_list_tasks"
-        tools:layout="@layout/fragment_gm_tasks">
-        <action
-            android:id="@+id/action_editTask"
-            app:destination="@id/GMTaskEditFragment" />
-        <action
-            android:id="@+id/action_addTask"
-            app:destination="@id/GMTaskAddFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/GMListToAcceptFragment"
         android:name="com.progzesp22.scoutout.fragments.gm.GMListUncheckedAnswersFragment"
         android:label="GMfragment_list_to_accept"
@@ -46,11 +34,6 @@
             android:id="@+id/action_checkAnswer"
             app:destination="@id/GMTaskCheckFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/GMTaskAddFragment"
-        android:name="com.progzesp22.scoutout.fragments.gm.GMAddTaskFragment"
-        android:label="GMfragment_add_task"
-        tools:layout="@layout/fragment_gm_add_task" />
     <fragment
         android:id="@+id/GMTaskCheckFragment"
         android:name="com.progzesp22.scoutout.fragments.gm.GMCheckAnswerFragment"
@@ -97,11 +80,11 @@
         android:label="fragment_user_games"
         tools:layout="@layout/fragment_user_games" >
         <action
-            android:id="@+id/editGame"
-            app:destination="@id/GMlistTasksFragment" />
-        <action
             android:id="@+id/joinGame"
             app:destination="@id/listTasksFragment" />
+        <action
+            android:id="@+id/action_create_edit_game"
+            app:destination="@id/GMNewGameFragment" />
 
     </fragment>
     <fragment
@@ -112,5 +95,17 @@
         <action
             android:id="@+id/gameStart"
             app:destination="@id/gm_game_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/GMNewGameFragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMNewGameFragment"
+        android:label="GMNewGameFragment">
+
+        <action
+            android:id="@+id/action_add_edit_task"
+            app:destination="@id/GMTaskEditFragment" />
+        <action
+            android:id="@+id/action_open_lobby"
+            app:destination="@id/GMWaitForPlayersFragment" />
     </fragment>
 </navigation>

@@ -7,9 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.progzesp22.scoutout.R;
@@ -79,7 +77,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
                 button.setVisibility(View.VISIBLE);
                 button.setOnClickListener(view1 -> {
                     model.setActiveGame(game);
-                    navController.navigate(R.id.editGame);
+                    navController.navigate(R.id.action_create_edit_game);
                 });
                 break;
             case PENDING:

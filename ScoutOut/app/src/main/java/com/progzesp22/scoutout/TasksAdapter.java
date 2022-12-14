@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 
@@ -73,7 +71,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         comment.setText("");
         button.setText("edit");
-        button.setOnClickListener(view -> navController.navigate(R.id.action_editTask));
+        button.setOnClickListener(view -> navController.navigate(R.id.action_add_edit_task));
     }
 
     @Override
