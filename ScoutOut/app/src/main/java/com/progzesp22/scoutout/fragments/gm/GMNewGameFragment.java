@@ -76,11 +76,15 @@ public class GMNewGameFragment extends Fragment {
                 gameEndTimeEditText.setEnabled(false);
             } else {
                 gameEndTimeEditText.setVisibility(View.INVISIBLE);
+                gameEndTimeEditText.getText().clear();
+                gameEndTimeEditText.setHint("");
+                gameEndTimeEditText.setEnabled(false);
             }
         });
 
-        binding.addTask.setOnClickListener(view1 ->
-                NavHostFragment.findNavController(this).navigate(R.id.action_addTask));
+        binding.addTask.setOnClickListener(view1 -> {
+                NavHostFragment.findNavController(this).navigate(R.id.action_addTask);
+        });
 
         binding.saveGameButton.setOnClickListener((group)-> {
 
@@ -118,7 +122,7 @@ public class GMNewGameFragment extends Fragment {
                         return;
                     }
                 }
-                else {
+                else if (timeButton.isChecked()){
                     try {
                         endTime = Timestamp.valueOf(gameEndTimeEditText.getText().toString());
                     } catch(Exception e) {
