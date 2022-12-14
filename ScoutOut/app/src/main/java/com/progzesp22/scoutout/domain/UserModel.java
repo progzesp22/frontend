@@ -1,5 +1,6 @@
 package com.progzesp22.scoutout.domain;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
@@ -9,7 +10,8 @@ public class UserModel extends ViewModel {
         GM,
     }
 
-    private UserType userType = UserType.PLAYER;
+
+    private MutableLiveData<UserType> userType = new MutableLiveData<>(UserType.PLAYER);
 
     private String username = "";
 
@@ -23,10 +25,10 @@ public class UserModel extends ViewModel {
     }
 
     public void setUserType(UserType userType) {
-        this.userType = userType;
+        this.userType.postValue(userType);
     }
 
-    public UserType getUserType() {
+    public MutableLiveData<UserType> getUserType() {
         return userType;
     }
 }
