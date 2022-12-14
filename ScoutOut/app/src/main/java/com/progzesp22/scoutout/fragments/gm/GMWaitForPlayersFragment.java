@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.progzesp22.scoutout.CustomExpandableListAdapter;
+import com.progzesp22.scoutout.TeamsExpandableListAdapter;
 import com.progzesp22.scoutout.MockRequestHandler;
 import com.progzesp22.scoutout.RequestInterface;
 import com.progzesp22.scoutout.databinding.FragmentGMWaitForPlayersBinding;
@@ -30,7 +30,7 @@ public class GMWaitForPlayersFragment extends Fragment {
     //TODO: zmienić na odpowiednią klasę
     RequestInterface requestInterface = new MockRequestHandler();
 
-    CustomExpandableListAdapter expandableListAdapter;
+    TeamsExpandableListAdapter expandableListAdapter;
 
     Timer timer;
     int REFRESH_RATE = 5000;
@@ -49,7 +49,7 @@ public class GMWaitForPlayersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        expandableListAdapter = new CustomExpandableListAdapter(getContext());
+        expandableListAdapter = new TeamsExpandableListAdapter(getContext());
         binding.teamsList.setAdapter(expandableListAdapter);
         refreshTeams();
         binding.refreshTeamsButton.setOnClickListener(view1 -> refreshTeams());
