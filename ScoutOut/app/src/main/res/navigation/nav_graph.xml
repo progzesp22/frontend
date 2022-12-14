@@ -3,27 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/GMWaitForPlayersFragment">
-    <fragment
-        android:id="@+id/selectUserTypeFragment"
-        android:name="com.progzesp22.scoutout.fragments.UserLoginFragment"
-        android:label="fragment_select_user_type"
-        tools:layout="@layout/fragment_user_login">
-        <action
-            android:id="@+id/action_playerSelected"
-            app:destination="@id/listTasksFragment" />
-        <action
-            android:id="@+id/action_GMAcceptSelected"
-            app:destination="@id/GMListToAcceptFragment" />
-
-        <action
-            android:id="@+id/action_GMEditSelected"
-            app:destination="@id/GMlistTasksFragment" />
-        <action
-            android:id="@+id/action_generate_QR"
-            app:destination="@id/GMqrGeneratorFragment" />
-
-    </fragment>
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/listTasksFragment"
         android:name="com.progzesp22.scoutout.fragments.player.PlayerTasksFragment"
