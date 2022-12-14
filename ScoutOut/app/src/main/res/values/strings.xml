@@ -26,8 +26,14 @@
     <string name="content">Treść</string>
     <string name="answer">Odpowiedź</string>
     <string name="answer_verb">Odpowiedz</string>
+    <string name="game_description">Opis gry</string>
+    <string name="game_start_automatically">Automatyczny start gry</string>
+    <string name="game_start_hour">Godzina rozpoczęcia gry</string>
+    <string name="game_end_condition">Warunek zakończenia gry:</string>
+    <string name="game_end_with_time">Ustalona godzina zakończenia</string>
+    <string name="game_end_with_points">Ustalona liczba punktów</string>
     <string name="scan_qr">Skanuj kod QR / Kreskowy</string>
-    <string name="tasks_list">lista zadań</string>
+    <string name="tasks_list">Lista zadań:</string>
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="add_task">Dodaj zadanie</string>
@@ -44,6 +50,8 @@
     <string name="share">Udostępnij</string>
     <string name="QR_image">Kod QR</string>
     <string name="QRgenerationSuccess">Wygenerowano kod QR</string>
+    <string name="create_game">Tworzenie gry</string>
+    <string name="task_completion">Ukończenie zadań</string>
     <string name="nav_header_title">Nawigacja</string>
     <string name="menu_home">home</string>
     <string name="menu_nav_user_login">login</string>
