@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GMTaskEditFragment"
+    tools:context="fragments.gm.GMEditTaskFragment"
     android:orientation="vertical">
 
 
@@ -13,21 +13,54 @@
         android:layout_height="48dp"
         android:layout_margin="10dp"
         android:inputType="textMultiLine"
-        android:text="@string/title"
+        android:hint="@string/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/descriptionText"
         android:layout_width="match_parent"
-        android:layout_height="485dp"
+        android:layout_height="0dp"
         android:layout_margin="10dp"
         android:layout_weight="3"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
-        android:hint="@string/edit_tasks"
+        android:hint="@string/content"
         android:inputType="textMultiLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/taskScoreInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="@string/task_score_info"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/taskScoreText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:autofillHints=""
+            android:text=""
+            android:inputType="number"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
@@ -35,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:text="@string/save_changes" />
+        android:text="@string/add_task" />
 
 </LinearLayout>
 

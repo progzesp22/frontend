@@ -38,24 +38,27 @@
         <TextView
             android:id="@+id/taskScoreInfo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:text="@string/task_score_info"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:autofillHints="" />
 
         <EditText
             android:id="@+id/taskScoreText"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:autofillHints=""
             android:text=""
             android:inputType="number"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
