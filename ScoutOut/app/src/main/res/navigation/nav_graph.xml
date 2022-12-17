@@ -5,15 +5,14 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
     <fragment
-        android:id="@+id/selectUserTypeFragment"
-        android:name="com.progzesp22.scoutout.fragments.UserLoginFragment"
-        android:label="fragment_select_user_type"
-        tools:layout="@layout/fragment_user_login">
+        android:id="@+id/gm_game_fragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMGameFragment"
+        android:label="fragment_gm_game"
+        tools:layout="@layout/fragment_gm_game">
+
+
         <action
-            android:id="@+id/action_playerSelected"
-            app:destination="@id/listTasksFragment2" />
-        <action
-            android:id="@+id/action_GMAcceptSelected"
+            android:id="@+id/action_gm_game_fragment_to_GMListToAcceptFragment"
             app:destination="@id/GMListToAcceptFragment" />
 
         <action
@@ -24,26 +23,15 @@
             app:destination="@id/GMqrGeneratorFragment" />
 
     </fragment>
+
     <fragment
-        android:id="@+id/listTasksFragment2"
+        android:id="@+id/listTasksFragment"
         android:name="com.progzesp22.scoutout.fragments.player.PlayerTasksFragment"
         android:label="fragment_list_tasks"
         tools:layout="@layout/fragment_player_tasks">
         <action
-            android:id="@+id/action_answerTask"
-            app:destination="@id/taskAnswerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/GMlistTasksFragment"
-        android:name="com.progzesp22.scoutout.fragments.gm.GMTasksFragment"
-        android:label="GMfragment_list_tasks"
-        tools:layout="@layout/fragment_gm_tasks">
-        <action
-            android:id="@+id/action_editTask"
-            app:destination="@id/GMTaskEditFragment" />
-        <action
-            android:id="@+id/action_addTask"
-            app:destination="@id/GMTaskAddFragment" />
+            android:id="@+id/action_listTasksFragment_to_taskViewFragment"
+            app:destination="@id/taskViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/GMListToAcceptFragment"
@@ -54,11 +42,6 @@
             android:id="@+id/action_checkAnswer"
             app:destination="@id/GMTaskCheckFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/GMTaskAddFragment"
-        android:name="com.progzesp22.scoutout.fragments.gm.GMAddTaskFragment"
-        android:label="GMfragment_add_task"
-        tools:layout="@layout/fragment_gm_add_task" />
     <fragment
         android:id="@+id/GMTaskCheckFragment"
         android:name="com.progzesp22.scoutout.fragments.gm.GMCheckAnswerFragment"
@@ -73,7 +56,11 @@
         android:id="@+id/GMTaskEditFragment"
         android:name="com.progzesp22.scoutout.fragments.gm.GMEditTaskFragment"
         android:label="fragment_gm_task_edit"
-        tools:layout="@layout/fragment_gm_edit_task" />
+        tools:layout="@layout/fragment_gm_edit_task" >
+        <action
+            android:id="@+id/gmGenerateQR"
+            app:destination="@id/GMqrGeneratorFragment" />
+    </fragment>
     <fragment
         android:id="@+id/taskAnswerFragment"
         android:name="com.progzesp22.scoutout.fragments.player.PlayerSubmitAnswerFragment"
@@ -101,10 +88,55 @@
         android:label="fragment_user_games"
         tools:layout="@layout/fragment_user_games" >
         <action
-            android:id="@+id/editGame"
-            app:destination="@id/GMlistTasksFragment" />
-        <action
             android:id="@+id/joinGame"
+            app:destination="@id/listTasksFragment" />
+        <action
+            android:id="@+id/action_create_edit_game"
+            app:destination="@id/GMNewGameFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/GMWaitForPlayersFragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMWaitForPlayersFragment"
+        android:label="fragment_g_m_wait_for_players"
+        tools:layout="@layout/fragment_gm_wait_for_players" >
+        <action
+            android:id="@+id/gameStart"
+            app:destination="@id/gm_game_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/GMNewGameFragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMNewGameFragment"
+        android:label="GMNewGameFragment">
+
+        <action
+            android:id="@+id/action_add_edit_task"
+            app:destination="@id/GMTaskEditFragment" />
+        <action
+            android:id="@+id/action_open_lobby"
+            app:destination="@id/GMWaitForPlayersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskViewFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.TaskViewFragment"
+        android:label="TaskViewFragment" >
+        <action
+            android:id="@+id/action_taskViewFragment_to_previousAnwsersFragment"
+            app:destination="@id/previousAnwsersFragment" />
+        <action
+            android:id="@+id/action_taskViewFragment_to_taskAnswerFragment"
+            app:destination="@id/taskAnswerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previousAnwsersFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.PreviousAnwsersFragment"
+        android:label="PreviousAnwsersFragment" >
+        <action
+            android:id="@+id/action_previousAnwsersFragment_to_taskViewFragment"
+            app:destination="@id/taskViewFragment" />
+        <action
+            android:id="@+id/action_previousAnwsersFragment_to_taskAnswerFragment"
+            app:destination="@id/taskAnswerFragment" />
             app:destination="@id/playerTeamsFragment" />
         <action
             android:id="@+id/playGame"

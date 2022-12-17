@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".fragments.gm.GMGameFragment">
+
+    <TextView
+        android:id="@+id/gm_game_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Ciekawa nazwa gry"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/gm_game_timerGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="gm_game_timerCountdownProgressBar, gm_game_timerLabel, gm_game_timerValue" />
+
+
+    <ProgressBar
+        android:id="@+id/gm_game_timerCountdownProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:progress="0"
+        android:max="100"
+        app:layout_constraintEnd_toEndOf="@+id/gm_game_name"
+        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintStart_toStartOf="@+id/gm_game_name"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_name" />
+
+    <TextView
+        android:id="@+id/gm_game_timerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Koniec gry: "
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/gm_game_timerValue"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/gm_game_timerCountdownProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_timerCountdownProgressBar" />
+
+    <TextView
+        android:id="@+id/gm_game_timerValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="15:00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/gm_game_timerLabel"
+        app:layout_constraintEnd_toEndOf="@+id/gm_game_timerCountdownProgressBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gm_game_timerLabel"
+        app:layout_constraintTop_toTopOf="@+id/gm_game_timerLabel" />
+
+
+
+    <ProgressBar
+        android:id="@+id/gm_game_tasksProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:max="7"
+        android:progress="5"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_timerLabel"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/gm_game_tasksLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Zadania wykonane: "
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/gm_game_tasksLeftValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/gm_game_tasksProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_tasksProgressBar" />
+
+    <TextView
+        android:id="@+id/gm_game_tasksLeftValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="5/7"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/gm_game_tasksLabel"
+        app:layout_constraintEnd_toEndOf="@+id/gm_game_tasksProgressBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gm_game_tasksLabel"
+        app:layout_constraintTop_toTopOf="@+id/gm_game_tasksLabel"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/gm_game_endButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Zakończ grę"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_tasksLabel" />
+
+    <TextView
+        android:id="@+id/gm_game_answersLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Nieocenione rozwiązania: "
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/gm_game_answersValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_endButton" />
+
+    <TextView
+        android:id="@+id/gm_game_answersValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/gm_game_answersLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gm_game_answersLabel"
+        app:layout_constraintTop_toTopOf="@+id/gm_game_answersLabel" />
+
+    <Button
+        android:id="@+id/gm_game_answersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Oceń rozwiązania"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gm_game_answersLabel" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

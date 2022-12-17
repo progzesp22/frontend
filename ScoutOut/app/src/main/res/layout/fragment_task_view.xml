@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".fragments.LoginFragment">
+
+    <TextView
+        android:id="@+id/task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="220dp"
+        android:textColor = "@color/black"
+        android:textSize = "24sp"
+        android:textStyle="bold|italic"
+        android:text="Task name"/>
+
+    <TextView
+        android:id="@+id/task_description"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="150dp"
+        android:scrollbars="vertical"
+        android:background="@drawable/button_border"
+        android:textColor="#2B3459"
+        android:textSize="15sp"
+        android:text="@string/task_description"/>
+
+    <ListView
+        android:id="@+id/subtask_list"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-50dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/go_to_upload"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-230dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_shape"
+        android:text="Upload Task"
+        tools:ignore="ExtraText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/go_to_previous_anwsers"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-300dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_shape"
+        android:text="See preious anwsers"
+        tools:ignore="ExtraText" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="300dp"
+        app:shapeAppearanceOverlay="@style/Circular"
+        android:src="@mipmap/logo" />
+
+
+</FrameLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">ScoutOut</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -26,8 +26,14 @@
     <string name="content">Treść</string>
     <string name="answer">Odpowiedź</string>
     <string name="answer_verb">Odpowiedz</string>
+    <string name="game_description">Opis gry</string>
+    <string name="game_start_automatically">Automatyczny start gry</string>
+    <string name="game_start_hour">Godzina rozpoczęcia gry</string>
+    <string name="game_end_condition">Warunek zakończenia gry:</string>
+    <string name="game_end_with_time">Ustalona godzina zakończenia</string>
+    <string name="game_end_with_points">Ustalona liczba punktów</string>
     <string name="scan_qr">Skanuj kod QR / Kreskowy</string>
-    <string name="tasks_list">lista zadań</string>
+    <string name="tasks_list">Lista zadań:</string>
     <string name="refresh">odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="add_task">Dodaj zadanie</string>
@@ -44,6 +50,17 @@
     <string name="share">Udostępnij</string>
     <string name="QR_image">Kod QR</string>
     <string name="QRgenerationSuccess">Wygenerowano kod QR</string>
+    <string name="create_game">Tworzenie gry</string>
+    <string name="task_completion">Ukończenie zadań</string>
+    <string name="nav_header_title">Nawigacja</string>
+    <string name="menu_home">home</string>
+    <string name="menu_nav_user_login">login</string>
+    <string name="menu_nav_player_tasks">lista zadań</string>
+    <string name="menu_nav_gm_tasks">zadania</string>
+    <string name="menu_nav_gm_list_to_accept">sprawdź odpowiedzi</string>
+    <string name="menu_nav_gm_qr_generator">wygeneruj kod QR</string>
+    <string name="nav_menu_player">Player</string>
+    <string name="nav_menu_GM">GM</string>
     <string name="register_in_our_application">Register in our application</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
@@ -54,6 +71,10 @@
     <string name="log_in">Log in</string>
     <string name="or">or</string>
     <string name="register_in_login">Register</string>
+    <string name="task_description">task_description</string>
+    <string name="login_failed">Login failed</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_password">Invalid password</string>
     <string name="add_team">Create</string>
     <string name="team_name">New team name</string>
 </resources>

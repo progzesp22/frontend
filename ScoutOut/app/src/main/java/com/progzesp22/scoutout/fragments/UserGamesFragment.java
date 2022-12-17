@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,12 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentUserGamesBinding;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
-import com.progzesp22.scoutout.domain.TasksModel;
 
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -45,6 +43,10 @@ public class UserGamesFragment extends Fragment {
         GamesModel model = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         model.getGames().observe(getViewLifecycleOwner(), this::displayGames);
         model.refresh();
+
+        binding.addGame.setOnClickListener(view1 ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_create_edit_game)
+        );
 
 
     }

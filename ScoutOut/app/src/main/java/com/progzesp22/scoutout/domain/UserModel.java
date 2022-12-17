@@ -1,5 +1,6 @@
 package com.progzesp22.scoutout.domain;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
@@ -9,17 +10,10 @@ public class UserModel extends ViewModel {
         GM,
     }
 
-    public enum MasterMode {
-        EDIT,
-        ACCEPT,
-        INVITE
-    }
 
+    private MutableLiveData<UserType> userType = new MutableLiveData<>(UserType.PLAYER);
 
-    private UserType userType = UserType.PLAYER;
-    private MasterMode masterMode = MasterMode.EDIT;
-
-    private String username = "default";
+    private String username = "";
 
 
     public void setUsername(String username) {
@@ -31,19 +25,11 @@ public class UserModel extends ViewModel {
     }
 
     public void setUserType(UserType userType) {
-        this.userType = userType;
+        this.userType.postValue(userType);
     }
 
-    public UserType getUserType() {
+    public MutableLiveData<UserType> getUserType() {
         return userType;
-    }
-
-    public void setMasterMode(MasterMode masterMode) {
-        this.masterMode = masterMode;
-    }
-
-    public MasterMode getMasterMode() {
-        return masterMode;
     }
 }
 

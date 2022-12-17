@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.progzesp22.scoutout.databinding.FragmentRegisterBinding;
 
 
 public class RegisterFragment extends Fragment {
+    static final String TAG = "RegisterFragment";
+
     FragmentRegisterBinding binding;
 
     public RegisterFragment() {
@@ -42,6 +45,7 @@ public class RegisterFragment extends Fragment {
                         NavHostFragment.findNavController(this).navigateUp();
                     },
                     error -> {
+                        Log.e(TAG, error.toString());
                         Toast.makeText(getContext(), "Register error", Toast.LENGTH_SHORT).show();
                     }
             );

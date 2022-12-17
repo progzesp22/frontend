@@ -53,7 +53,7 @@ public class PlayerTasksFragment extends Fragment {
             taskView.setOnClick(view -> {
                 TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
                 model.setActiveTask(task);
-                NavHostFragment.findNavController(this).navigate(R.id.action_answerTask);
+                NavHostFragment.findNavController(this).navigate(R.id.action_listTasksFragment_to_taskViewFragment);
             });
             binding.tasksLayout.addView(taskView);
         }

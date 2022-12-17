@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Task extends Entity{
 
-    public static final long UNKNOWN_ID = Long.MIN_VALUE;
 
     protected final long id;
     protected String name;
@@ -75,6 +74,16 @@ public class Task extends Entity{
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public boolean isFinished() {
+        for (Answer answer : answers) {
+            if (answer.isApproved()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public enum TaskType {
