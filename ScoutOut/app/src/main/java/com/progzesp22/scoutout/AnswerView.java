@@ -26,6 +26,16 @@ public class AnswerView extends LinearLayout {
         text.setText(taskTitle);
     }
 
+    public void setAnswer(String answer) {
+        TextView text = (TextView) getChildAt(0);
+        text.setText(answer);
+    }
+
+    public void disableButton() {
+        Button button = (Button) getChildAt(1);
+        button.setVisibility(INVISIBLE);
+    }
+
     public void setOnClick(OnClickListener listener) {
         Button button = (Button) getChildAt(1);
         button.setOnClickListener(listener);

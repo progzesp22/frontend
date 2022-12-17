@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.progzesp22.scoutout.TeamsExpandableListAdapter;
 import com.progzesp22.scoutout.MockRequestHandler;
 import com.progzesp22.scoutout.RequestInterface;
-import com.progzesp22.scoutout.databinding.FragmentGMWaitForPlayersBinding;
+import com.progzesp22.scoutout.databinding.FragmentGmWaitForPlayersBinding;
 import com.progzesp22.scoutout.domain.Team;
 
 import org.json.JSONException;
@@ -26,7 +26,7 @@ import java.util.Timer;
  * create an instance of this fragment.
  */
 public class GMWaitForPlayersFragment extends Fragment {
-    private FragmentGMWaitForPlayersBinding binding;
+    private FragmentGmWaitForPlayersBinding binding;
     //TODO: zmienić na odpowiednią klasę
     RequestInterface requestInterface = new MockRequestHandler();
 
@@ -124,7 +124,7 @@ public class GMWaitForPlayersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentGMWaitForPlayersBinding.inflate(inflater, container, false);
+        binding = FragmentGmWaitForPlayersBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

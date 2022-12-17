@@ -22,8 +22,8 @@
         android:label="fragment_list_tasks"
         tools:layout="@layout/fragment_player_tasks">
         <action
-            android:id="@+id/action_answerTask"
-            app:destination="@id/taskAnswerFragment" />
+            android:id="@+id/action_listTasksFragment_to_taskViewFragment"
+            app:destination="@id/taskViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/GMListToAcceptFragment"
@@ -91,7 +91,7 @@
         android:id="@+id/GMWaitForPlayersFragment"
         android:name="com.progzesp22.scoutout.fragments.gm.GMWaitForPlayersFragment"
         android:label="fragment_g_m_wait_for_players"
-        tools:layout="@layout/fragment_g_m_wait_for_players" >
+        tools:layout="@layout/fragment_gm_wait_for_players" >
         <action
             android:id="@+id/gameStart"
             app:destination="@id/gm_game_fragment" />
@@ -107,5 +107,27 @@
         <action
             android:id="@+id/action_open_lobby"
             app:destination="@id/GMWaitForPlayersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskViewFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.TaskViewFragment"
+        android:label="TaskViewFragment" >
+        <action
+            android:id="@+id/action_taskViewFragment_to_previousAnwsersFragment"
+            app:destination="@id/previousAnwsersFragment" />
+        <action
+            android:id="@+id/action_taskViewFragment_to_taskAnswerFragment"
+            app:destination="@id/taskAnswerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previousAnwsersFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.PreviousAnwsersFragment"
+        android:label="PreviousAnwsersFragment" >
+        <action
+            android:id="@+id/action_previousAnwsersFragment_to_taskViewFragment"
+            app:destination="@id/taskViewFragment" />
+        <action
+            android:id="@+id/action_previousAnwsersFragment_to_taskAnswerFragment"
+            app:destination="@id/taskAnswerFragment" />
     </fragment>
 </navigation>
