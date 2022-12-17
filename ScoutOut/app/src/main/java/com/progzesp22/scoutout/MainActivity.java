@@ -7,12 +7,18 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.progzesp22.scoutout.databinding.ActivityMainBinding;
+import com.progzesp22.scoutout.domain.UserModel;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,11 +26,19 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
     private static final int REQUEST_PERMISSIONS = 200;
-    public static RequestHandler requestHandler;
+    public static RequestInterface requestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final boolean mock_requests = false;
+        if(mock_requests){
+            requestHandler = new MockRequestHandler();
+        } else{
+            requestHandler = new RequestHandler(getApplicationContext());
+        }
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -32,12 +46,69 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        Set<Integer> topLevelDestinations = getTopLevelDestinations();
+
+
+        appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
 
-        requestHandler = RequestHandler.getInstance(getApplicationContext());
+        setupHamburgerMenu(navController);
+
+
+    }
+
+
+    /**
+     * Wszystkie fragmenty, które mają być widoczne w menu nawigacji powinny zostać tutaj dodane.
+     * Nie jestem pewien co to w 100% robi ale z tego co rozumiem to pozwala aby te ekrany były
+     * traktowane na równi z ekranem startowym.
+     */
+    private Set<Integer> getTopLevelDestinations() {
+        HashSet<Integer> set = new HashSet<>();
+        set.add(R.id.selectUserTypeFragment); // user login fragment
+        set.add(R.id.listTasksFragment); // player tasks fragment
+        set.add(R.id.GMlistTasksFragment); // GM tasks fragment
+        set.add(R.id.GMqrGeneratorFragment); // GM players fragment
+        set.add(R.id.GMListToAcceptFragment); // GM players fragment
+        return set;
+    }
+
+    private void setupHamburgerMenu(NavController navController) {
+        // Powinno być ustawione na pierwszy ekran który ma być widoczny po otworzeniu aplikacji
+        binding.navView.setCheckedItem(R.id.selectUserTypeFragment);
+
+        UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
+
+        userModel.getUserType().observe(this, userType -> {
+            binding.navView.getMenu().clear();
+            if (userType == null) {
+                binding.navView.inflateMenu(R.menu.drawer_menu_default);
+            } else if (userType == UserModel.UserType.PLAYER) {
+                binding.navView.inflateMenu(R.menu.drawer_menu_player);
+            } else if (userType == UserModel.UserType.GM) {
+                binding.navView.inflateMenu(R.menu.drawer_menu_gm);
+            }
+        });
+
+        binding.navView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.selectUserTypeFragment) {
+                navController.navigate(R.id.selectUserTypeFragment);
+            } else if (item.getItemId() == R.id.listTasksFragment) {
+                navController.navigate(R.id.listTasksFragment);
+            } else if (item.getItemId() == R.id.GMlistTasksFragment) {
+                navController.navigate(R.id.GMlistTasksFragment);
+            } else if (item.getItemId() == R.id.GMqrGeneratorFragment) {
+                navController.navigate(R.id.GMqrGeneratorFragment);
+            } else if (item.getItemId() == R.id.GMListToAcceptFragment) {
+                navController.navigate(R.id.GMListToAcceptFragment);
+            }
+
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
     }
 
     @Override

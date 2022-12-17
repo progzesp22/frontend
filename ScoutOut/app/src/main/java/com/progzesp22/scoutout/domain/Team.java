@@ -1,16 +1,19 @@
 package com.progzesp22.scoutout.domain;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Team {
+public class Team extends Entity{
 
-    private long id;
-    private long gameId;
-    private String name;
-    private String creator;
-    private List<String> members;
+    protected long id;
+    protected long gameId;
+    protected String name;
+    protected String creator;
+    protected List<String> members;
 
     public Team(long id, long gameId, String name, String creator, List<String> members) {
         this.id = id;
@@ -20,12 +23,17 @@ public class Team {
         this.members = members;
     }
 
-    public static Team fromJson(JSONObject json) {
-        return new Team(json.optLong("id"),
-                json.optLong("gameId"),
-                json.optString("name"),
-                json.optString("creator"),
-                null); // TODO: parse members
+    public static Team fromJson(JSONObject json) throws JSONException {
+        List<String> members = new ArrayList<>();
+        JSONArray membersJson = json.getJSONArray("members");
+        for (int i = 0; i < membersJson.length(); i++) {
+            members.add(membersJson.getString(i));
+        }
+        return new Team(json.getLong("id"),
+                json.getLong("gameId"),
+                json.getString("name"),
+                json.getString("creator"),
+                members);
     }
 
     public long getId() {

@@ -28,9 +28,9 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="130dp"
-        android:textSize = "24sp"
+        android:hint="@string/user_name"
         android:inputType="text"
-        android:text="@string/user_name_login" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/password"
@@ -38,9 +38,9 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="60dp"
-        android:textSize = "24sp"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:text="@string/password_login" />
+        android:textSize="24sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginButton"

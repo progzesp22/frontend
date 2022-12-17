@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/selectUserTypeFragment"
+            android:title="@string/menu_nav_user_login" />
+        <item
+            android:id="@+id/listTasksFragment"
+            android:title="@string/menu_nav_player_tasks" />
+    </group>
+</menu>

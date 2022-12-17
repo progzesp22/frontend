@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="fragments.gm.GMNewGameFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/titleText"
+            android:layout_width="395dp"
+            android:layout_height="48dp"
+            android:layout_margin="10dp"
+            android:autofillHints=""
+            android:inputType="textMultiLine"
+            android:hint="@string/title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="24sp" />
+
+
+
+
+
+
+        <EditText
+            android:id="@+id/descriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="10dp"
+            android:layout_weight="3"
+            android:autofillHints=""
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/game_description"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/gameStartTime"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/game_start_automatically" />
+
+            <TextView
+                android:id="@+id/gameStartTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_weight="1"
+                android:text="@string/game_start_hour" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/textViewEndGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:text="@string/game_end_condition" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/endGameRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/endGameAllTasks">
+
+                <RadioButton
+                    android:id="@+id/endGameAllTasks"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/task_completion" />
+
+                <RadioButton
+                    android:id="@+id/endGamePointsRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/game_end_with_points" />
+
+                <RadioButton
+                    android:id="@+id/endGameTimeRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="@string/game_end_with_time" />
+
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/editTextEndCondition"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:inputType="text"
+                android:text=""
+                android:enabled="false"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/infoTaskList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:text="@string/tasks_list" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="20dp"
+                android:clickable="true"
+                android:src="@android:drawable/ic_input_add" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tasksList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="5"
+                tools:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/task_row" >
+
+            </androidx.recyclerview.widget.RecyclerView>/>
+
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/saveGameButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:text="@string/save_changes" />
+    </LinearLayout>
+</ScrollView>
+
