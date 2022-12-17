@@ -1,15 +1,15 @@
 package com.progzesp22.scoutout.fragments.ui.login;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.util.Patterns;
-
+import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.fragments.data.LoginRepository;
 import com.progzesp22.scoutout.fragments.data.Result;
 import com.progzesp22.scoutout.fragments.data.model.LoggedInUser;
-import com.progzesp22.scoutout.fragments.R;
 
 public class LoginViewModel extends ViewModel {
 

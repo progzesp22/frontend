@@ -72,4 +72,7 @@
     <string name="or">or</string>
     <string name="register_in_login">Register</string>
     <string name="task_description">task_description</string>
+    <string name="login_failed">Login failed</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_password">Invalid password</string>
 </resources>

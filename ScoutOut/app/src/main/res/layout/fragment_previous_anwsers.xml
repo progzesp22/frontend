@@ -8,11 +8,7 @@
     tools:context=".fragments.LoginFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:id="@+id/task_description"
+        android:id="@+id/task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,6 +19,7 @@
         android:text="Task name"/>
 
     <ListView
+        android:id="@+id/previous_answers_list"
         android:layout_width="300dp"
         android:layout_height="350dp"
         android:layout_gravity="center"
@@ -51,13 +48,13 @@
         tools:ignore="ExtraText" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="300dp"
         app:shapeAppearanceOverlay="@style/Circular"
-        android:src="@mipmap/Logo" />
+        android:src="@mipmap/logo" />
 
 
 </FrameLayout>

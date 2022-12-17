@@ -43,6 +43,10 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
+    public LoggedInUser getLoggedInUser() {
+        return user;
+    }
+
     public Result<LoggedInUser> login(String username, String password) {
         // handle login
         Result<LoggedInUser> result = dataSource.login(username, password);

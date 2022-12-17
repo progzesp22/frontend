@@ -1,66 +1,107 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.progzesp22.scoutout.AnswerView;
+import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
+import com.progzesp22.scoutout.databinding.FragmentPreviousAnwsersBinding;
+import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.Task;
+import com.progzesp22.scoutout.domain.TasksModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PreviousAnwsersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
 public class PreviousAnwsersFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    FragmentPreviousAnwsersBinding binding;
+    Task activeTask;
 
     public PreviousAnwsersFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PreviousAnwsersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PreviousAnwsersFragment newInstance(String param1, String param2) {
-        PreviousAnwsersFragment fragment = new PreviousAnwsersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_previous_anwsers, container, false);
+        binding = FragmentPreviousAnwsersBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.goToUpload.setOnClickListener(view1 -> {
+            NavHostFragment.findNavController(this).navigate(R.id.action_previousAnwsersFragment_to_taskAnswerFragment);
+        });
+
+        binding.goToTaskDescription.setOnClickListener(view1 -> {
+            NavHostFragment.findNavController(this).navigate(R.id.action_previousAnwsersFragment_to_taskViewFragment);
+        });
+
+        TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        activeTask = tasksModel.getActiveTask();
+
+        if (activeTask == null) {
+            NavHostFragment.findNavController(this).navigateUp();
+            return;
+        }
+
+        binding.taskName.setText(activeTask.getName());
+
+        binding.previousAnswersList.setAdapter(new AnswerListAdapter(activeTask.getAnswers()));
+    }
+
+
+    class AnswerListAdapter extends BaseAdapter {
+
+        List<Answer> answers;
+
+        AnswerListAdapter(List<Answer> answers) {
+            this.answers = answers;
+        }
+
+        @Override
+        public int getCount() {
+            return answers.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return answers.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                AnswerView answerView = new AnswerView(getContext());
+                answerView.disableButton();
+                // TODO: maybe optimize how we get answer from the backend
+                MainActivity.requestHandler.getAnswer(answers.get(i).getId(), jsonObject -> {
+                    answerView.setAnswer(jsonObject.optString("response"));
+
+            }, error -> {
+                answerView.setAnswer("Błąd pobierania odpowiedzi");
+                });
+                view = answerView;
+            }
+
+            return view;
+        }
     }
 }
