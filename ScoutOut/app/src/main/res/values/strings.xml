@@ -75,4 +75,6 @@
     <string name="login_failed">Login failed</string>
     <string name="invalid_username">Invalid username</string>
     <string name="invalid_password">Invalid password</string>
+    <string name="add_team">Create</string>
+    <string name="team_name">New team name</string>
 </resources>

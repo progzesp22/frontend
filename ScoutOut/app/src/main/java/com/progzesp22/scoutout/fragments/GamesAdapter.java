@@ -86,17 +86,17 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
                 button.setVisibility(View.VISIBLE);
                 button.setOnClickListener(view1 -> {
                     model.setActiveGame(game);
-                    navController.navigate(R.id.joinGame);
+                    navController.navigate(R.id.action_userGamesFragment_to_playerTeamsFragment);
 
                 });
                 break;
             case STARTED:
                 status.setText("playing");
-                button.setText("join");
+                button.setText("play");
                 button.setVisibility(View.VISIBLE);
                 button.setOnClickListener(view1 -> {
                     model.setActiveGame(game);
-                    navController.navigate(R.id.joinGame);
+                    navController.navigate(R.id.action_userGamesFragment_to_listTasksFragment);
                 });
                 break;
             case FINISHED:

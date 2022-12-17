@@ -9,8 +9,6 @@
         android:name="com.progzesp22.scoutout.fragments.gm.GMGameFragment"
         android:label="fragment_gm_game"
         tools:layout="@layout/fragment_gm_game">
-
-
         <action
             android:id="@+id/action_gm_game_fragment_to_GMListToAcceptFragment"
             app:destination="@id/GMListToAcceptFragment" />
@@ -80,11 +78,14 @@
         android:label="fragment_user_games"
         tools:layout="@layout/fragment_user_games" >
         <action
-            android:id="@+id/joinGame"
-            app:destination="@id/listTasksFragment" />
-        <action
             android:id="@+id/action_create_edit_game"
             app:destination="@id/GMNewGameFragment" />
+        <action
+            android:id="@+id/action_userGamesFragment_to_playerTeamsFragment"
+            app:destination="@id/playerTeamsFragment" />
+        <action
+            android:id="@+id/action_userGamesFragment_to_listTasksFragment"
+            app:destination="@id/listTasksFragment" />
 
     </fragment>
     <fragment
@@ -130,4 +131,14 @@
             android:id="@+id/action_previousAnwsersFragment_to_taskAnswerFragment"
             app:destination="@id/taskAnswerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/playerTeamsFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.PlayerTeamsFragment"
+        android:label="fragment_player_teams"
+        tools:layout="@layout/fragment_player_teams" >
+        <action
+            android:id="@+id/action_playerTeamsFragment_to_listTasksFragment2"
+            app:destination="@id/listTasksFragment" />
+    </fragment>
+
 </navigation>
