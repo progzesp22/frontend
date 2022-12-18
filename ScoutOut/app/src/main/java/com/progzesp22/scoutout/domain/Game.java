@@ -11,8 +11,9 @@ import java.util.Locale;
 public class Game extends Entity{
 
     protected long id;
-    protected String name;
-    protected String gameMaster;
+    protected String name = "";
+    protected String description = "";
+    protected String gameMaster = "";
     protected GameState state;
     protected Date startTime;
     protected Date endTime;
@@ -135,6 +136,14 @@ public class Game extends Entity{
 
     public void setEndScore(long endScore) {
         this.endScore = endScore;
+    }
+
+    public String getDescription(){return description;}
+
+    public void setDescription(String description){this.description= description;}
+
+    public String getEndTimeString() {
+        return dateFormat.format(endTime);
     }
 
     public enum GameState {

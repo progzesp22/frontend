@@ -510,7 +510,7 @@ public class RequestHandler implements RequestInterface {
             json.put("endCondition", game.getEndCondition());
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
-                json.put("endTime", game.getEndTime());
+                json.put("endTime", game.getEndTimeString());
             } else if(game.getEndCondition() == Game.EndCondition.SCORE) {
                 json.put("endScore", game.getEndScore());
             }
@@ -575,11 +575,11 @@ public class RequestHandler implements RequestInterface {
         JSONObject json = new JSONObject();
         try {
             json.put("name", game.getName());
-            json.put("startTime", game.getStartTime());
+            json.put("startTime", game.getStartTimeString());
             json.put("endCondition", game.getEndCondition());
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
-                json.put("endTime", game.getEndTime());
+                json.put("endTime", game.getEndTimeString());
             } else if(game.getEndCondition() == Game.EndCondition.SCORE) {
                 json.put("endScore", game.getEndScore());
             }
@@ -598,6 +598,7 @@ public class RequestHandler implements RequestInterface {
             }
         };
 
+        requestQueue.add(jsonObjectRequest);
     }
 
 

@@ -23,6 +23,8 @@ import java.util.List;
 
 public class UserGamesFragment extends Fragment {
     FragmentUserGamesBinding binding;
+    GamesModel model;
+
 
     public UserGamesFragment() {
         // Required empty public constructor
@@ -38,17 +40,18 @@ public class UserGamesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        model = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+
         binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        GamesModel model = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         model.getGames().observe(getViewLifecycleOwner(), this::displayGames);
         model.refresh();
 
-        binding.addGame.setOnClickListener(view1 ->
-                NavHostFragment.findNavController(this).navigate(R.id.action_create_edit_game)
+        binding.addGame.setOnClickListener(view1 -> {
+                model.setActiveGame(null);
+                NavHostFragment.findNavController(this).navigate(R.id.action_create_edit_game);
+            }
         );
-
-
     }
 
     public void displayGames(List<Game> games){

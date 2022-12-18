@@ -11,14 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.function.Consumer;
 
 
 public class SelectDateTimeFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    TextView dob;
-    public SelectDateTimeFragment (TextView dob) {
+    Consumer<Calendar> callback;
+    public SelectDateTimeFragment (Consumer<Calendar> callback) {
         super();
-        this.dob = dob;
+        this.callback = callback;
     }
 
     @NonNull
@@ -38,12 +42,12 @@ public class SelectDateTimeFragment extends DialogFragment implements DatePicker
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                 (view1, hourOfDay, minute) -> {
-                    String hourString = String.valueOf(hourOfDay);
-                    if(hourOfDay < 10) hourString = "0"+hourString;
-                    String minuteString = String.valueOf(minute);
-                    if(minute < 10) minuteString = "0"+minuteString;
-                    String txt = yy+"-"+(mm+1)+"-"+dd+" "+ hourString + ":" + minuteString + ":00";
-                    dob.setText(txt);
+                    Calendar combined = new GregorianCalendar();
+                    combined.set(yy, mm, dd);
+                    combined.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    combined.set(Calendar.MINUTE, minute);
+
+                    callback.accept(combined);
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
