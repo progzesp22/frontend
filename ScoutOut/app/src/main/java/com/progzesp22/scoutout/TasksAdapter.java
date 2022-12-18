@@ -71,7 +71,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         comment.setText("");
         button.setText("edit");
-        button.setOnClickListener(view -> navController.navigate(R.id.action_add_edit_task));
+        button.setOnClickListener(view -> {
+            model.setActiveTask(task);
+            navController.navigate(R.id.action_add_edit_task);
+        });
     }
 
     @Override

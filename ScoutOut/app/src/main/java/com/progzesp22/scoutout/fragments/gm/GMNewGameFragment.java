@@ -104,6 +104,21 @@ public class GMNewGameFragment extends Fragment {
             }
         });
 
+        binding.startGame.setOnClickListener(view1 -> {
+            Log.d(TAG, "Start game button clicked");
+
+            if(game.getId() == Entity.UNKNOWN_ID){
+                Toast.makeText(getContext(), "Należy zapisać grę przed wystartowaniem jej", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            game.setState(Game.GameState.PENDING);
+            MainActivity.requestHandler.patchGame(game, response -> {
+                NavHostFragment.findNavController(this).navigate(R.id.action_open_lobby);
+            }, error->{
+                Toast.makeText(getContext(), "Błąd otwierania lobby", Toast.LENGTH_SHORT).show();
+            });
+        });
+
         GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         loadGameOrCreateNew(gameModel.getActiveGame());
 

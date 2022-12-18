@@ -27,6 +27,16 @@ public class Task extends Entity{
         this.answers = new ArrayList<>();
     }
 
+    public Task(Task other) {
+        this.id = other.id;
+        this.name = other.name;
+        this.description = other.description;
+        this.gameId = other.id;
+        this.type = other.type;
+        this.prerequisites = new ArrayList<>(other.prerequisites);
+        this.answers = new ArrayList<>(other.answers);
+    }
+
     public long getId() {
         return id;
     }
