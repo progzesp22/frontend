@@ -123,4 +123,14 @@ public class GamesModel extends ViewModel {
         });
     }
 
+    public void endGame(Game game) {
+        Game.GameState temp = activeGame.getState();
+        game.setState(Game.GameState.FINISHED);
+        MainActivity.requestHandler.patchGame(game, response -> {
+            refresh();
+        }, error -> {
+            Log.e(TAG, "Error ending game: " + error.toString());
+            game.setState(temp);
+        });
+    }
 }

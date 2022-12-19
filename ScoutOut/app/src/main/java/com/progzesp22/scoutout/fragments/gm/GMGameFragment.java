@@ -132,8 +132,8 @@ public class GMGameFragment extends Fragment {
         });
 
         binding.gmGameEndButton.setOnClickListener(v -> {
-            // TODO: zakończenie gry
-            Toast.makeText(getContext(), "End game", Toast.LENGTH_SHORT).show();
+            gamesModel.endGame(gamesModel.getActiveGame());
+            NavHostFragment.findNavController(this).navigate(R.id.userGamesFragment);
         });
 
         binding.gmGameAnswersButton.setOnClickListener(v -> {
