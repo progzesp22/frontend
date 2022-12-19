@@ -18,6 +18,7 @@ import java.util.List;
 public class TeamsModel extends ViewModel {
     private MutableLiveData<List<Team>> teams;
     private Team activeTeam;
+    private Long previousGameId = -1L;
 
     private static final String TAG = "TeamsModel";
 
@@ -35,6 +36,11 @@ public class TeamsModel extends ViewModel {
             teams = new MutableLiveData<>();
         }
 
+        if (previousGameId != gameId) {
+            teams.setValue(new ArrayList<>());
+        }
+
+        previousGameId = gameId;
         fetch(gameId);
     }
 

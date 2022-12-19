@@ -49,6 +49,7 @@ public class GMWaitForPlayersFragment extends Fragment {
         binding.teamsList.setAdapter(expandableListAdapter);
         TeamsModel teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        teamsModel.refresh(gamesModel.getActiveGame().getId());
 
         gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
             if (gamesModel.getActiveGame().getState() == Game.GameState.STARTED){
