@@ -33,11 +33,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class PlayerTeamsFragment extends Fragment {
     FragmentPlayerTeamsBinding binding;
     NavController navController;
+    Timer timer;
 
     public PlayerTeamsFragment() {
         // Required empty public constructor
@@ -57,6 +60,21 @@ public class PlayerTeamsFragment extends Fragment {
         UserModel userModel = new ViewModelProvider(requireActivity()).get(UserModel.class);
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         Game activeGame = gamesModel.getActiveGame();
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                    gamesModel.refresh();
+            }
+        }, 0, 5000);
+
+        gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
+            if (gamesModel.getActiveGame().getState() == Game.GameState.STARTED){
+                NavHostFragment.findNavController(PlayerTeamsFragment.this)
+                        .navigate(R.id.action_playerTeamsFragment_to_listTasksFragment2);
+            }
+        });
 
         teamsModel.getTeams(activeGame.getId()).observe(getViewLifecycleOwner(), this::displayTeams);
         teamsModel.refresh(activeGame.getId());
@@ -108,5 +126,10 @@ public class PlayerTeamsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        timer.cancel();
+    }
 
 }

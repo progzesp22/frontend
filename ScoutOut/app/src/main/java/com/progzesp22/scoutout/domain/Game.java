@@ -166,4 +166,15 @@ public class Game extends Entity{
         TASKS
     }
 
+    public void updateFrom(Game other){
+        this.name = other.name;
+        this.description = other.description;
+        this.gameMaster = other.gameMaster;
+        this.state = other.state;
+        this.startTime = other.startTime;
+        this.endTime = other.endTime;
+        this.endCondition = other.endCondition;
+        this.endScore = other.endScore;
+    }
+
 }

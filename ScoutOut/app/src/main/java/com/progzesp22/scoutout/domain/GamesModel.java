@@ -50,12 +50,25 @@ public class GamesModel extends ViewModel {
 
     private void fetch() {
         MainActivity.requestHandler.getGames(response -> {
-            List<Game> currentGames = new ArrayList<>();
+            List<Game> currentGames = games.getValue();
+
+            if (currentGames == null) {
+                currentGames = new ArrayList<>();
+            }
 
             try {
                 for (int i = 0; i < response.length(); i++) {
                     Game parsedGame = Game.fromJson(response.getJSONObject(i));
-                    currentGames.add(parsedGame);
+                    boolean found = false;
+                    for (Game game : currentGames) {
+                        if (game.getId() == parsedGame.getId()) {
+                            game.updateFrom(parsedGame);
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        currentGames.add(parsedGame);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
