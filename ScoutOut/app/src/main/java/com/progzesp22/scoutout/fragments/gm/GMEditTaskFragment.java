@@ -82,6 +82,8 @@ public class GMEditTaskFragment extends Fragment {
                 binding.answerTypeAudioRadioButton.setChecked(true);
                 break;
         }
+
+        binding.taskScoreText.setText(Long.toString(task.getMaxScore()));
     }
 
     private void saveToServer(){
