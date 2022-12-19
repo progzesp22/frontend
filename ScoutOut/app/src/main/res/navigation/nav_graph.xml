@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/action_add_edit_task"
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/gm_game_fragment"
@@ -47,15 +47,6 @@
         android:name="com.progzesp22.scoutout.fragments.gm.GMEditTaskFragment"
         android:label="fragment_gm_task_edit"
         tools:layout="@layout/fragment_gm_edit_task" >
-        <action
-            android:id="@+id/gmGenerateQR"
-            app:destination="@id/GMqrGeneratorFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/GMAddTaskFragment"
-        android:name="com.progzesp22.scoutout.fragments.gm.GMAddTaskFragment"
-        android:label="fragment_gm_task_add"
-        tools:layout="@layout/fragment_gm_add_task" >
         <action
             android:id="@+id/gmGenerateQR"
             app:destination="@id/GMqrGeneratorFragment" />
@@ -115,11 +106,11 @@
         android:label="GMNewGameFragment">
 
         <action
-            android:id="@+id/action_add_edit_task"
-            app:destination="@id/GMAddTaskFragment" />
-        <action
             android:id="@+id/action_open_lobby"
             app:destination="@id/GMWaitForPlayersFragment" />
+        <action
+            android:id="@+id/action_GMNewGameFragment_to_GMTaskEditFragment"
+            app:destination="@id/GMTaskEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskViewFragment"

@@ -51,13 +51,37 @@ public class GMEditTaskFragment extends Fragment {
         if(incomingTask == null){
             GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
             long gameId = gamesModel.getActiveGame().getId();
-            task = new Task(Entity.UNKNOWN_ID, "", "", gameId, Task.TaskType.TEXT, new LinkedList<>());
+            task = new Task(Entity.UNKNOWN_ID, "", "", gameId, Task.TaskType.TEXT, 0, new LinkedList<>());
         } else{
             task = new Task(incomingTask);
         }
 
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
+
+        binding.answerTypeTextRadioButton.setChecked(true);
+        binding.answerTypePictureRadioButton.setChecked(true);
+        binding.answerTypeQRRadioButton.setChecked(true);
+        binding.answerTypeNavigationRadioButton.setChecked(true);
+        binding.answerTypeAudioRadioButton.setChecked(true);
+
+        switch(task.getType()){
+            case TEXT:
+                binding.answerTypeTextRadioButton.setChecked(true);
+                break;
+            case PHOTO:
+                binding.answerTypePictureRadioButton.setChecked(true);
+                break;
+            case QR_CODE:
+                binding.answerTypeQRRadioButton.setChecked(true);
+                break;
+            case NAV_POS:
+                binding.answerTypeNavigationRadioButton.setChecked(true);
+                break;
+            case AUDIO:
+                binding.answerTypeAudioRadioButton.setChecked(true);
+                break;
+        }
     }
 
     private void saveToServer(){
@@ -88,8 +112,43 @@ public class GMEditTaskFragment extends Fragment {
         loadOrCreateTask(tasksModel.getActiveTask());
 
         binding.button.setOnClickListener(view1 -> {
+            if(binding.titleText.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "Brak tytułu!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             task.setName(binding.titleText.getText().toString());
             task.setDescription(binding.descriptionText.getText().toString());
+
+            Task.TaskType taskType;
+            if(binding.answerTypeTextRadioButton.isChecked()) {
+                taskType = Task.TaskType.TEXT;
+            }
+            else if(binding.answerTypeQRRadioButton.isChecked()) {
+                taskType = Task.TaskType.QR_CODE;
+            }
+            else if(binding.answerTypePictureRadioButton.isChecked()) {
+                taskType = Task.TaskType.PHOTO;
+            }
+            else if(binding.answerTypeAudioRadioButton.isChecked()) {
+                taskType = Task.TaskType.PHOTO;
+            }
+            else {
+                taskType = Task.TaskType.NAV_POS;
+            }
+            task.setType(taskType);
+
+            long maxScore;
+            try {
+                maxScore = Integer.parseInt(binding.taskScoreText.getText().toString());
+            } catch (NumberFormatException ex) {
+                Toast.makeText(getContext(), "Nieprawidłowa liczba punktów!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            task.setMaxScore(maxScore);
+
+
             saveToServer();
         });
     }
