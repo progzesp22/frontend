@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/gm_game_fragment"
@@ -109,11 +108,11 @@
         android:label="GMNewGameFragment">
 
         <action
-            android:id="@+id/action_add_edit_task"
-            app:destination="@id/GMTaskEditFragment" />
-        <action
             android:id="@+id/action_open_lobby"
             app:destination="@id/GMWaitForPlayersFragment" />
+        <action
+            android:id="@+id/action_add_edit_task"
+            app:destination="@id/GMTaskEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskViewFragment"

@@ -25,6 +25,11 @@
     <string name="title">Tytuł</string>
     <string name="content">Treść</string>
     <string name="answer">Odpowiedź</string>
+    <string name="answer_type">Rodzaj odpowiedzi:</string>
+    <string name="answer_type_text">Tekstowa</string>
+    <string name="answer_type_picture">Zdjęcie</string>
+    <string name="answer_type_audio">Nagranie audio</string>
+    <string name="answer_type_nav">Lokalizacja GPS</string>
     <string name="answer_verb">Odpowiedz</string>
     <string name="game_description">Opis gry</string>
     <string name="game_start_automatically">Automatyczny start gry</string>
@@ -64,7 +69,8 @@
     <string name="register_in_our_application">Register in our application</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="user_name">User name</string>
+    <string name="task_score_info">Liczba punktów za zadanie: </string>
+    <string name="user_name">user name</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="user_name_login">User name</string>
     <string name="password_login">Password</string>
