@@ -92,7 +92,7 @@ public class GamesModel extends ViewModel {
         for (Game game : currentGames) {
             MainActivity.requestHandler.getGame(game.getId(), response -> {
                 try {
-                    if (response.has("endCondition")){
+                    if (response.has("endCondition") && !response.isNull("endCondition")) {
                         Game.EndCondition endCondition = Game.EndCondition.valueOf(response.getString("endCondition"));
                         game.setEndCondition(endCondition);
                         game.setStartTime(Game.dateFormat.parse(response.getString("startTime")));
