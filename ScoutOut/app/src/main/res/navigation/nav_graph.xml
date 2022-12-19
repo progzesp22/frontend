@@ -89,6 +89,9 @@
         <action
             android:id="@+id/action_userGamesFragment_to_gm_game_fragment"
             app:destination="@id/gm_game_fragment" />
+        <action
+            android:id="@+id/action_userGamesFragment_to_listTasksFragment"
+            app:destination="@id/listTasksFragment" />
 
     </fragment>
     <fragment

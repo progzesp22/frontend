@@ -122,7 +122,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
                     button.setOnClickListener(view1 -> {
                         model.setActiveGame(game);
                         userModel.setUserType(UserModel.UserType.PLAYER);
-                        navController.navigate(R.id.action_userGamesFragment_to_playerTeamsFragment);
+                        navController.navigate(R.id.action_userGamesFragment_to_listTasksFragment);
                     });
                 }
                 break;

@@ -16,6 +16,7 @@ import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentPreviousAnwsersBinding;
 import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 
@@ -50,6 +51,8 @@ public class PreviousAnwsersFragment extends Fragment {
         });
 
         TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        tasksModel.refresh(gamesModel.getActiveGame().getId());
         activeTask = tasksModel.getActiveTask();
 
         if (activeTask == null) {
