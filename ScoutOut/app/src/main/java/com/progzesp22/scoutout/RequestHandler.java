@@ -126,7 +126,16 @@ public class RequestHandler implements RequestInterface {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new MyJsonRequest(Request.Method.POST, url + "user/register", jsonBody, listener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "user/register", jsonBody, listener, errorListener){
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                if (response.data.length == 0) {
+                    byte[] responseData = "{}".getBytes(StandardCharsets.UTF_8);
+                    response = new NetworkResponse(response.statusCode, responseData, response.headers, response.notModified);
+                }
+                return super.parseNetworkResponse(response);
+            }
+        };
         requestQueue.add(request);
     }
 
