@@ -1,6 +1,7 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.TaskView;
 import com.progzesp22.scoutout.TeamsExpandableListAdapter;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
+import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.domain.Team;
 import com.progzesp22.scoutout.domain.TeamsModel;
+import com.progzesp22.scoutout.domain.UserModel;
 
 import java.util.List;
 
@@ -48,12 +51,37 @@ public class PlayerTasksFragment extends Fragment {
         model.getTasks(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), this::displayTasks);
         model.refresh(gamesModel.getActiveGame().getId());
 
-        teamsModel.getTeams(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), teams -> {
-            Team activeTeam = teamsModel.getActiveTeam();
-            binding.points.setText(String.valueOf(activeTeam.getScore()));
+        gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
+            if (gamesModel.getActiveGame().getState() != Game.GameState.STARTED){
+                NavHostFragment.findNavController(this).navigate(R.id.userGamesFragment);
+            }
         });
 
-        binding.refreshTasks.setOnClickListener(view1 -> model.refresh(gamesModel.getActiveGame().getId()));
+        teamsModel.getTeams(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), teams -> {
+            Team activeTeam = teamsModel.getActiveTeam();
+            if (activeTeam == null) {
+                String username = new ViewModelProvider(requireActivity()).get(UserModel.class).getUsername();
+                boolean found = false;
+                for (Team team : teams) {
+                    if (team.getMembers().contains(username)) {
+                        activeTeam = team;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    Log.e("PlayerTasksFragment", "onViewCreated: Player does't have any team");
+                } else {
+                    binding.points.setText(String.valueOf(activeTeam.getScore()));
+                }
+            }
+        });
+
+        binding.refreshTasks.setOnClickListener(view1 -> {
+            gamesModel.refresh();
+            model.refresh(gamesModel.getActiveGame().getId());
+            teamsModel.refresh(gamesModel.getActiveGame().getId());
+        });
     }
 
     private void displayTasks(List<Task> tasks) {
