@@ -64,6 +64,7 @@ public class GamesModel extends ViewModel {
                         if (game.getId() == parsedGame.getId()) {
                             game.updateFrom(parsedGame);
                             found = true;
+                            break;
                         }
                     }
                     if (!found) {

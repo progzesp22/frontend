@@ -38,6 +38,7 @@ import java.util.TimerTask;
 
 
 public class PlayerTeamsFragment extends Fragment {
+    private static final String TAG = "PlayerTeamsFragment";
     FragmentPlayerTeamsBinding binding;
     NavController navController;
     Timer timer;
@@ -70,12 +71,11 @@ public class PlayerTeamsFragment extends Fragment {
         }, 0, 5000);
 
         gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
-            if (gamesModel.getActiveGame().getState() == Game.GameState.STARTED){
+            if (activeGame.getState() == Game.GameState.STARTED){
                 NavHostFragment.findNavController(PlayerTeamsFragment.this)
                         .navigate(R.id.action_playerTeamsFragment_to_listTasksFragment2);
             }
         });
-
         teamsModel.getTeams(activeGame.getId()).observe(getViewLifecycleOwner(), this::displayTeams);
         teamsModel.refresh(activeGame.getId());
         setGameInfoTexts(gamesModel);
@@ -87,7 +87,8 @@ public class PlayerTeamsFragment extends Fragment {
                     gamesModel.getActiveGame().getId(),
                     String.valueOf(binding.newTeamName.getText()),
                     userModel.getUsername(),
-                    members
+                    members,
+                    0
             );
             MainActivity.requestHandler.postTeams(newTeam, response -> {
                 Toast.makeText(view1.getContext(), "Team created successfully", Toast.LENGTH_SHORT).show();

@@ -101,6 +101,7 @@ public class TasksModel extends ViewModel {
                         if (task.getId() == parsedTask.getId()) {
                             found = true;
                             task.updateFrom(parsedTask);
+                            break;
                         }
                     }
 

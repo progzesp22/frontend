@@ -16,12 +16,13 @@ public class Team extends Entity{
     protected List<String> members;
     protected long score;
 
-    public Team(long id, long gameId, String name, String creator, List<String> members) {
+    public Team(long id, long gameId, String name, String creator, List<String> members, long score) {
         this.id = id;
         this.gameId = gameId;
         this.name = name;
         this.creator = creator;
         this.members = members;
+        this.score = score;
     }
 
     public static Team fromJson(JSONObject json) throws JSONException {
@@ -32,11 +33,14 @@ public class Team extends Entity{
                 members.add(membersJson.getString(i));
             }
         }
+        long score = json.optLong("score", 0);
+
         return new Team(json.getLong("id"),
                 json.getLong("gameId"),
                 json.getString("name"),
                 json.getString("creator"),
-                members);
+                members,
+                score);
     }
 
     public long getId() {
@@ -77,5 +81,16 @@ public class Team extends Entity{
 
     public void setMembers(List<String> members) {
         this.members = members;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public void updateFrom(Team parsedTeam) {
+        this.name = parsedTeam.name;
+        this.creator = parsedTeam.creator;
+        this.members = parsedTeam.members;
+        this.score = parsedTeam.score;
     }
 }

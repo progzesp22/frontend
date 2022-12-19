@@ -12,10 +12,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.TaskView;
+import com.progzesp22.scoutout.TeamsExpandableListAdapter;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
 import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
+import com.progzesp22.scoutout.domain.Team;
+import com.progzesp22.scoutout.domain.TeamsModel;
 
 import java.util.List;
 
@@ -39,10 +42,16 @@ public class PlayerTasksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
-
+        TeamsModel teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+
         model.getTasks(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), this::displayTasks);
         model.refresh(gamesModel.getActiveGame().getId());
+
+        teamsModel.getTeams(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), teams -> {
+            Team activeTeam = teamsModel.getActiveTeam();
+            binding.points.setText(String.valueOf(activeTeam.getScore()));
+        });
 
         binding.refreshTasks.setOnClickListener(view1 -> model.refresh(gamesModel.getActiveGame().getId()));
     }
