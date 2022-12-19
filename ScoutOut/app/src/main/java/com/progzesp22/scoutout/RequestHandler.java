@@ -311,7 +311,7 @@ public class RequestHandler implements RequestInterface {
             json.put("description", task.getDescription());
             json.put("gameId", task.getGameId());
             json.put("type", task.getType());
-            json.put("score", task.getMaxScore());
+            json.put("maxScore", task.getMaxScore());
             JSONArray jsonPrerequsiteTasks = new JSONArray(task.getPrerequisiteTasks());
             json.put("prerequisiteTasks", jsonPrerequsiteTasks);
         } catch (JSONException e) {
@@ -341,7 +341,7 @@ public class RequestHandler implements RequestInterface {
             json.put("name", task.getName());
             json.put("description", task.getDescription());
             json.put("type", task.getType());
-            json.put("score", task.getMaxScore());
+            json.put("maxScore", task.getMaxScore());
 
         } catch (JSONException e) {
             e.printStackTrace();

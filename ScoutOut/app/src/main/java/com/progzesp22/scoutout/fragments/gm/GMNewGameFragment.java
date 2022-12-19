@@ -105,6 +105,8 @@ public class GMNewGameFragment extends Fragment {
                 Toast.makeText(getContext(), "Należy zapisać grę przed dodaniem zadań", Toast.LENGTH_SHORT).show();
                 return;
             }
+            TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+            tasksModel.setActiveTask(null);
 
             NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task);
         });

@@ -36,6 +36,7 @@ public class Task extends Entity{
         this.gameId = other.id;
         this.type = other.type;
         this.prerequisites = new ArrayList<>(other.prerequisites);
+        this.maxScore = other.maxScore;
         this.answers = new ArrayList<>(other.answers);
     }
 
@@ -65,7 +66,7 @@ public class Task extends Entity{
                 json.getString("description"),
                 json.getInt("gameId"),
                 TaskType.valueOf(json.getString("type")),
-                json.getLong("points"),
+                json.getLong("maxScore"),
                 new ArrayList<>()); // TODO: parse prerequisites
     }
 
@@ -119,6 +120,7 @@ public class Task extends Entity{
         this.name = other.name;
         this.description = other.description;
         this.type = other.type;
+        this.maxScore = other.maxScore;
     }
 
 
