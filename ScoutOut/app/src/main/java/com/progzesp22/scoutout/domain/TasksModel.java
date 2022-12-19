@@ -71,6 +71,20 @@ public class TasksModel extends ViewModel {
         return null;
     }
 
+    public Answer getAnswerById(long id) {
+        if (tasks == null || tasks.getValue() == null) {
+            return null;
+        }
+
+        for (Answer answer : getAnswers()) {
+            if (answer.getId() == id) {
+                return answer;
+            }
+        }
+
+        return null;
+    }
+
     private void fetch(long gameId) {
         MainActivity.requestHandler.getTasks(gameId, response -> {
             List<Task> currentTasks = tasks.getValue();
@@ -198,5 +212,27 @@ public class TasksModel extends ViewModel {
         }
 
         return answers;
+    }
+
+    public void downloadFullAnswer(long answerId) {
+        MainActivity.requestHandler.getAnswer(answerId, response -> {
+                    Answer parsedAnswer;
+                    try {
+                        parsedAnswer = Answer.fromJson(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    Answer answer = getAnswerById(answerId);
+                    answer.setApproved(parsedAnswer.isApproved());
+                    answer.setChecked(parsedAnswer.isChecked());
+                    answer.setAnswer(parsedAnswer.getAnswer());
+                    tasks.setValue(tasks.getValue()); // maybe it can be better
+                },
+                error -> {
+                    Log.e(TAG, "Error downloading answer content");
+                    Log.e(TAG, error.toString());
+                }
+        );
     }
 }

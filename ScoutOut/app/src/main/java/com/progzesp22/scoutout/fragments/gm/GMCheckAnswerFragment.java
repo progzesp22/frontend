@@ -53,10 +53,16 @@ public class GMCheckAnswerFragment extends Fragment {
         if (answer == null) return;
         Task task = taskModel.getById(answer.getTaskId());
         if (task == null) return;
+        showTask(task);
+        showAnswer(answer);
 
-        binding.titleText.setText(task.getName());
-        binding.descriptionText.setText(task.getDescription());
-        binding.answerText.setText(answer.getAnswer());
+        taskModel.getTasks(activeGameId).observe(getViewLifecycleOwner(), tasks -> {
+            showAnswer(answer);
+            showTask(task);
+        });
+
+
+
         binding.accept.setOnClickListener(view1 -> {
             MainActivity.requestHandler.patchAnswer(answer.getId(), true, response -> {
                 Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
@@ -76,6 +82,19 @@ public class GMCheckAnswerFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
             });
         });
+
+
+        taskModel.downloadFullAnswer(answer.getId());
+
+    }
+
+    private void showTask(Task task){
+        binding.titleText.setText(task.getName());
+        binding.descriptionText.setText(task.getDescription());
+    }
+
+    private void showAnswer(Answer ans){
+        binding.answerText.setText(ans.getAnswer());
     }
 
 }

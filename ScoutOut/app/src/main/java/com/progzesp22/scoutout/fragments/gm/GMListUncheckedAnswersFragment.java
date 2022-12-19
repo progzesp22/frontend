@@ -58,7 +58,6 @@ public class GMListUncheckedAnswersFragment extends Fragment {
         binding.answersLayout.removeAllViews();
         TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
 
-
         for (Answer answer : answers) {
             Task task = taskModel.getById(answer.getTaskId());
             if (task == null) {
