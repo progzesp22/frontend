@@ -71,18 +71,11 @@ public class GMGameFragment extends Fragment {
                 if (activeGame.getEndCondition() == Game.EndCondition.TIME) {
                     binding.gmGameTimerGroup.setVisibility(View.VISIBLE);
 
-//                    Date endTime = activeGame.getEndTime();
-//                    Date startTime = activeGame.getStartTime();
-
-                    // TODO: ta cześć jest tylko na potrzeby testów
-                    Date now = new Date();
-                    Date endTime = new Date(now.getTime() + 1000 * 60);
-                    Date startTime = new Date();
-
-
+                    Date endTime = activeGame.getEndTime();
+                    Date startTime = activeGame.getStartTime();
 
                     long timeWhole = endTime.getTime() - startTime.getTime();
-                    long timePassed = now.getTime() - startTime.getTime();
+                    long timePassed = new Date().getTime() - startTime.getTime();
 
                     DateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
