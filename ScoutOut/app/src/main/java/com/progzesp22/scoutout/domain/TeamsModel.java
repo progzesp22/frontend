@@ -73,7 +73,6 @@ public class TeamsModel extends ViewModel {
         }, error -> {
             Log.e(TAG, "Error adding Team: " + error.toString());
         });
-
     }
 
     public void fetchTeamInfo(long teamId){

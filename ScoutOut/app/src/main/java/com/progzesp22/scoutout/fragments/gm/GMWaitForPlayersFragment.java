@@ -25,6 +25,8 @@ import com.progzesp22.scoutout.domain.TeamsModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 
 public class GMWaitForPlayersFragment extends Fragment {
     private FragmentGmWaitForPlayersBinding binding;
@@ -55,7 +57,8 @@ public class GMWaitForPlayersFragment extends Fragment {
             }
         });
 
-        displayTeams(gamesModel.getActiveGame().getId());
+        teamsModel.getTeams(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), this::displayTeams);
+
         binding.refreshTeamsButton.setOnClickListener(view1 -> {
             teamsModel.refresh(gamesModel.getActiveGame().getId());
         });
@@ -70,19 +73,16 @@ public class GMWaitForPlayersFragment extends Fragment {
         gamesModel.startGame(gamesModel.getActiveGame());
     }
 
-    private void displayTeams(long gameId){
+    private void displayTeams(List<Team> teams){
         expandableListAdapter.getExpandableListTitle().clear();
         expandableListAdapter.getExpandableListDetail().clear();
         TeamsModel teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
-        teamsModel.getTeams(gameId).observe(getViewLifecycleOwner(), teams -> {
-            for (Team team : teams) {
-                teamsModel.fetchTeamInfo(team.getId());
-                expandableListAdapter.getExpandableListTitle().add(team.getName());
-                expandableListAdapter.getExpandableListDetail().put(team.getName(), team.getMembers());
-            }
-            expandableListAdapter.notifyDataSetChanged();
-        });
-
+        for (Team team : teams) {
+            teamsModel.fetchTeamInfo(team.getId());
+            expandableListAdapter.getExpandableListTitle().add(team.getName());
+            expandableListAdapter.getExpandableListDetail().put(team.getName(), team.getMembers());
+        }
+        expandableListAdapter.notifyDataSetChanged();
     }
 
     @Override
