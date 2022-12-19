@@ -26,11 +26,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Timer;
 
 
 public class GMWaitForPlayersFragment extends Fragment {
     private FragmentGmWaitForPlayersBinding binding;
     TeamsExpandableListAdapter expandableListAdapter;
+    Timer timer = new Timer();
 
     public GMWaitForPlayersFragment() {
         // Required empty public constructor
@@ -60,9 +62,13 @@ public class GMWaitForPlayersFragment extends Fragment {
 
         teamsModel.getTeams(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), this::displayTeams);
 
-        binding.refreshTeamsButton.setOnClickListener(view1 -> {
-            teamsModel.refresh(gamesModel.getActiveGame().getId());
-        });
+        timer.schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                teamsModel.refresh(gamesModel.getActiveGame().getId());
+                System.out.println("refreshing");
+            }
+        }, 0, 5000);
 
         binding.startButton.setOnClickListener((event)->startButtonPressed());
         binding.gameNameTextView.setText(gamesModel.getActiveGame().getName());
@@ -96,6 +102,7 @@ public class GMWaitForPlayersFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        timer.cancel();
         super.onDestroyView();
     }
 }
