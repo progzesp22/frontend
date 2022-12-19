@@ -39,9 +39,8 @@ public class Game extends Entity{
             name = json.getString("name");
         }
 
-        //TODO: bakend XD
-        if(json.has("gameMasterId")){
-            gameMaster = json.getString("gameMasterId");
+        if(json.has("gameMaster")){
+            gameMaster = json.getString("gameMaster");
         }
 
         Game game = new Game(json.getLong("id"),

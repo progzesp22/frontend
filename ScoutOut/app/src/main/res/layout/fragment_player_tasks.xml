@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.player.PlayerTasksFragment">
+
+    <TextView
+        android:id="@+id/pointsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Points: "
+        app:layout_constraintEnd_toStartOf="@+id/points"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/pointsLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pointsLabel"
+        app:layout_constraintTop_toTopOf="@+id/pointsLabel"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/refreshTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
         android:contentDescription="@string/refresh"
+        android:focusable="true"
         android:src="@android:drawable/stat_notify_sync"
-        android:focusable="true" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
-        android:id="@+id/scroll"
+        app:layout_constraintTop_toBottomOf="@id/points"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/tasks_list">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/tasksLayout"
@@ -30,4 +64,5 @@
             android:orientation="vertical" />
     </ScrollView>
 
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

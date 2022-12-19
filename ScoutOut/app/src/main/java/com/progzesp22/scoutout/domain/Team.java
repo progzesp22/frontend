@@ -14,6 +14,7 @@ public class Team extends Entity{
     protected String name;
     protected String creator;
     protected List<String> members;
+    protected long score;
 
     public Team(long id, long gameId, String name, String creator, List<String> members) {
         this.id = id;
