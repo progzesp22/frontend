@@ -18,6 +18,7 @@ import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTeamsBinding;
 import com.progzesp22.scoutout.domain.Entity;
+import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Team;
 import com.progzesp22.scoutout.domain.TeamsModel;
@@ -51,11 +52,13 @@ public class PlayerTeamsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        TeamsModel model = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
-        model.getTeams().observe(getViewLifecycleOwner(), this::displayTeams);
-        model.refresh();
-        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        TeamsModel teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
         UserModel userModel = new ViewModelProvider(requireActivity()).get(UserModel.class);
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        Game activeGame = gamesModel.getActiveGame();
+
+        teamsModel.getTeams(activeGame.getId()).observe(getViewLifecycleOwner(), this::displayTeams);
+        teamsModel.refresh(activeGame.getId());
         setGameInfoTexts(gamesModel);
         binding.createTeamButton.setOnClickListener(view1 -> {
             List<String> members = new ArrayList<>();
@@ -73,7 +76,7 @@ public class PlayerTeamsFragment extends Fragment {
                 Toast.makeText(view1.getContext(), "Error, team not created", Toast.LENGTH_SHORT).show();
             } );
             binding.newTeamName.setText("");
-            model.setActiveTeam(newTeam);
+            teamsModel.setActiveTeam(newTeam);
             NavHostFragment.findNavController(this).navigate(R.id.action_playerTeamsFragment_to_userGamesFragment);
             });
 
