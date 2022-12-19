@@ -138,17 +138,15 @@ public class GMNewGameFragment extends Fragment {
 
         loadGameOrCreateNew(gameModel.getActiveGame());
 
-        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks(gameModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), tasks -> {
-            List<Task> filteredTasks  = new ArrayList<>();
-            for(Task task : tasks){
-                if(task.getGameId() == game.getId()){
-                    filteredTasks.add(task);
-                }
-            }
-            displayTasks(filteredTasks);
-        });
-        model.refresh(gameModel.getActiveGame().getId());
+        observeTasks();
+    }
+
+    private void observeTasks() {
+        TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        if(game.getId() != Entity.UNKNOWN_ID){
+            tasksModel.getTasks(game.getId()).observe(getViewLifecycleOwner(), this::displayTasks);
+            tasksModel.refresh(game.getId());
+        }
     }
 
     private void updateExistingGame() {
@@ -168,6 +166,8 @@ public class GMNewGameFragment extends Fragment {
                 game = postedGame;
                 GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
                 gameModel.setActiveGame(game);
+                observeTasks();
+
             } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(getContext(), "Błąd zapisywania gry!", Toast.LENGTH_SHORT).show();

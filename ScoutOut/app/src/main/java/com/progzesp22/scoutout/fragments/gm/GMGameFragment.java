@@ -59,10 +59,6 @@ public class GMGameFragment extends Fragment {
 
 
         gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
-            if (games.size() > 0) {
-                gamesModel.setActiveGame(games.get(0));
-            }
-
             Game activeGame = gamesModel.getActiveGame();
 
             if (activeGame != null) {
