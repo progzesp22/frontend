@@ -151,7 +151,9 @@ public class GMGameFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        timer.cancel();
+        if(timer != null) {
+            timer.cancel();
+        }
         timer = null;
     }
 }
