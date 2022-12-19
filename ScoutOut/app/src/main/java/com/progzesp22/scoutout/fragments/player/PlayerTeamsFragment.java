@@ -30,6 +30,7 @@ import org.json.JSONException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,8 +93,19 @@ public class PlayerTeamsFragment extends Fragment {
         binding.gameNameText.setText(gamesModel.getActiveGame().getName());
         binding.gameMasterText.setText(gamesModel.getActiveGame().getGameMaster());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'\n'HH:mm", Locale.getDefault());
-        binding.startTimeText.setText(dateFormat.format(gamesModel.getActiveGame().getStartTime()));
-        binding.endTimeText.setText(dateFormat.format(gamesModel.getActiveGame().getEndTime()));
+        Date startTime = gamesModel.getActiveGame().getStartTime();
+        Date endTime = gamesModel.getActiveGame().getEndTime();
+        if(startTime != null){
+            binding.startTimeText.setText(dateFormat.format(startTime));
+        } else {
+            binding.startTimeText.setText("");
+        }
+
+        if(endTime != null){
+            binding.endTimeText.setText(dateFormat.format(endTime));
+        } else{
+            binding.endTimeText.setText("");
+        }
     }
 
 
