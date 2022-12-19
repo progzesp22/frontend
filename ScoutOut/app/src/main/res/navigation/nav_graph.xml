@@ -142,6 +142,9 @@
         <action
             android:id="@+id/action_playerTeamsFragment_to_listTasksFragment2"
             app:destination="@id/listTasksFragment" />
+        <action
+            android:id="@+id/action_playerTeamsFragment_to_userGamesFragment"
+            app:destination="@id/userGamesFragment" />
     </fragment>
 
 </navigation>

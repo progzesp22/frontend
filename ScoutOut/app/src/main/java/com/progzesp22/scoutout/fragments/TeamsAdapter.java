@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.domain.Team;
 import com.progzesp22.scoutout.domain.TeamsModel;
@@ -72,8 +73,13 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         button.setText("Join");
         button.setVisibility(View.VISIBLE);
         button.setOnClickListener(view1 -> {
-            Toast.makeText(view1.getContext(), "Joined successfully", Toast.LENGTH_SHORT).show();
-            navController.navigate(R.id.playerTeamsFragment);
+            model.setActiveTeam(team);
+            MainActivity.requestHandler.postTeamJoin(team.getId(), response -> {
+                Toast.makeText(view1.getContext(), "Joined successfully", Toast.LENGTH_SHORT).show();
+            }, error -> {
+                Toast.makeText(view1.getContext(), "Error, team not joined", Toast.LENGTH_SHORT).show();
+            } );
+            navController.navigate(R.id.action_playerTeamsFragment_to_userGamesFragment);
         });
     }
 

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean mock_requests = false;
+        final boolean mock_requests = true;
         if(mock_requests){
             requestHandler = new MockRequestHandler();
         } else{
