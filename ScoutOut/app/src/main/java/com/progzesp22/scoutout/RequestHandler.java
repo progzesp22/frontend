@@ -431,6 +431,7 @@ public class RequestHandler implements RequestInterface {
             json.put("startTime", game.getStartTimeString());
             json.put("endCondition", game.getEndCondition());
             json.put("state", game.getState().toString());
+            json.put("description", game.getDescription());
 
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
@@ -481,6 +482,7 @@ public class RequestHandler implements RequestInterface {
             json.put("startTime", game.getStartTimeString());
             json.put("endCondition", game.getEndCondition());
             json.put("state", game.getState().toString());
+            json.put("description", game.getDescription());
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
                 json.put("endTime", game.getEndTimeString());
