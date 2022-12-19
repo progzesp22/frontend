@@ -71,7 +71,8 @@ public class GMEditTaskFragment extends Fragment {
     }
 
     private void serverCommunicationSuccess(JSONObject response){
-        tasksModel.refresh();
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        tasksModel.refresh(gamesModel.getActiveGame().getId());
         Toast.makeText(getContext(), "Sukces", Toast.LENGTH_SHORT).show();
         NavHostFragment.findNavController(this).navigateUp();
     }

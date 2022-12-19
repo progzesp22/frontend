@@ -92,15 +92,16 @@ public class GamesModel extends ViewModel {
         for (Game game : currentGames) {
             MainActivity.requestHandler.getGame(game.getId(), response -> {
                 try {
-                    Game.EndCondition endCondition = Game.EndCondition.valueOf(response.getString("endCondition"));
-                    game.setEndCondition(endCondition);
-                    game.setStartTime(Game.dateFormat.parse(response.getString("startTime")));
-                    if (endCondition == Game.EndCondition.TIME) {
-                        game.setEndTime(Game.dateFormat.parse(response.getString("endTime")));
-                    } else if (endCondition == Game.EndCondition.SCORE) {
-                        game.setEndScore(response.getInt("endScore"));
+                    if (response.has("endCondition")){
+                        Game.EndCondition endCondition = Game.EndCondition.valueOf(response.getString("endCondition"));
+                        game.setEndCondition(endCondition);
+                        game.setStartTime(Game.dateFormat.parse(response.getString("startTime")));
+                        if (endCondition == Game.EndCondition.TIME) {
+                            game.setEndTime(Game.dateFormat.parse(response.getString("endTime")));
+                        } else if (endCondition == Game.EndCondition.SCORE) {
+                            game.setEndScore(response.getInt("endScore"));
+                        }
                     }
-
                     games.setValue(currentGames);
                 } catch (JSONException | ParseException e) {
                     e.printStackTrace();

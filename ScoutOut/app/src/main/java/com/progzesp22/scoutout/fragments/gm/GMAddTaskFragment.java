@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentGmAddTaskBinding;
 import com.progzesp22.scoutout.domain.Entity;
+import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.MainActivity;
@@ -47,6 +48,8 @@ public class GMAddTaskFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        long activeGameId = gamesModel.getActiveGame().getId();
 
         binding.button.setOnClickListener(view1 -> {
             Task newTask = new Task(
@@ -62,7 +65,7 @@ public class GMAddTaskFragment extends Fragment {
                     newTask,
                     response -> {
                         Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();
-                        model.refresh();
+                        model.refresh(activeGameId);
                         NavHostFragment.findNavController(this).navigateUp();
                     },
                     error -> {

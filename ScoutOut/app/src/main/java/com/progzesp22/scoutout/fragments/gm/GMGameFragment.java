@@ -110,7 +110,7 @@ public class GMGameFragment extends Fragment {
                     timer.start();
                 }
 
-                tasksModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+                tasksModel.getTasks(activeGame.getId()).observe(getViewLifecycleOwner(), tasks -> {
                     int count = 0;
                     int finished = 0;
                     for (Task task : tasks) {

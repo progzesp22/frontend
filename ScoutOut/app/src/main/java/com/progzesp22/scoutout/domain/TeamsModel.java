@@ -28,6 +28,10 @@ public class TeamsModel extends ViewModel {
             teams = new MutableLiveData<>();
             fetch(gameId);
         }
+        if (previousGameId != gameId) {
+            fetch(gameId);
+            previousGameId = gameId;
+        }
         return teams;
     }
 
@@ -38,9 +42,9 @@ public class TeamsModel extends ViewModel {
 
         if (previousGameId != gameId) {
             teams.setValue(new ArrayList<>());
+            previousGameId = gameId;
         }
 
-        previousGameId = gameId;
         fetch(gameId);
     }
 

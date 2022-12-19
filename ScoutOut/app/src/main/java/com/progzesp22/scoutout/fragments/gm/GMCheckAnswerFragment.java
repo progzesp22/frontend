@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentGmCheckAnswerBinding;
 import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.MainActivity;
@@ -44,6 +45,8 @@ public class GMCheckAnswerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        long activeGameId = gamesModel.getActiveGame().getId();
 
         Answer answer = taskModel.getActiveAnswer();
 
@@ -57,7 +60,7 @@ public class GMCheckAnswerFragment extends Fragment {
         binding.accept.setOnClickListener(view1 -> {
             MainActivity.requestHandler.patchAnswer(answer.getId(), true, response -> {
                 Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
-                taskModel.refresh();
+                taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
                 Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
@@ -67,7 +70,7 @@ public class GMCheckAnswerFragment extends Fragment {
         binding.decline.setOnClickListener(view1 -> {
             MainActivity.requestHandler.patchAnswer(answer.getId(), false, response -> {
                 Toast.makeText(getContext(), "Odrzucono", Toast.LENGTH_SHORT).show();
-                taskModel.refresh();
+                taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
                 Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();

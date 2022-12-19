@@ -104,5 +104,11 @@ public class Task extends Entity{
         AUDIO
     }
 
+    public void updateFrom(Task other){
+        this.name = other.name;
+        this.description = other.description;
+        this.type = other.type;
+    }
+
 
 }

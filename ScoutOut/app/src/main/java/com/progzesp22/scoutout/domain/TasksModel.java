@@ -18,25 +18,34 @@ public class TasksModel extends ViewModel {
     private MutableLiveData<List<Task>> tasks;
     private Task activeTask;
     private Answer activeAnswer;
+    private long previousGameId = -1L;
 
     private static final String TAG = "TasksModel";
 
 
-    public LiveData<List<Task>> getTasks() {
+    public LiveData<List<Task>> getTasks(long gameId) {
         if (tasks == null) {
             tasks = new MutableLiveData<>();
-            fetch();
+            fetch(gameId);
         }
-
+        if (previousGameId != gameId) {
+            fetch(gameId);
+            previousGameId = gameId;
+        }
         return tasks;
     }
 
-    public void refresh() {
+    public void refresh(long gameId) {
         if (tasks == null) {
             tasks = new MutableLiveData<>();
         }
 
-        fetch();
+        if (previousGameId != gameId) {
+            tasks.setValue(new ArrayList<>());
+            previousGameId = gameId;
+        }
+
+        fetch(gameId);
     }
 
 
@@ -62,8 +71,8 @@ public class TasksModel extends ViewModel {
         return null;
     }
 
-    private void fetch() {
-        MainActivity.requestHandler.getTasks(response -> {
+    private void fetch(long gameId) {
+        MainActivity.requestHandler.getTasks(gameId, response -> {
             List<Task> currentTasks = tasks.getValue();
             if (currentTasks == null) {
                 currentTasks = new ArrayList<>();
@@ -77,9 +86,7 @@ public class TasksModel extends ViewModel {
                     for (Task task : currentTasks) {
                         if (task.getId() == parsedTask.getId()) {
                             found = true;
-                            task.setName(parsedTask.getName());
-                            task.setDescription(parsedTask.getDescription());
-                            task.setType(parsedTask.getType());
+                            task.updateFrom(parsedTask);
                         }
                     }
 
@@ -97,15 +104,15 @@ public class TasksModel extends ViewModel {
             tasks.setValue(currentTasks);
 
 
-            fetchAnswers(); // fetch answers after we fetch new tasks
+            fetchAnswers(gameId); // fetch answers after we fetch new tasks
 
         }, error -> {
             Log.e("TasksModel", "Error fetching tasks: " + error.toString());
         });
     }
 
-    private void fetchAnswers() {
-        MainActivity.requestHandler.getAnswers(false, response -> {
+    private void fetchAnswers(long gameId) {
+        MainActivity.requestHandler.getAnswers(gameId,false, response -> {
             List<Task> currentTasks = tasks.getValue();
             if (currentTasks == null) {
                 currentTasks = new ArrayList<>(); // this should never happen but just in case
