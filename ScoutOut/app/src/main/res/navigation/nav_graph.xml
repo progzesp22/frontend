@@ -54,6 +54,15 @@
             app:destination="@id/GMqrGeneratorFragment" />
     </fragment>
     <fragment
+        android:id="@+id/GMAddTaskFragment"
+        android:name="com.progzesp22.scoutout.fragments.gm.GMAddTaskFragment"
+        android:label="fragment_gm_task_add"
+        tools:layout="@layout/fragment_gm_add_task" >
+        <action
+            android:id="@+id/gmGenerateQR"
+            app:destination="@id/GMqrGeneratorFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/taskAnswerFragment"
         android:name="com.progzesp22.scoutout.fragments.player.PlayerSubmitAnswerFragment"
         android:label="fragment_task_answer"
@@ -103,7 +112,7 @@
 
         <action
             android:id="@+id/action_add_edit_task"
-            app:destination="@id/GMTaskEditFragment" />
+            app:destination="@id/GMAddTaskFragment" />
         <action
             android:id="@+id/action_open_lobby"
             app:destination="@id/GMWaitForPlayersFragment" />

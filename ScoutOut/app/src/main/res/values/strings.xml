@@ -25,6 +25,11 @@
     <string name="title">Tytuł</string>
     <string name="content">Treść</string>
     <string name="answer">Odpowiedź</string>
+    <string name="answer_type">Rodzaj odpowiedzi:</string>
+    <string name="answer_type_text">Tekstowa</string>
+    <string name="answer_type_picture">Zdjęcie</string>
+    <string name="answer_type_audio">Nagranie audio</string>
+    <string name="answer_type_nav">Lokalizacja GPS</string>
     <string name="answer_verb">Odpowiedz</string>
     <string name="game_description">Opis gry</string>
     <string name="game_start_automatically">Automatyczny start gry</string>
