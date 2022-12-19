@@ -7,12 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
+import com.progzesp22.scoutout.domain.UserModel;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
 
     private final List<Game> localDataSet;
     private final GamesModel model;
+    private final UserModel userModel;
     private final NavController navController;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,10 +49,11 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         public Button getButton(){return button;}
     }
 
-    public GamesAdapter(List<Game> dataSet, NavController navController, GamesModel model) {
+    public GamesAdapter(List<Game> dataSet, NavController navController, GamesModel model, UserModel userModel) {
         localDataSet = dataSet;
         this.navController = navController;
         this.model = model;
+        this.userModel = userModel;
     }
 
     @NonNull
@@ -69,35 +73,58 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
 
         TextView status = viewHolder.getStatusTextView();
         TextView button = viewHolder.getButton();
+        String username = userModel.getUsername();
 
         switch(game.getState()){
             case CREATED:
                 status.setText("configuring");
-                button.setText("edit");
-                button.setVisibility(View.VISIBLE);
-                button.setOnClickListener(view1 -> {
-                    model.setActiveGame(game);
-                    navController.navigate(R.id.action_create_edit_game);
-                });
+                if (!username.equals(game.getGameMaster())){
+                    button.setVisibility(View.GONE);
+                } else {
+                    button.setText("edit");
+                    button.setVisibility(View.VISIBLE);
+                    button.setOnClickListener(view1 -> {
+                        model.setActiveGame(game);
+                        navController.navigate(R.id.action_create_edit_game);
+                    });
+                }
                 break;
             case PENDING:
                 status.setText("waiting for players");
                 button.setText("join");
                 button.setVisibility(View.VISIBLE);
-                button.setOnClickListener(view1 -> {
-                    model.setActiveGame(game);
-                    navController.navigate(R.id.action_userGamesFragment_to_playerTeamsFragment);
+                if (username.equals(game.getGameMaster())){
+                    button.setOnClickListener(view1 -> {
+                        model.setActiveGame(game);
+                        userModel.setUserType(UserModel.UserType.GM);
+                        navController.navigate(R.id.action_userGamesFragment_to_GMWaitForPlayersFragment);
+                    });
+                } else {
+                    button.setOnClickListener(view1 -> {
+                        model.setActiveGame(game);
+                        userModel.setUserType(UserModel.UserType.PLAYER);
+                        navController.navigate(R.id.action_userGamesFragment_to_playerTeamsFragment);
 
-                });
+                    });
+                }
                 break;
             case STARTED:
                 status.setText("playing");
                 button.setText("play");
                 button.setVisibility(View.VISIBLE);
-                button.setOnClickListener(view1 -> {
-                    model.setActiveGame(game);
-                    navController.navigate(R.id.action_userGamesFragment_to_listTasksFragment);
-                });
+                if (username.equals(game.getGameMaster())){
+                    button.setOnClickListener(view1 -> {
+                        model.setActiveGame(game);
+                        userModel.setUserType(UserModel.UserType.GM);
+                        navController.navigate(R.id.action_userGamesFragment_to_gm_game_fragment);
+                    });
+                } else {
+                    button.setOnClickListener(view1 -> {
+                        model.setActiveGame(game);
+                        userModel.setUserType(UserModel.UserType.PLAYER);
+                        navController.navigate(R.id.action_userGamesFragment_to_playerTeamsFragment);
+                    });
+                }
                 break;
             case FINISHED:
                 status.setText("finished");

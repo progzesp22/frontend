@@ -30,6 +30,7 @@ import com.progzesp22.scoutout.domain.UserModel;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -61,7 +62,7 @@ public class GMNewGameFragment extends Fragment {
         binding.gameStartTime.setOnClickListener(view1 -> {
             if (binding.gameStartTime.isChecked()) {
                 DialogFragment newFragment = new SelectDateTimeFragment(calendar -> {
-                    binding.gameStartTextView.setText(dateFormat.format(calendar));
+                    binding.gameStartTextView.setText(dateFormat.format(calendar.getTime()));
                 });
                 newFragment.show(requireFragmentManager(), "DatePicker");
             }
@@ -123,7 +124,15 @@ public class GMNewGameFragment extends Fragment {
         loadGameOrCreateNew(gameModel.getActiveGame());
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
+        model.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+            List<Task> filteredTasks  = new ArrayList<>();
+            for(Task task : tasks){
+                if(task.getGameId() == game.getId()){
+                    filteredTasks.add(task);
+                }
+            }
+            displayTasks(filteredTasks);
+        });
         model.refresh();
     }
 

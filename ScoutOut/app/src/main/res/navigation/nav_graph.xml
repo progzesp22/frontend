@@ -84,8 +84,11 @@
             android:id="@+id/action_userGamesFragment_to_playerTeamsFragment"
             app:destination="@id/playerTeamsFragment" />
         <action
-            android:id="@+id/action_userGamesFragment_to_listTasksFragment"
-            app:destination="@id/listTasksFragment" />
+            android:id="@+id/action_userGamesFragment_to_GMWaitForPlayersFragment"
+            app:destination="@id/GMWaitForPlayersFragment" />
+        <action
+            android:id="@+id/action_userGamesFragment_to_gm_game_fragment"
+            app:destination="@id/gm_game_fragment" />
 
     </fragment>
     <fragment

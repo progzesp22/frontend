@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.progzesp22.scoutout.MainActivity;
 
@@ -95,6 +96,17 @@ public class GamesModel extends ViewModel {
                 Log.e(TAG, "Error fetching Game details: " + error.toString());
             });
         }
+    }
+
+    public void startGame(Game game){
+        Game.GameState temp = game.getState();
+        game.setState(Game.GameState.STARTED);
+        MainActivity.requestHandler.patchGame(game, response -> {
+            refresh();
+        }, error -> {
+            Log.e(TAG, "Error starting game: " + error.toString());
+            game.setState(temp);
+        });
     }
 
 }

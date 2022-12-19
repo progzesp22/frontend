@@ -1,5 +1,7 @@
 package com.progzesp22.scoutout.domain;
 
+import android.annotation.SuppressLint;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +22,7 @@ public class Game extends Entity{
     protected EndCondition endCondition = EndCondition.MANUAL;
     protected long endScore;
 
+    @SuppressLint("NewApi")
     static public final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault());
 
     public Game(long id, String name, String gameMaster, GameState state) {
@@ -111,6 +114,7 @@ public class Game extends Entity{
     }
 
     public String getStartTimeString(){
+        if (startTime == null) return "";
         return dateFormat.format(startTime);
     }
 

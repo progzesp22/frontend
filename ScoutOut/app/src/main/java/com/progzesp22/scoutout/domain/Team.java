@@ -25,9 +25,11 @@ public class Team extends Entity{
 
     public static Team fromJson(JSONObject json) throws JSONException {
         List<String> members = new ArrayList<>();
-        JSONArray membersJson = json.getJSONArray("members");
-        for (int i = 0; i < membersJson.length(); i++) {
-            members.add(membersJson.getString(i));
+        JSONArray membersJson = json.optJSONArray("members");
+        if (membersJson != null) {
+            for (int i = 0; i < membersJson.length(); i++) {
+                members.add(membersJson.getString(i));
+            }
         }
         return new Team(json.getLong("id"),
                 json.getLong("gameId"),
