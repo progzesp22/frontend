@@ -22,7 +22,6 @@ public class Game extends Entity{
     protected EndCondition endCondition = EndCondition.MANUAL;
     protected long endScore;
 
-    @SuppressLint("NewApi")
     static public final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault());
 
     public Game(long id, String name, String gameMaster, GameState state) {
@@ -40,14 +39,17 @@ public class Game extends Entity{
             name = json.getString("name");
         }
 
-        if(json.has("gameMaster")){
-            gameMaster = json.getString("gameMaster");
+        //TODO: bakend XD
+        if(json.has("gameMasterId")){
+            gameMaster = json.getString("gameMasterId");
         }
 
         Game game = new Game(json.getLong("id"),
                 name,
                 gameMaster,
                 GameState.valueOf(json.getString("state")));
+
+        game.setDescription(json.optString("description", ""));
 
         try{
             if (json.has("startTime")) {

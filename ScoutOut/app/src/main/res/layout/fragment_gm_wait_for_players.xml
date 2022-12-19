@@ -50,9 +50,10 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -66,11 +67,17 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/waitingTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="10sp"
-            android:text="\nWaiting for Players...\nTeams list:"
+            android:text="Waiting for Players..."
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/teamsListTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teams list:"
             android:textSize="16sp" />
     </LinearLayout>
 
