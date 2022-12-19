@@ -52,12 +52,12 @@ public class Game extends Entity{
         game.setDescription(json.optString("description", ""));
 
         try{
-            if (json.has("startTime")) {
+            if (json.has("startTime") && !json.isNull("startTime")) {
                 game.setStartTime(dateFormat.parse(json.getString("startTime")));
 
             }
 
-            if (json.has("endCondition")) {
+            if (json.has("endCondition") && !json.isNull("endCondition")) {
                 EndCondition endCondition = EndCondition.valueOf(json.getString("endCondition"));
                 game.setEndCondition(endCondition);
                 if (endCondition == EndCondition.TIME) {

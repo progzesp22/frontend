@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.TaskView;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
+import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 
@@ -37,12 +38,13 @@ public class PlayerTasksFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(getViewLifecycleOwner(), this::displayTasks);
-        model.refresh();
+        model.getTasks(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), this::displayTasks);
+        model.refresh(gamesModel.getActiveGame().getId());
 
-        binding.refreshTasks.setOnClickListener(view1 -> model.refresh());
+        binding.refreshTasks.setOnClickListener(view1 -> model.refresh(gamesModel.getActiveGame().getId()));
     }
 
     private void displayTasks(List<Task> tasks) {

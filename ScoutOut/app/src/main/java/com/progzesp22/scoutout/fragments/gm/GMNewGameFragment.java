@@ -139,7 +139,7 @@ public class GMNewGameFragment extends Fragment {
         loadGameOrCreateNew(gameModel.getActiveGame());
 
         TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+        model.getTasks(gameModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), tasks -> {
             List<Task> filteredTasks  = new ArrayList<>();
             for(Task task : tasks){
                 if(task.getGameId() == game.getId()){
@@ -148,7 +148,7 @@ public class GMNewGameFragment extends Fragment {
             }
             displayTasks(filteredTasks);
         });
-        model.refresh();
+        model.refresh(gameModel.getActiveGame().getId());
     }
 
     private void updateExistingGame() {

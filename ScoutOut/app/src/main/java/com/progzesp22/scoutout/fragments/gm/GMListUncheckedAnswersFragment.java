@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentGmListUncheckedAnswerBinding;
 import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.AnswerView;
@@ -38,18 +39,19 @@ public class GMListUncheckedAnswersFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
 
         TasksModel tasksModel = new ViewModelProvider((requireActivity())).get(TasksModel.class);
-        tasksModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+        tasksModel.getTasks(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), tasks -> {
             List<Answer> answers = tasksModel.getUncheckedAnswers();
             if (answers != null) {
                 displayAnswers(answers);
             }
         });
 
-        tasksModel.refresh();
+        tasksModel.refresh(gamesModel.getActiveGame().getId());
 
-        binding.refreshAnswerActionButton.setOnClickListener(view1 -> tasksModel.refresh());
+        binding.refreshAnswerActionButton.setOnClickListener(view1 -> tasksModel.refresh(gamesModel.getActiveGame().getId()));
     }
 
     private void displayAnswers(List<Answer> answers) {
