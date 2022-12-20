@@ -1,6 +1,7 @@
 package com.progzesp22.scoutout;
 
 import com.android.volley.Response;
+import com.progzesp22.scoutout.domain.Answer;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.Team;
@@ -35,7 +36,7 @@ public interface RequestInterface {
 
     void getTasks(Long gameId, Response.Listener<JSONArray> responseCallback, Response.ErrorListener errorListener);
 
-    void postAnswer(long taskId, String response, Response.Listener<JSONObject> responseCallback,
+    void postAnswer(Answer answer, Response.Listener<JSONObject> responseCallback,
                     Response.ErrorListener errorListener);
 
     void postTask(Task task, Response.Listener<JSONObject> responseCallback,
@@ -50,7 +51,7 @@ public interface RequestInterface {
 
     void getAnswer(long answerId, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener);
 
-    void patchAnswer(long answerId, Boolean approved, Response.Listener<JSONObject> responseCallback,
+    void patchAnswer(Answer answer, Response.Listener<JSONObject> responseCallback,
                      Response.ErrorListener errorListener);
 
     void postGame(Game game, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener);

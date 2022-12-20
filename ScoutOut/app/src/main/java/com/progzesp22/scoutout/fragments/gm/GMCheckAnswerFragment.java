@@ -64,7 +64,11 @@ public class GMCheckAnswerFragment extends Fragment {
 
 
         binding.accept.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.patchAnswer(answer.getId(), true, response -> {
+            answer.setApproved(true);
+            answer.setChecked(true);
+            answer.setScore(task.getMaxScore());
+
+            MainActivity.requestHandler.patchAnswer(answer, response -> {
                 Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
                 taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
@@ -74,7 +78,11 @@ public class GMCheckAnswerFragment extends Fragment {
         });
 
         binding.decline.setOnClickListener(view1 -> {
-            MainActivity.requestHandler.patchAnswer(answer.getId(), false, response -> {
+            answer.setApproved(false);
+            answer.setChecked(true);
+            answer.setScore(0);
+
+            MainActivity.requestHandler.patchAnswer(answer, response -> {
                 Toast.makeText(getContext(), "Odrzucono", Toast.LENGTH_SHORT).show();
                 taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();

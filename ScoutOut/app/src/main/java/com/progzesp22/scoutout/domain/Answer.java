@@ -10,6 +10,7 @@ public class Answer extends Entity{
     protected final long userId;
     protected boolean approved;
     protected boolean checked;
+    protected long score = 0;
 
     public Answer(long id, String answer, long taskId, long userId, boolean approved, boolean checked) {
         this.id = id;
@@ -80,6 +81,14 @@ public class Answer extends Entity{
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
     }
 
 

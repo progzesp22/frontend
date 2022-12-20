@@ -17,6 +17,8 @@ import com.progzesp22.scoutout.databinding.FragmentPlayerSubmitAnswerBinding;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
+import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.Entity;
 import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.MainActivity;
@@ -53,9 +55,9 @@ public class PlayerSubmitAnswerFragment extends Fragment {
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
         binding.answerButton.setOnClickListener(view1 -> {
+            Answer answer = new Answer(Entity.UNKNOWN_ID, binding.answerText.getText().toString(), task.getId(), Entity.UNKNOWN_ID, false, false);
             MainActivity.requestHandler.postAnswer(
-                    task.getId(),
-                    binding.answerText.getText().toString(),
+                    answer,
                     response -> {
                         Toast.makeText(getContext(), "Wysłano", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigateUp();
