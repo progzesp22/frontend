@@ -383,7 +383,7 @@ public class RequestHandler implements RequestInterface {
 
         requestQueue.add(jsonObjectRequest);
     }
-    
+
     @Override
     public void patchAnswer(Answer answer, Response.Listener<JSONObject> responseCallback,
                             Response.ErrorListener errorListener) {
