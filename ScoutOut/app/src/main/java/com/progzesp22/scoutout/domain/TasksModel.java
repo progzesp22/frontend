@@ -29,6 +29,7 @@ public class TasksModel extends ViewModel {
             fetch(gameId);
         }
         if (previousGameId != gameId) {
+            tasks.setValue(new ArrayList<>());
             fetch(gameId);
             previousGameId = gameId;
         }
