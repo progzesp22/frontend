@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#FFFFFF"
+    android:background="@drawable/gradient_background"
     android:orientation="vertical"
     tools:context=".TaskAnswerFragment">
 
@@ -52,24 +52,26 @@
         android:orientation="horizontal"
         app:layout_constraintHorizontal_bias="0.05">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/decline"
             android:layout_margin="10dp"
             android:layout_weight="2.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/decline_task"
+            android:textColor="@color/white"
+            android:background="@drawable/button_shape"
+            android:layout_gravity="center"            android:text="@string/decline_task"
              />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/accept"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/accept_task" />
+            android:textColor="@color/white"
+            android:background="@drawable/button_shape"
+            android:layout_gravity="center"            android:text="@string/accept_task" />
     </LinearLayout>
 
 </LinearLayout>
