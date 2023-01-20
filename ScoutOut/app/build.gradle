@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.progzesp22.scoutout"
-        minSdk 24
+        minSdk 26 // required to use Base64.getEncoder()
         targetSdk 33
         versionCode 1
         versionName "1.0"
