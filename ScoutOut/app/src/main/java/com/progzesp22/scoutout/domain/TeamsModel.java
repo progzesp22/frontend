@@ -18,6 +18,7 @@ import java.util.List;
 public class TeamsModel extends ViewModel {
     private MutableLiveData<List<Team>> teams;
     private Team activeTeam;
+    private Long previousGameId = -1L;
 
     private static final String TAG = "TeamsModel";
 
@@ -27,12 +28,21 @@ public class TeamsModel extends ViewModel {
             teams = new MutableLiveData<>();
             fetch(gameId);
         }
+        if (previousGameId != gameId) {
+            fetch(gameId);
+            previousGameId = gameId;
+        }
         return teams;
     }
 
     public void refresh(long gameId) {
         if (teams == null) {
             teams = new MutableLiveData<>();
+        }
+
+        if (previousGameId != gameId) {
+            teams.setValue(new ArrayList<>());
+            previousGameId = gameId;
         }
 
         fetch(gameId);
@@ -49,12 +59,26 @@ public class TeamsModel extends ViewModel {
 
     private void fetch(long gameId) {
         MainActivity.requestHandler.getTeams(gameId, response -> {
-            List<Team> currentTeams = new ArrayList<>();
+            List<Team> currentTeams = teams.getValue();
+
+            if (currentTeams == null) {
+                currentTeams = new ArrayList<>();
+            }
 
             try {
                 for (int i = 0; i < response.length(); i++) {
                     Team parsedTeam = Team.fromJson(response.getJSONObject(i));
-                    currentTeams.add(parsedTeam);
+                    boolean found = false;
+                    for (Team team : currentTeams) {
+                        if (team.getId() == parsedTeam.getId()) {
+                            team.updateFrom(parsedTeam);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        currentTeams.add(parsedTeam);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -64,16 +88,6 @@ public class TeamsModel extends ViewModel {
         }, error -> {
             Log.e(TAG, "Error fetching Teams: " + error.toString());
         });
-    }
-
-    public void addTeam(long gameId, String teamName, String userName) {
-        Team newTeam = new Team(Team.UNKNOWN_ID, gameId, teamName, userName, new ArrayList<>());
-        MainActivity.requestHandler.postTeams(newTeam, response -> {
-            fetch(gameId);
-        }, error -> {
-            Log.e(TAG, "Error adding Team: " + error.toString());
-        });
-
     }
 
     public void fetchTeamInfo(long teamId){

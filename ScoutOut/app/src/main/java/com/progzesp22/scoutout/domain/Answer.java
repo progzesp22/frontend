@@ -5,11 +5,12 @@ import org.json.JSONObject;
 
 public class Answer extends Entity{
     protected final long id;
-    protected final String answer;
+    protected String answer;
     protected final long taskId;
     protected final long userId;
     protected boolean approved;
     protected boolean checked;
+    protected long score = 0;
 
     public Answer(long id, String answer, long taskId, long userId, boolean approved, boolean checked) {
         this.id = id;
@@ -28,6 +29,10 @@ public class Answer extends Entity{
         return answer;
     }
 
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
     public long getTaskId() {
         return taskId;
     }
@@ -44,7 +49,7 @@ public class Answer extends Entity{
         try {
             userId = json.getInt("userId");
         } catch (JSONException e) {
-            userId = -1;
+            userId = Entity.UNKNOWN_ID;
         }
 
         try {
@@ -76,6 +81,14 @@ public class Answer extends Entity{
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
     }
 
 

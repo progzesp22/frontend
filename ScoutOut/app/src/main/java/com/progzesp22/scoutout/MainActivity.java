@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean mock_requests = true;
+        final boolean mock_requests = false;
         if(mock_requests){
             requestHandler = new MockRequestHandler();
         } else{
@@ -47,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
-        Set<Integer> topLevelDestinations = getTopLevelDestinations();
-
-
-        appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(binding.drawerLayout).build();
+        appBarConfiguration = new AppBarConfiguration.Builder().setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
@@ -58,22 +55,6 @@ public class MainActivity extends AppCompatActivity {
         setupHamburgerMenu(navController);
 
 
-    }
-
-
-    /**
-     * Wszystkie fragmenty, które mają być widoczne w menu nawigacji powinny zostać tutaj dodane.
-     * Nie jestem pewien co to w 100% robi ale z tego co rozumiem to pozwala aby te ekrany były
-     * traktowane na równi z ekranem startowym.
-     */
-    private Set<Integer> getTopLevelDestinations() {
-        HashSet<Integer> set = new HashSet<>();
-        set.add(R.id.selectUserTypeFragment); // user login fragment
-        set.add(R.id.listTasksFragment); // player tasks fragment
-        set.add(R.id.GMlistTasksFragment); // GM tasks fragment
-        set.add(R.id.GMqrGeneratorFragment); // GM players fragment
-        set.add(R.id.GMListToAcceptFragment); // GM players fragment
-        return set;
     }
 
     private void setupHamburgerMenu(NavController navController) {

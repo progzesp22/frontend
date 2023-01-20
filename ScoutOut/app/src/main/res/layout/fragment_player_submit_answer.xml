@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,7 +35,21 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/answer"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/qrResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wynik skanowania kodu QR" />
 
     <Button
         android:id="@+id/scanQRButton"
@@ -43,6 +58,13 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="10dp"
         android:text="@string/scan_qr" />
+
+    <Button
+        android:id="@+id/photoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Zrób zdjęcie" />
 
     <Button
             android:id="@+id/answerButton"

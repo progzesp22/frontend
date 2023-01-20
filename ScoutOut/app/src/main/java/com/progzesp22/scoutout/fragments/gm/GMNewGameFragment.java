@@ -27,6 +27,8 @@ import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.TasksAdapter;
 import com.progzesp22.scoutout.domain.UserModel;
 
+import org.json.JSONException;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,6 +58,8 @@ public class GMNewGameFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
 
         binding.tasksList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -91,7 +95,21 @@ public class GMNewGameFragment extends Fragment {
             }
         });
 
-        binding.addTask.setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task));
+        binding.addTask.setOnClickListener(view1 -> {
+            if(game.getId() == Entity.UNKNOWN_ID){
+                Toast.makeText(getContext(), "Należy zapisać grę przed dodaniem zadań", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(gameModel.getActiveGame() == null){
+                Toast.makeText(getContext(), "Należy zapisać grę przed dodaniem zadań", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+            tasksModel.setActiveTask(null);
+
+            NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task);
+        });
 
         binding.saveGameButton.setOnClickListener((group)-> {
             Log.d(TAG, "Save game button clicked");
@@ -120,20 +138,17 @@ public class GMNewGameFragment extends Fragment {
             });
         });
 
-        GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         loadGameOrCreateNew(gameModel.getActiveGame());
 
-        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(getViewLifecycleOwner(), tasks -> {
-            List<Task> filteredTasks  = new ArrayList<>();
-            for(Task task : tasks){
-                if(task.getGameId() == game.getId()){
-                    filteredTasks.add(task);
-                }
-            }
-            displayTasks(filteredTasks);
-        });
-        model.refresh();
+        observeTasks();
+    }
+
+    private void observeTasks() {
+        TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        if(game.getId() != Entity.UNKNOWN_ID){
+            tasksModel.getTasks(game.getId()).observe(getViewLifecycleOwner(), this::displayTasks);
+            tasksModel.refresh(game.getId());
+        }
     }
 
     private void updateExistingGame() {
@@ -148,6 +163,18 @@ public class GMNewGameFragment extends Fragment {
     private void postNewGame() {
         Log.d(TAG, "Posting new game");
         MainActivity.requestHandler.postGame(game, response -> {
+            try {
+                Game postedGame = Game.fromJson(response);
+                game = postedGame;
+                GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+                gameModel.setActiveGame(game);
+                observeTasks();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Błąd zapisywania gry!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Toast.makeText(getContext(), "Zapisano grę", Toast.LENGTH_SHORT).show();
         }, error -> {
             Toast.makeText(getContext(), "Błąd zapisywania gry!", Toast.LENGTH_SHORT).show();
