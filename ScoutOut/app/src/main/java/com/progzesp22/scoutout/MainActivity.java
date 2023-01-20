@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupHamburgerMenu(NavController navController) {
         // Powinno być ustawione na pierwszy ekran który ma być widoczny po otworzeniu aplikacji
-        binding.navView.setCheckedItem(R.id.selectUserTypeFragment);
+        binding.navView.setCheckedItem(R.id.loginFragment);
 
         UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
 
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.navView.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.selectUserTypeFragment) {
-                navController.navigate(R.id.selectUserTypeFragment);
+            if (item.getItemId() == R.id.loginFragment) {
+                navController.navigate(R.id.loginFragment);
             } else if (item.getItemId() == R.id.listTasksFragment) {
                 navController.navigate(R.id.listTasksFragment);
             } else if (item.getItemId() == R.id.GMlistTasksFragment) {
