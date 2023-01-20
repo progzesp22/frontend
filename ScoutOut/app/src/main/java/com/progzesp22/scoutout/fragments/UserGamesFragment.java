@@ -17,6 +17,7 @@ import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentUserGamesBinding;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
+import com.progzesp22.scoutout.domain.TeamsModel;
 import com.progzesp22.scoutout.domain.UserModel;
 
 import java.util.List;
@@ -78,10 +79,13 @@ public class UserGamesFragment extends Fragment {
     public void displayGames(List<Game> games){
         GamesModel model = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         UserModel userModel = new ViewModelProvider(requireActivity()).get(UserModel.class);
+        TeamsModel teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
         NavController navController = NavHostFragment.findNavController(this);
 
+        binding.recycler.setAdapter(new GamesAdapter(games, navController, model, userModel, teamsModel));
 //        int scrollY = binding.recycler.getScrollY();
-        binding.recycler.setAdapter(new GamesAdapter(games, navController, model, userModel));
 //        binding.recycler.setScrollY(scrollY);
     }
+
+
 }

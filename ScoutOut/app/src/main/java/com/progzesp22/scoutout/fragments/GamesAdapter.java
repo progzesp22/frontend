@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
+import com.progzesp22.scoutout.domain.Team;
+import com.progzesp22.scoutout.domain.TeamsModel;
 import com.progzesp22.scoutout.domain.UserModel;
 
 import java.util.List;
@@ -23,6 +26,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
     private final List<Game> localDataSet;
     private final GamesModel model;
     private final UserModel userModel;
+    private final TeamsModel teamsModel;
     private final NavController navController;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,11 +53,12 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         public Button getButton(){return button;}
     }
 
-    public GamesAdapter(List<Game> dataSet, NavController navController, GamesModel model, UserModel userModel) {
+    public GamesAdapter(List<Game> dataSet, NavController navController, GamesModel model, UserModel userModel, TeamsModel teamsModel) {
         localDataSet = dataSet;
         this.navController = navController;
         this.model = model;
         this.userModel = userModel;
+        this.teamsModel = teamsModel;
     }
 
     @NonNull
@@ -120,9 +125,15 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
                     });
                 } else {
                     button.setOnClickListener(view1 -> {
-                        model.setActiveGame(game);
-                        userModel.setUserType(UserModel.UserType.PLAYER);
-                        navController.navigate(R.id.action_userGamesFragment_to_listTasksFragment);
+                        teamsModel.teamWithPlayerExists(username, game.getId(),exists->{
+                            if(exists){
+                                model.setActiveGame(game);
+                                userModel.setUserType(UserModel.UserType.PLAYER);
+                                navController.navigate(R.id.action_userGamesFragment_to_listTasksFragment);
+                            }else{
+                                Toast.makeText(viewHolder.itemView.getContext(), "You are not in any team", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     });
                 }
                 break;

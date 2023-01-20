@@ -66,7 +66,6 @@ public class GMWaitForPlayersFragment extends Fragment {
             @Override
             public void run() {
                 teamsModel.refresh(gamesModel.getActiveGame().getId());
-                System.out.println("refreshing");
             }
         }, 0, 5000);
 

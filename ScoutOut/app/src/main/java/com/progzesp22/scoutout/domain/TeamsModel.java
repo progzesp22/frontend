@@ -1,7 +1,10 @@
 package com.progzesp22.scoutout.domain;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.core.util.Consumer;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,6 +17,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 public class TeamsModel extends ViewModel {
     private MutableLiveData<List<Team>> teams;
@@ -57,10 +61,52 @@ public class TeamsModel extends ViewModel {
         return activeTeam;
     }
 
+    public void teamWithPlayerExists(String name, long gameId, Consumer<Boolean> callback) {
+        teams = new MutableLiveData<>();
+        MainActivity.requestHandler.getTeams(gameId, response -> {
+            List<Team> currentTeams = teams.getValue();
+            if (currentTeams == null) {
+                currentTeams = new ArrayList<>();
+            }
+
+            try {
+                for (int i = 0; i < response.length(); i++) {
+                    Team parsedTeam = Team.fromJson(response.getJSONObject(i));
+                    boolean found = false;
+                    for (Team team : currentTeams) {
+                        if (team.getId() == parsedTeam.getId()) {
+                            team.updateFrom(parsedTeam);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        currentTeams.add(parsedTeam);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            teams.setValue(currentTeams);
+            boolean exists = false;
+            for(Team team : currentTeams) {
+                if (team.getMembers().contains(name)) {
+                    activeTeam = team;
+                    exists = true;
+                    break;
+                }
+            }
+            callback.accept(exists);
+
+        }, error -> {
+            Log.e(TAG, "Error fetching Teams: " + error.toString());
+        });
+    }
+
     private void fetch(long gameId) {
         MainActivity.requestHandler.getTeams(gameId, response -> {
             List<Team> currentTeams = teams.getValue();
-
             if (currentTeams == null) {
                 currentTeams = new ArrayList<>();
             }
