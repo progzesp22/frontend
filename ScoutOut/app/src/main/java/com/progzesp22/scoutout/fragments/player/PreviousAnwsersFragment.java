@@ -1,6 +1,7 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class PreviousAnwsersFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -48,20 +50,37 @@ public class PreviousAnwsersFragment extends Fragment {
         binding.goToTaskDescription.setOnClickListener(view1 -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_previousAnwsersFragment_to_taskViewFragment);
         });
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("PreviousAnswersFragment", "onResume()");
 
         TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
-        tasksModel.refresh(gamesModel.getActiveGame().getId());
-        activeTask = tasksModel.getActiveTask();
+        long gameId = gamesModel.getActiveGame().getId();
+        tasksModel.refresh(gameId);
+        tasksModel.getAnswers();
 
+
+        activeTask = tasksModel.getActiveTask();
         if (activeTask == null) {
             NavHostFragment.findNavController(this).navigateUp();
             return;
         }
 
+        for(Answer ans : activeTask.getAnswers()){
+            tasksModel.downloadFullAnswer(ans.getId());
+        }
+
         binding.taskName.setText(activeTask.getName());
 
-        binding.previousAnswersList.setAdapter(new AnswerListAdapter(activeTask.getAnswers()));
+        tasksModel.getTasks(gameId).observe(getViewLifecycleOwner(), tasks -> {
+            binding.previousAnswersList.setAdapter(new AnswerListAdapter(activeTask.getAnswers()));
+        });
     }
 
 
@@ -99,7 +118,6 @@ public class PreviousAnwsersFragment extends Fragment {
                 TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
                 Task task = taskModel.getById(answer.getTaskId());
 
-                taskModel.downloadFullAnswer(answer.getId());
 
                 answerView.showAnswer(answer, task);
 
