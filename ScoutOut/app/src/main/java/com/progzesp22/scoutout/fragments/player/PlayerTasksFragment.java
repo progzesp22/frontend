@@ -74,6 +74,8 @@ public class PlayerTasksFragment extends Fragment {
                 } else {
                     binding.points.setText(String.valueOf(activeTeam.getScore()));
                 }
+            }else{
+                binding.points.setText(String.valueOf(activeTeam.getScore()));
             }
         });
 
