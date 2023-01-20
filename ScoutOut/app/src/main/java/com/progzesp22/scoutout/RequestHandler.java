@@ -1,6 +1,7 @@
 package com.progzesp22.scoutout;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -388,6 +389,7 @@ public class RequestHandler implements RequestInterface {
     public void patchAnswer(Answer answer, Response.Listener<JSONObject> responseCallback,
                             Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
+
         try {
             json.put("approved", answer.isApproved());
             json.put("score", answer.getScore());
