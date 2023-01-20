@@ -26,11 +26,10 @@ import org.json.JSONException;
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     static final String TAG = "LoginFragment";
-
+    boolean awaitingResponse = false;
 
     public LoginFragment() {
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -46,6 +45,9 @@ public class LoginFragment extends Fragment {
 
 
         binding.loginButton.setOnClickListener(view1 -> {
+            if (awaitingResponse) {
+                return;
+            }
             final String username =  binding.username.getText().toString();
             MainActivity.requestHandler.postUserLogin(
                     username,
@@ -63,12 +65,15 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(getContext(), "Login successful", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigate(R.id.loginSuccesfull);
                         model.setUsername(username);
+                        awaitingResponse = false;
                     },
                     error -> {
                         Toast.makeText(getContext(), "Login failed", Toast.LENGTH_SHORT).show();
                         model.setUsername("");
+                        awaitingResponse = false;
                     }
             );
+            awaitingResponse = true;
         });
 
         binding.registerButton.setOnClickListener(view1-> NavHostFragment.findNavController(this).navigate(R.id.action_loginFragment_to_registerFragment));
