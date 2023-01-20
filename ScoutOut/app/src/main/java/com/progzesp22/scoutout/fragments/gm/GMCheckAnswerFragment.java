@@ -64,8 +64,6 @@ public class GMCheckAnswerFragment extends Fragment {
             show(task, answer);
         });
 
-
-
         binding.accept.setOnClickListener(view1 -> {
             answer.setApproved(true);
             answer.setChecked(true);

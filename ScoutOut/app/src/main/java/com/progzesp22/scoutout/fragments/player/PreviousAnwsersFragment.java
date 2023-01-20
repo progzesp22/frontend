@@ -1,6 +1,7 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.progzesp22.scoutout.AnswerView;
-import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentPreviousAnwsersBinding;
 import com.progzesp22.scoutout.domain.Answer;
@@ -38,6 +38,7 @@ public class PreviousAnwsersFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -49,20 +50,37 @@ public class PreviousAnwsersFragment extends Fragment {
         binding.goToTaskDescription.setOnClickListener(view1 -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_previousAnwsersFragment_to_taskViewFragment);
         });
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("PreviousAnswersFragment", "onResume()");
 
         TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
-        tasksModel.refresh(gamesModel.getActiveGame().getId());
-        activeTask = tasksModel.getActiveTask();
+        long gameId = gamesModel.getActiveGame().getId();
+        tasksModel.refresh(gameId);
+        tasksModel.getAnswers();
 
+
+        activeTask = tasksModel.getActiveTask();
         if (activeTask == null) {
             NavHostFragment.findNavController(this).navigateUp();
             return;
         }
 
+        for(Answer ans : activeTask.getAnswers()){
+            tasksModel.downloadFullAnswer(ans.getId());
+        }
+
         binding.taskName.setText(activeTask.getName());
 
-        binding.previousAnswersList.setAdapter(new AnswerListAdapter(activeTask.getAnswers()));
+        tasksModel.getTasks(gameId).observe(getViewLifecycleOwner(), tasks -> {
+            binding.previousAnswersList.setAdapter(new AnswerListAdapter(activeTask.getAnswers()));
+        });
     }
 
 
@@ -94,13 +112,15 @@ public class PreviousAnwsersFragment extends Fragment {
             if (view == null) {
                 AnswerView answerView = new AnswerView(getContext());
                 answerView.disableButton();
-                // TODO: maybe optimize how we get answer from the backend
-                MainActivity.requestHandler.getAnswer(answers.get(i).getId(), jsonObject -> {
-                    answerView.setAnswer(jsonObject.optString("response"));
 
-            }, error -> {
-                answerView.setAnswer("Błąd pobierania odpowiedzi");
-                });
+                Answer answer = answers.get(i);
+
+                TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+                Task task = taskModel.getById(answer.getTaskId());
+
+
+                answerView.showAnswer(answer, task);
+
                 view = answerView;
             }
 
