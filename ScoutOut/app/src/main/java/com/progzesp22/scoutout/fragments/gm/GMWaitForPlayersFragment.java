@@ -32,7 +32,9 @@ import java.util.Timer;
 public class GMWaitForPlayersFragment extends Fragment {
     private FragmentGmWaitForPlayersBinding binding;
     TeamsExpandableListAdapter expandableListAdapter;
-    Timer timer = new Timer();
+    Timer timer;
+    TeamsModel teamsModel;
+    GamesModel gamesModel;
 
     public GMWaitForPlayersFragment() {
         // Required empty public constructor
@@ -49,8 +51,8 @@ public class GMWaitForPlayersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         expandableListAdapter = new TeamsExpandableListAdapter(getContext());
         binding.teamsList.setAdapter(expandableListAdapter);
-        TeamsModel teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
-        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        teamsModel = new ViewModelProvider(requireActivity()).get(TeamsModel.class);
+        gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         teamsModel.refresh(gamesModel.getActiveGame().getId());
 
         gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
@@ -62,15 +64,28 @@ public class GMWaitForPlayersFragment extends Fragment {
 
         teamsModel.getTeams(gamesModel.getActiveGame().getId()).observe(getViewLifecycleOwner(), this::displayTeams);
 
+
+
+        binding.startButton.setOnClickListener((event)->startButtonPressed());
+        binding.gameNameTextView.setText(gamesModel.getActiveGame().getName());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        timer = new Timer();
         timer.schedule(new java.util.TimerTask() {
             @Override
             public void run() {
                 teamsModel.refresh(gamesModel.getActiveGame().getId());
             }
         }, 0, 5000);
+    }
 
-        binding.startButton.setOnClickListener((event)->startButtonPressed());
-        binding.gameNameTextView.setText(gamesModel.getActiveGame().getName());
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 
     private void startButtonPressed(){
@@ -101,7 +116,6 @@ public class GMWaitForPlayersFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        timer.cancel();
         super.onDestroyView();
     }
 }
