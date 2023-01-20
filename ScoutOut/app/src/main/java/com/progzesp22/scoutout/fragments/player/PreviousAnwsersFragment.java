@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.progzesp22.scoutout.AnswerView;
-import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentPreviousAnwsersBinding;
 import com.progzesp22.scoutout.domain.Answer;
@@ -94,13 +93,16 @@ public class PreviousAnwsersFragment extends Fragment {
             if (view == null) {
                 AnswerView answerView = new AnswerView(getContext());
                 answerView.disableButton();
-                // TODO: maybe optimize how we get answer from the backend
-                MainActivity.requestHandler.getAnswer(answers.get(i).getId(), jsonObject -> {
-                    answerView.setAnswer(jsonObject.optString("response"));
 
-            }, error -> {
-                answerView.setAnswer("Błąd pobierania odpowiedzi");
-                });
+                Answer answer = answers.get(i);
+
+                TasksModel taskModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+                Task task = taskModel.getById(answer.getTaskId());
+
+                taskModel.downloadFullAnswer(answer.getId());
+
+                answerView.showAnswer(answer, task);
+
                 view = answerView;
             }
 
