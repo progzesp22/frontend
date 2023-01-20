@@ -1,8 +1,13 @@
 package com.progzesp22.scoutout.fragments.player;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -30,14 +39,20 @@ import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.MyCaptureActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class PlayerSubmitAnswerFragment extends Fragment {
     private FragmentPlayerSubmitAnswerBinding binding;
     Task task;
     String qrText = null;
-    Bitmap bitmap;
+    String TAG = "PlayerSubmitAnswerFragment";
 
 
     public PlayerSubmitAnswerFragment() {
@@ -82,24 +97,83 @@ public class PlayerSubmitAnswerFragment extends Fragment {
 
 
         binding.scanQRButton.setOnClickListener(view2 -> scanCode());
+        binding.photoButton.setOnClickListener(view3 -> dispatchTakePictureIntent());
+    }
 
+    String currentPhotoPath;
 
-        binding.photoButton.setOnClickListener(view1 -> {
-                    int REQUEST_IMAGE_CAPTURE = 7; // random number xd
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
         );
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (data == null) return;
-        Bundle extras = data.getExtras();
-        bitmap = (Bitmap) extras.get("data");
-        binding.photo.setImageBitmap(bitmap);
-        Log.d("Camera", "jest zdjęcie!");
+
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(requireContext().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.e(TAG, "dispatchTakePictureIntent: ", ex);
+                Toast toast = Toast.makeText(getContext(), "Błąd podczas tworzenia pliku", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(requireContext(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                cameraActivityResultLauncher.launch(takePictureIntent);
+            }
+        }
     }
+
+    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+    ActivityResultLauncher<Intent> cameraActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+
+                        if (data == null) {
+                            Log.e(TAG, "onActivityResult: ", new NullPointerException("data is null"));
+                        } else {
+                            Bitmap bitmap = BitmapFactory.decodeFile(data.getData().getPath());
+                            binding.photo.setImageBitmap(bitmap);
+                            binding.photo.setVisibility(View.VISIBLE);
+                            Log.d("Camera", "jest zdjęcie!");
+                        }
+                    }
+                }
+            });
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        if (data == null) return;
+//        Bundle extras = data.getExtras();
+//        bitmap = (Bitmap) extras.get("data");
+//        binding.photo.setImageBitmap(bitmap);
+//        Log.d("Camera", "jest zdjęcie!");
+//    }
 
     private Answer buildAnswer(){
         Answer answer = new Answer(Entity.UNKNOWN_ID, "", task.getId(), Entity.UNKNOWN_ID, false, false);;
@@ -108,8 +182,18 @@ public class PlayerSubmitAnswerFragment extends Fragment {
                 answer.setAnswer(binding.answerText.getText().toString());
                 break;
             case PHOTO:
+                int targetW = 1000;
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inJustDecodeBounds = true;
+
+                BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+                int photoW = bmOptions.outWidth;
+
+                int scaleFactor = Math.max(1, photoW/targetW);
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
+                Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
                 String response = Base64.getEncoder().encodeToString(bytes.toByteArray());
                 answer.setAnswer(response);
                 break;

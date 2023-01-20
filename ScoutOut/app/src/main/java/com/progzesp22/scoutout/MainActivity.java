@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
+    private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private static final int REQUEST_PERMISSIONS = 200;
     public static RequestInterface requestHandler;
 
