@@ -1,11 +1,15 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -40,7 +44,9 @@ import com.progzesp22.scoutout.MyCaptureActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
@@ -150,20 +156,55 @@ public class PlayerSubmitAnswerFragment extends Fragment {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
 
-                        if (data == null) {
-                            Log.e(TAG, "onActivityResult: ", new NullPointerException("data is null"));
-                        } else {
-                            Bitmap bitmap = BitmapFactory.decodeFile(data.getData().getPath());
-                            binding.photo.setImageBitmap(bitmap);
-                            binding.photo.setVisibility(View.VISIBLE);
-                            Log.d("Camera", "jest zdjęcie!");
-                        }
+                        // There are no request codes
+                        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+                        bitmap = rotateImageIfRequired(requireContext(), bitmap, Uri.fromFile(new File(currentPhotoPath)));
+                        binding.photo.setImageBitmap(bitmap);
+                        binding.photo.setVisibility(View.VISIBLE);
+                        Log.d(TAG, "udało się zrobić zdjęcie! poggers");
+
                     }
                 }
             });
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
+
+    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage){
+
+        InputStream input = null;
+        try {
+            input = context.getContentResolver().openInputStream(selectedImage);
+        } catch (FileNotFoundException e) {
+            Log.e("rotateImageIfRequired", "rotateImageIfRequired: ", e);
+        }
+        ExifInterface ei;
+        try {
+            ei = new ExifInterface(input);
+        } catch (IOException e) {
+            Log.e("rotateImageIfRequired", "rotateImageIfRequired: ", e);
+            return img;
+        }
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
 
 
 //    @Override
@@ -182,7 +223,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
                 answer.setAnswer(binding.answerText.getText().toString());
                 break;
             case PHOTO:
-                int targetW = 1000;
+                int targetW = 1024;
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 bmOptions.inJustDecodeBounds = true;
 
@@ -194,6 +235,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
                 bmOptions.inSampleSize = scaleFactor;
                 Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                 String response = Base64.getEncoder().encodeToString(bytes.toByteArray());
                 answer.setAnswer(response);
                 break;
