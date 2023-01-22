@@ -308,6 +308,7 @@ public class RequestHandler implements RequestInterface {
             json.put("maxScore", task.getMaxScore());
             JSONArray jsonPrerequsiteTasks = new JSONArray(task.getPrerequisiteTasks());
             json.put("prerequisiteTasks", jsonPrerequsiteTasks);
+            json.put("correct_answer", task.getCorrectAnswer());
         } catch (JSONException e) {
             e.printStackTrace();
         }
