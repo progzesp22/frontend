@@ -64,29 +64,24 @@ public class GMEditTaskFragment extends Fragment {
         binding.answerTypeQRRadioButton.setChecked(true);
         binding.answerTypeNavigationRadioButton.setChecked(true);
         binding.answerTypeAudioRadioButton.setChecked(true);
-        binding.qrAnswerContainer.setActivated(false);
 
         switch(task.getType()){
             case TEXT:
                 binding.answerTypeTextRadioButton.setChecked(true);
-                binding.qrAnswerContainer.setActivated(false);
                 break;
             case PHOTO:
                 binding.answerTypePictureRadioButton.setChecked(true);
-                binding.qrAnswerContainer.setActivated(false);
                 break;
             case QR_CODE:
                 binding.answerTypeQRRadioButton.setChecked(true);
-                binding.qrAnswerContainer.setActivated(true);
-                task.setCorrectAnswer(String.valueOf(binding.taskAnswerText.getText()));
+                binding.taskAnswerText.setText(task.getCorrectAnswer());
+               // task.setCorrectAnswer(String.valueOf(binding.taskAnswerText.getText()));
                 break;
             case NAV_POS:
                 binding.answerTypeNavigationRadioButton.setChecked(true);
-                binding.qrAnswerContainer.setActivated(false);
                 break;
             case AUDIO:
                 binding.answerTypeAudioRadioButton.setChecked(true);
-                binding.qrAnswerContainer.setActivated(false);
                 break;
         }
 
@@ -118,9 +113,52 @@ public class GMEditTaskFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
         loadOrCreateTask(tasksModel.getActiveTask());
+        if (tasksModel.getActiveTask() != null && tasksModel.getActiveTask().getType() != Task.TaskType.QR_CODE) {
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+        } else if (tasksModel.getActiveTask() == null) {
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+        } else {
+            binding.qrAnswerContainer.setVisibility(View.VISIBLE);
+            binding.taskAnswerInfo.setVisibility(View.VISIBLE);
+            binding.taskAnswerText.setVisibility(View.VISIBLE);
+            binding.taskAnswerText.setText(task.getCorrectAnswer());
+        }
+        binding.answerTypeQRRadioButton.setOnClickListener(view1 -> {
+            binding.qrAnswerContainer.setVisibility(View.VISIBLE);
+            binding.taskAnswerInfo.setVisibility(View.VISIBLE);
+            binding.taskAnswerText.setVisibility(View.VISIBLE);
+        });
 
+        binding.answerTypeAudioRadioButton.setOnClickListener(view1 -> {
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+        });
+
+        binding.answerTypeNavigationRadioButton.setOnClickListener(view1 -> {
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+        });
+
+        binding.answerTypeTextRadioButton.setOnClickListener(view1 -> {
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+        });
+
+        binding.answerTypePictureRadioButton.setOnClickListener(view1 -> {
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+        });
         binding.button.setOnClickListener(view1 -> {
             if(binding.titleText.getText().toString().isEmpty()) {
                 Toast.makeText(getContext(), "Brak tytułu!", Toast.LENGTH_SHORT).show();
@@ -136,15 +174,19 @@ public class GMEditTaskFragment extends Fragment {
             }
             else if(binding.answerTypeQRRadioButton.isChecked()) {
                 taskType = Task.TaskType.QR_CODE;
+                task.setCorrectAnswer(String.valueOf(binding.taskAnswerText.getText()));
             }
             else if(binding.answerTypePictureRadioButton.isChecked()) {
                 taskType = Task.TaskType.PHOTO;
+
             }
             else if(binding.answerTypeAudioRadioButton.isChecked()) {
                 taskType = Task.TaskType.PHOTO;
+
             }
             else {
                 taskType = Task.TaskType.NAV_POS;
+
             }
             task.setType(taskType);
 

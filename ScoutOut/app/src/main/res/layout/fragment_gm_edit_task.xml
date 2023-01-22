@@ -25,7 +25,7 @@
         <EditText
             android:id="@+id/descriptionText"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="222dp"
             android:layout_margin="10dp"
             android:layout_weight="3"
             android:autofillHints=""
@@ -67,9 +67,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/qrAnswerContainer"
-            android:layout_height="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -88,11 +88,10 @@
             <EditText
                 android:id="@+id/taskAnswerText"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:autofillHints=""
                 android:gravity="center"
-                android:inputType="number"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="18sp" />

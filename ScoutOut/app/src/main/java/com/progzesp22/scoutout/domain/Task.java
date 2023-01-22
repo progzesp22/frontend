@@ -65,6 +65,7 @@ public class Task extends Entity{
 
     public void setCorrectAnswer(String correctAnswer) { this.correctAnswer = correctAnswer; }
 
+    public String getCorrectAnswer() { return correctAnswer; }
     static public Task fromJson(JSONObject json) throws JSONException {
         return new Task(json.getInt("id"),
                 json.getString("name"),
