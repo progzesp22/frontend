@@ -51,8 +51,8 @@ public class GMEditTaskFragment extends Fragment {
         if(incomingTask == null){
             GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
             long gameId = gamesModel.getActiveGame().getId();
-            task = new Task(Entity.UNKNOWN_ID, "", "", gameId, Task.TaskType.TEXT, 0, new LinkedList<>());
-        } else{
+            task = new Task(Entity.UNKNOWN_ID, "", "", gameId, Task.TaskType.TEXT, 0, new LinkedList<>(), null);
+        } else {
             task = new Task(incomingTask);
         }
 
@@ -64,22 +64,29 @@ public class GMEditTaskFragment extends Fragment {
         binding.answerTypeQRRadioButton.setChecked(true);
         binding.answerTypeNavigationRadioButton.setChecked(true);
         binding.answerTypeAudioRadioButton.setChecked(true);
+        binding.qrAnswerContainer.setActivated(false);
 
         switch(task.getType()){
             case TEXT:
                 binding.answerTypeTextRadioButton.setChecked(true);
+                binding.qrAnswerContainer.setActivated(false);
                 break;
             case PHOTO:
                 binding.answerTypePictureRadioButton.setChecked(true);
+                binding.qrAnswerContainer.setActivated(false);
                 break;
             case QR_CODE:
                 binding.answerTypeQRRadioButton.setChecked(true);
+                binding.qrAnswerContainer.setActivated(true);
+                task.setCorrectAnswer(String.valueOf(binding.taskAnswerText.getText()));
                 break;
             case NAV_POS:
                 binding.answerTypeNavigationRadioButton.setChecked(true);
+                binding.qrAnswerContainer.setActivated(false);
                 break;
             case AUDIO:
                 binding.answerTypeAudioRadioButton.setChecked(true);
+                binding.qrAnswerContainer.setActivated(false);
                 break;
         }
 
