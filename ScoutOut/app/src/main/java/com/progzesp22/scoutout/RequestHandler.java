@@ -337,7 +337,7 @@ public class RequestHandler implements RequestInterface {
             json.put("description", task.getDescription());
             json.put("type", task.getType());
             json.put("maxScore", task.getMaxScore());
-
+            json.put("correct_answer", task.getCorrectAnswer());
         } catch (JSONException e) {
             e.printStackTrace();
         }
