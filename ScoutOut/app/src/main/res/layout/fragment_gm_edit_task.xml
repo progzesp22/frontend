@@ -25,7 +25,7 @@
         <EditText
             android:id="@+id/descriptionText"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="222dp"
             android:layout_margin="10dp"
             android:layout_weight="3"
             android:autofillHints=""
@@ -61,6 +61,38 @@
                 android:autofillHints=""
                 android:text=""
                 android:inputType="number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/qrAnswerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/taskAnswerInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints=""
+                android:gravity="center"
+                android:text="Poprawna odpowiedź: "
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/taskAnswerText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:autofillHints=""
+                android:gravity="center"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="18sp" />
 

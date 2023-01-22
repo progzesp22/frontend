@@ -17,8 +17,9 @@ public class Task extends Entity{
     protected final List<Answer> answers;
     protected final long gameId;
     private long maxScore = 0;
+    protected String correctAnswer;
 
-    public Task(long id, String name, String description, long gameId, TaskType type, long maxScore,  List<Task> prerequisites) {
+    public Task(long id, String name, String description, long gameId, TaskType type, long maxScore,  List<Task> prerequisites, String correctAnswer) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,6 +28,7 @@ public class Task extends Entity{
         this.prerequisites = prerequisites;
         this.answers = new ArrayList<>();
         this.maxScore = maxScore;
+        this.correctAnswer = correctAnswer;
     }
 
     public Task(Task other) {
@@ -38,6 +40,7 @@ public class Task extends Entity{
         this.prerequisites = new ArrayList<>(other.prerequisites);
         this.maxScore = other.maxScore;
         this.answers = new ArrayList<>(other.answers);
+        this.correctAnswer = other.correctAnswer;
     }
 
     public long getId() {
@@ -60,6 +63,9 @@ public class Task extends Entity{
         this.description = description;
     }
 
+    public void setCorrectAnswer(String correctAnswer) { this.correctAnswer = correctAnswer; }
+
+    public String getCorrectAnswer() { return correctAnswer; }
     static public Task fromJson(JSONObject json) throws JSONException {
         return new Task(json.getInt("id"),
                 json.getString("name"),
@@ -67,7 +73,8 @@ public class Task extends Entity{
                 json.getInt("gameId"),
                 TaskType.valueOf(json.getString("type")),
                 json.getLong("maxScore"),
-                new ArrayList<>()); // TODO: parse prerequisites
+                new ArrayList<>(),
+                json.getString("correct_answer")); // TODO: parse prerequisites
     }
 
     public long getGameId() {
@@ -121,6 +128,7 @@ public class Task extends Entity{
         this.description = other.description;
         this.type = other.type;
         this.maxScore = other.maxScore;
+        this.correctAnswer = other.correctAnswer;
     }
 
 
