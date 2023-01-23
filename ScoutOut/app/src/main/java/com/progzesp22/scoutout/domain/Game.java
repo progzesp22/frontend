@@ -1,7 +1,5 @@
 package com.progzesp22.scoutout.domain;
 
-import android.annotation.SuppressLint;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

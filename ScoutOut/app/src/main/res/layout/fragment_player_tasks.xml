@@ -16,7 +16,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:text="Points: "
+        android:text="@string/points_number"
         app:layout_constraintEnd_toStartOf="@+id/points"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"

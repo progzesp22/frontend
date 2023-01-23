@@ -1,23 +1,20 @@
 package com.progzesp22.scoutout.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
-import com.progzesp22.scoutout.RequestInterface;
 import com.progzesp22.scoutout.databinding.FragmentLoginBinding;
-import com.progzesp22.scoutout.domain.TasksModel;
 import com.progzesp22.scoutout.domain.UserModel;
 
 import org.json.JSONException;
@@ -62,13 +59,13 @@ public class LoginFragment extends Fragment {
                         }
 
                         MainActivity.requestHandler.setSessionToken(token);
-                        Toast.makeText(getContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.login_successful, Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigate(R.id.loginSuccesfull);
                         model.setUsername(username);
                         awaitingResponse = false;
                     },
                     error -> {
-                        Toast.makeText(getContext(), "Login failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
                         model.setUsername("");
                         awaitingResponse = false;
                     }

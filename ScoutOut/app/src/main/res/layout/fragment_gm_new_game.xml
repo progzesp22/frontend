@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:clickable="true"
-                android:contentDescription="Start game"
+                android:contentDescription="@string/start_game"
                 android:src="@android:drawable/ic_media_play" />
         </LinearLayout>
 

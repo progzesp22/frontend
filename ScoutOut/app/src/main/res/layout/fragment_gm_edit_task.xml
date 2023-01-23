@@ -81,7 +81,7 @@
                 android:layout_marginBottom="10dp"
                 android:autofillHints=""
                 android:gravity="center"
-                android:text="Poprawna odpowiedź: "
+                android:text="@string/correct_answer"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="18sp" />
 

@@ -6,13 +6,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.progzesp22.scoutout.MainActivity;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.progzesp22.scoutout.domain.Task;
-import com.progzesp22.scoutout.MainActivity;
 
 public class TasksModel extends ViewModel {
     private MutableLiveData<List<Task>> tasks;

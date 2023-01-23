@@ -70,7 +70,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         TextView button = viewHolder.getButton();
 
         comment.setText("");
-        button.setText("edit");
+        button.setText(R.string.edit);
         button.setOnClickListener(view -> {
             model.setActiveTask(task);
             navController.navigate(R.id.action_add_edit_task);

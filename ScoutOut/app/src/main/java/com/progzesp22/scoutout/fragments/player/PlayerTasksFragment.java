@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.TaskView;
-import com.progzesp22.scoutout.TeamsExpandableListAdapter;
 import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;

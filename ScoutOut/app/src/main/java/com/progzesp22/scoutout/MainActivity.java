@@ -17,9 +17,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.progzesp22.scoutout.databinding.ActivityMainBinding;
 import com.progzesp22.scoutout.domain.UserModel;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;

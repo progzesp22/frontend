@@ -55,14 +55,14 @@
             android:id="@+id/waitingTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Waiting for Players..."
+            android:text="@string/waiting_for_players_capital"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/teamsListTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Teams list:"
+            android:text="@string/teams_list"
             android:textSize="16sp" />
     </LinearLayout>
 

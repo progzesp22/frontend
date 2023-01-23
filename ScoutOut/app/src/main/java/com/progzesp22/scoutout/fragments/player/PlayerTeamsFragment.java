@@ -1,7 +1,6 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,6 @@ import com.progzesp22.scoutout.domain.Team;
 import com.progzesp22.scoutout.domain.TeamsModel;
 import com.progzesp22.scoutout.domain.UserModel;
 import com.progzesp22.scoutout.fragments.TeamsAdapter;
-
-import org.json.JSONException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -91,9 +88,9 @@ public class PlayerTeamsFragment extends Fragment {
                     0
             );
             MainActivity.requestHandler.postTeams(newTeam, response -> {
-                Toast.makeText(view1.getContext(), "Team created successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view1.getContext(), R.string.team_created, Toast.LENGTH_SHORT).show();
             }, error -> {
-                Toast.makeText(view1.getContext(), "Error, team not created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view1.getContext(), R.string.error_team_create, Toast.LENGTH_SHORT).show();
             } );
             binding.newTeamName.setText("");
             teamsModel.setActiveTeam(newTeam);

@@ -30,7 +30,8 @@
         android:layout_marginBottom="60dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/username"
@@ -40,7 +41,8 @@
         android:layout_marginBottom="130dp"
         android:hint="@string/user_name"
         android:inputType="text"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:autofillHints="" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"

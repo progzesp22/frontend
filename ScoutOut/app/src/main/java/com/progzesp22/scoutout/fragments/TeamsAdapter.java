@@ -71,7 +71,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         TextView button = viewHolder.getButton();
         creator.setText(team.getCreator());
 
-        button.setText(R.string.join_team);
+        button.setText(R.string.join);
         button.setVisibility(View.VISIBLE);
         button.setOnClickListener(view1 -> {
             model.setActiveTeam(team);

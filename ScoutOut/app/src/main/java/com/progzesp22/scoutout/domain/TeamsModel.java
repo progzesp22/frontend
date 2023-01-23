@@ -1,14 +1,11 @@
 package com.progzesp22.scoutout.domain;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.util.Consumer;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.progzesp22.scoutout.MainActivity;
 
@@ -17,7 +14,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 public class TeamsModel extends ViewModel {
     private MutableLiveData<List<Team>> teams;

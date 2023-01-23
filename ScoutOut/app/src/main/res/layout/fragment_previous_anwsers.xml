@@ -16,7 +16,7 @@
         android:textColor = "@color/black"
         android:textSize = "24sp"
         android:textStyle="bold|italic"
-        android:text="Task name"/>
+        android:text="@string/previous_answers" />
 
     <ListView
         android:id="@+id/previous_answers_list"
@@ -33,7 +33,7 @@
         android:layout_marginBottom="-230dp"
         android:textColor="@color/white"
         android:background="@drawable/button_shape"
-        android:text="Upload Task"
+        android:text="@string/upload_answer"
         tools:ignore="ExtraText" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -44,7 +44,7 @@
         android:layout_marginBottom="-300dp"
         android:textColor="@color/white"
         android:background="@drawable/button_shape"
-        android:text="Task description"
+        android:text="@string/task_description"
         tools:ignore="ExtraText" />
 
     <com.google.android.material.imageview.ShapeableImageView
