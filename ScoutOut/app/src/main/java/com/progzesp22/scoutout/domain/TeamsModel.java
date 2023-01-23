@@ -41,7 +41,7 @@ public class TeamsModel extends ViewModel {
         }
 
         if (previousGameId != gameId) {
-            teams.setValue(new ArrayList<>());
+            teams.postValue(new ArrayList<>());
             previousGameId = gameId;
         }
 

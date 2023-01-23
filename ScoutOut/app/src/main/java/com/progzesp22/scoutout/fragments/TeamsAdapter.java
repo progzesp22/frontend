@@ -80,7 +80,6 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
             }, error -> {
                 Toast.makeText(view1.getContext(), R.string.failed_join_team, Toast.LENGTH_SHORT).show();
             } );
-            navController.navigate(R.id.action_playerTeamsFragment_to_userGamesFragment);
         });
     }
 

@@ -63,7 +63,8 @@ public class PlayerTeamsFragment extends Fragment {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                    gamesModel.refresh();
+                gamesModel.refresh();
+                teamsModel.refresh(activeGame.getId());
             }
         }, 0, 5000);
 
@@ -89,12 +90,12 @@ public class PlayerTeamsFragment extends Fragment {
             );
             MainActivity.requestHandler.postTeams(newTeam, response -> {
                 Toast.makeText(view1.getContext(), R.string.team_created, Toast.LENGTH_SHORT).show();
+                teamsModel.refresh(activeGame.getId());
             }, error -> {
                 Toast.makeText(view1.getContext(), R.string.error_team_create, Toast.LENGTH_SHORT).show();
             } );
             binding.newTeamName.setText("");
             teamsModel.setActiveTeam(newTeam);
-            NavHostFragment.findNavController(this).navigate(R.id.action_playerTeamsFragment_to_userGamesFragment);
             });
 
     }
