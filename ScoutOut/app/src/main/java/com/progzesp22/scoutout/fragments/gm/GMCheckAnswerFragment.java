@@ -76,7 +76,7 @@ public class GMCheckAnswerFragment extends Fragment {
                 taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
-                Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
             });
         });
 
@@ -90,7 +90,7 @@ public class GMCheckAnswerFragment extends Fragment {
                 taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
-                Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
             });
         });
 

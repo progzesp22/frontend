@@ -1,6 +1,8 @@
 package com.progzesp22.scoutout.fragments.player;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,25 +15,24 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.progzesp22.scoutout.R;
-import com.progzesp22.scoutout.databinding.FragmentPlayerSubmitAnswerBinding;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
-import com.progzesp22.scoutout.domain.Answer;
-import com.progzesp22.scoutout.domain.Entity;
-import com.progzesp22.scoutout.domain.TasksModel;
-import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.MyCaptureActivity;
+import com.progzesp22.scoutout.R;
+import com.progzesp22.scoutout.databinding.FragmentPlayerSubmitAnswerBinding;
+import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.Entity;
+import com.progzesp22.scoutout.domain.Task;
+import com.progzesp22.scoutout.domain.TasksModel;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
-import java.util.concurrent.ExecutionException;
 
 public class PlayerSubmitAnswerFragment extends Fragment {
     private FragmentPlayerSubmitAnswerBinding binding;
@@ -85,9 +86,17 @@ public class PlayerSubmitAnswerFragment extends Fragment {
 
 
         binding.photoButton.setOnClickListener(view1 -> {
-                    int REQUEST_IMAGE_CAPTURE = 7; // random number xd
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    if (ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+                    }
+                    if (ContextCompat.checkSelfPermission(this.requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(requireContext(), "Nie udzielono pozwolenia na użycie kamery!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        int REQUEST_IMAGE_CAPTURE = 7; // random number xd
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    }
                 }
         );
     }
@@ -102,12 +111,16 @@ public class PlayerSubmitAnswerFragment extends Fragment {
     }
 
     private Answer buildAnswer(){
-        Answer answer = new Answer(Entity.UNKNOWN_ID, "", task.getId(), Entity.UNKNOWN_ID, false, false);;
+        Answer answer = new Answer(Entity.UNKNOWN_ID, "", task.getId(), Entity.UNKNOWN_ID, false, false);
         switch(task.getType()){
             case TEXT:
                 answer.setAnswer(binding.answerText.getText().toString());
                 break;
             case PHOTO:
+                if (bitmap == null) {
+                    Toast.makeText(requireContext(), "Nie zrobiono zdjęcia!", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
                 String response = Base64.getEncoder().encodeToString(bytes.toByteArray());
