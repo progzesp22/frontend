@@ -70,14 +70,15 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         TextView creator = viewHolder.getCreatorTextView();
         TextView button = viewHolder.getButton();
         creator.setText(team.getCreator());
-        button.setText("Join");
+
+        button.setText(R.string.join_team);
         button.setVisibility(View.VISIBLE);
         button.setOnClickListener(view1 -> {
             model.setActiveTeam(team);
             MainActivity.requestHandler.postTeamJoin(team.getId(), response -> {
-                Toast.makeText(view1.getContext(), "Joined successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view1.getContext(), R.string.joined_team, Toast.LENGTH_SHORT).show();
             }, error -> {
-                Toast.makeText(view1.getContext(), "Error, team not joined", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view1.getContext(), R.string.failed_join_team, Toast.LENGTH_SHORT).show();
             } );
             navController.navigate(R.id.action_playerTeamsFragment_to_userGamesFragment);
         });

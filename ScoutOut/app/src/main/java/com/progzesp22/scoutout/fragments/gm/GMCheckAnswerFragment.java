@@ -70,7 +70,7 @@ public class GMCheckAnswerFragment extends Fragment {
             answer.setScore(task.getMaxScore());
 
             MainActivity.requestHandler.patchAnswer(answer, response -> {
-                Toast.makeText(getContext(), "Zaakceptowano", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.answer_accepted, Toast.LENGTH_SHORT).show();
                 taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {
@@ -84,7 +84,7 @@ public class GMCheckAnswerFragment extends Fragment {
             answer.setScore(0);
 
             MainActivity.requestHandler.patchAnswer(answer, response -> {
-                Toast.makeText(getContext(), "Odrzucono", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.answer_refused, Toast.LENGTH_SHORT).show();
                 taskModel.refresh(activeGameId);
                 NavHostFragment.findNavController(this).navigateUp();
             }, error -> {

@@ -12,18 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.TeamsExpandableListAdapter;
-import com.progzesp22.scoutout.RequestInterface;
 import com.progzesp22.scoutout.databinding.FragmentGmWaitForPlayersBinding;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Team;
 import com.progzesp22.scoutout.domain.TeamsModel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Timer;
@@ -89,7 +84,7 @@ public class GMWaitForPlayersFragment extends Fragment {
     }
 
     private void startButtonPressed(){
-        Toast.makeText(getContext(), "Starting game", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.starting_game, Toast.LENGTH_SHORT).show();
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         gamesModel.startGame(gamesModel.getActiveGame());
     }

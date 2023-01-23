@@ -161,7 +161,7 @@ public class GMEditTaskFragment extends Fragment {
         });
         binding.button.setOnClickListener(view1 -> {
             if(binding.titleText.getText().toString().isEmpty()) {
-                Toast.makeText(getContext(), "Brak tytułu!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.no_title, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -194,7 +194,7 @@ public class GMEditTaskFragment extends Fragment {
             try {
                 maxScore = Integer.parseInt(binding.taskScoreText.getText().toString());
             } catch (NumberFormatException ex) {
-                Toast.makeText(getContext(), "Nieprawidłowa liczba punktów!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.wrong_point_number, Toast.LENGTH_SHORT).show();
                 return;
             }
 

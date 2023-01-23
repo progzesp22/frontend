@@ -67,12 +67,12 @@ public class GMGenerateQRFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpeg");
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            startActivity(Intent.createChooser(intent, "Udostępnij kod QR"));
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_qr)));
         });
 
         binding.save.setOnClickListener(view1 -> {
             MediaStore.Images.Media.insertImage(view.getContext().getApplicationContext().getContentResolver(), finalMBitmap, "Test", "Test");
-            Snackbar mySnackbar = Snackbar.make(view, "Zapisano QR", 750);
+            Snackbar mySnackbar = Snackbar.make(view, R.string.qr_saved, 750);
             mySnackbar.show();
 
         });

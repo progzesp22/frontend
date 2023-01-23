@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,23 +22,21 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.progzesp22.scoutout.R;
-import com.progzesp22.scoutout.databinding.FragmentPlayerSubmitAnswerBinding;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
-import com.progzesp22.scoutout.domain.Answer;
-import com.progzesp22.scoutout.domain.Entity;
-import com.progzesp22.scoutout.domain.TasksModel;
-import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.MyCaptureActivity;
+import com.progzesp22.scoutout.R;
+import com.progzesp22.scoutout.databinding.FragmentPlayerSubmitAnswerBinding;
+import com.progzesp22.scoutout.domain.Answer;
+import com.progzesp22.scoutout.domain.Entity;
+import com.progzesp22.scoutout.domain.Task;
+import com.progzesp22.scoutout.domain.TasksModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,8 +47,6 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class PlayerSubmitAnswerFragment extends Fragment {
     private FragmentPlayerSubmitAnswerBinding binding;
@@ -135,7 +129,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 Log.e(TAG, "dispatchTakePictureIntent: ", ex);
-                Toast toast = Toast.makeText(getContext(), "Błąd podczas tworzenia pliku", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getContext(), R.string.error_file, Toast.LENGTH_SHORT);
                 toast.show();
             }
             // Continue only if the File was successfully created
@@ -217,7 +211,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
 //    }
 
     private Answer buildAnswer(){
-        Answer answer = new Answer(Entity.UNKNOWN_ID, "", task.getId(), Entity.UNKNOWN_ID, false, false);;
+        Answer answer = new Answer(Entity.UNKNOWN_ID, "", task.getId(), Entity.UNKNOWN_ID, false, false);
         switch(task.getType()){
             case TEXT:
                 answer.setAnswer(binding.answerText.getText().toString());
@@ -241,7 +235,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
                 break;
             case QR_CODE:
                 if(qrText == null){
-                    Toast.makeText(requireContext(), "Nie zeskanowano żadnego kodu!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.qr_not_scanned, Toast.LENGTH_SHORT).show();
                     return null;
                 }
                 answer.setAnswer(qrText);
@@ -275,7 +269,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
             case QR_CODE:
                 binding.scanQRButton.setVisibility(View.VISIBLE);
                 binding.qrResult.setVisibility(View.VISIBLE);
-                binding.qrResult.setText("Nie zeskanowano jeszcze kodu");
+                binding.qrResult.setText(R.string.qr_not_scanned);
                 break;
             case NAV_POS:
                 break;
@@ -286,7 +280,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
 
     private void scanCode() {
         ScanOptions options = new ScanOptions();
-        options.setPrompt("Włącz lampę błyskową, używając przycisku VolumeUp.");
+        options.setPrompt(getResources().getString(R.string.flashlight_info));
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
         options.setCaptureActivity(MyCaptureActivity.class);
@@ -296,7 +290,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
         if (result.getContents() != null) {
             qrText = result.getContents();
-            binding.qrResult.setText("Zeskanowano: " + qrText);
+            binding.qrResult.setText(R.string.qr_scanned + qrText);
         }
     });
 }
