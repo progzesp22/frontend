@@ -290,7 +290,7 @@ public class PlayerSubmitAnswerFragment extends Fragment {
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
         if (result.getContents() != null) {
             qrText = result.getContents();
-            binding.qrResult.setText(R.string.qr_scanned + qrText);
+            binding.qrResult.setText(getString(R.string.qr_scanned) + " " + qrText);
         }
     });
 }
