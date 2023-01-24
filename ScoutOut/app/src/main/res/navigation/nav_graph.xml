@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_listTasksFragment_to_taskViewFragment"
             app:destination="@id/taskViewFragment" />
+        <action
+            android:id="@+id/action_listTasksFragment_to_playerTeamRankingsFragment"
+            app:destination="@id/playerTeamRankingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/GMListToAcceptFragment"
@@ -148,5 +151,10 @@
             android:id="@+id/action_playerTeamsFragment_to_userGamesFragment"
             app:destination="@id/userGamesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/playerTeamRankingsFragment"
+        android:name="com.progzesp22.scoutout.fragments.player.PlayerTeamRankingsFragment"
+        android:label="fragment_player_team_rankings"
+        tools:layout="@layout/fragment_player_team_rankings" />
 
 </navigation>
