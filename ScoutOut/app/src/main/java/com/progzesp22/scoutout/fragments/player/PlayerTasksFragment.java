@@ -51,7 +51,9 @@ public class PlayerTasksFragment extends Fragment {
         model.refresh(gamesModel.getActiveGame().getId());
 
         gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
-            if (gamesModel.getActiveGame().getState() != Game.GameState.STARTED){
+            if (gamesModel.getActiveGame().getState() == Game.GameState.FINISHED) {
+                NavHostFragment.findNavController(this).navigate(R.id.action_listTasksFragment_to_playerTeamRankingsFragment);
+            } else if (gamesModel.getActiveGame().getState() != Game.GameState.STARTED){
                 NavHostFragment.findNavController(this).navigate(R.id.userGamesFragment);
             }
         });
