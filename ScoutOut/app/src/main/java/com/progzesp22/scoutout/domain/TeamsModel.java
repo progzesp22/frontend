@@ -154,7 +154,6 @@ public class TeamsModel extends ViewModel {
                     }
                 }
             }
-            teams.setValue(currentTeams);
         }, error -> {
             Log.e(TAG, "Error fetching Team info: " + error.toString());
         });
