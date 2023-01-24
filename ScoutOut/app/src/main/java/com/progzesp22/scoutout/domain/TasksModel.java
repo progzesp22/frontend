@@ -6,37 +6,46 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.progzesp22.scoutout.MainActivity;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.progzesp22.scoutout.domain.Task;
-import com.progzesp22.scoutout.MainActivity;
-
 public class TasksModel extends ViewModel {
     private MutableLiveData<List<Task>> tasks;
     private Task activeTask;
     private Answer activeAnswer;
+    private long previousGameId = -1L;
 
     private static final String TAG = "TasksModel";
 
 
-    public LiveData<List<Task>> getTasks() {
+    public LiveData<List<Task>> getTasks(long gameId) {
         if (tasks == null) {
             tasks = new MutableLiveData<>();
-            fetch();
+            fetch(gameId);
         }
-
+        if (previousGameId != gameId) {
+            tasks.setValue(new ArrayList<>());
+            fetch(gameId);
+            previousGameId = gameId;
+        }
         return tasks;
     }
 
-    public void refresh() {
+    public void refresh(long gameId) {
         if (tasks == null) {
             tasks = new MutableLiveData<>();
         }
 
-        fetch();
+        if (previousGameId != gameId) {
+            tasks.setValue(new ArrayList<>());
+            previousGameId = gameId;
+        }
+
+        fetch(gameId);
     }
 
 
@@ -62,8 +71,22 @@ public class TasksModel extends ViewModel {
         return null;
     }
 
-    private void fetch() {
-        MainActivity.requestHandler.getTasks(response -> {
+    public Answer getAnswerById(long id) {
+        if (tasks == null || tasks.getValue() == null) {
+            return null;
+        }
+
+        for (Answer answer : getAnswers()) {
+            if (answer.getId() == id) {
+                return answer;
+            }
+        }
+
+        return null;
+    }
+
+    private void fetch(long gameId) {
+        MainActivity.requestHandler.getTasks(gameId, response -> {
             List<Task> currentTasks = tasks.getValue();
             if (currentTasks == null) {
                 currentTasks = new ArrayList<>();
@@ -77,9 +100,8 @@ public class TasksModel extends ViewModel {
                     for (Task task : currentTasks) {
                         if (task.getId() == parsedTask.getId()) {
                             found = true;
-                            task.setName(parsedTask.getName());
-                            task.setDescription(parsedTask.getDescription());
-                            task.setType(parsedTask.getType());
+                            task.updateFrom(parsedTask);
+                            break;
                         }
                     }
 
@@ -97,15 +119,15 @@ public class TasksModel extends ViewModel {
             tasks.setValue(currentTasks);
 
 
-            fetchAnswers(); // fetch answers after we fetch new tasks
+            fetchAnswers(gameId); // fetch answers after we fetch new tasks
 
         }, error -> {
             Log.e("TasksModel", "Error fetching tasks: " + error.toString());
         });
     }
 
-    private void fetchAnswers() {
-        MainActivity.requestHandler.getAnswers(false, response -> {
+    private void fetchAnswers(long gameId) {
+        MainActivity.requestHandler.getAnswers(gameId,false, response -> {
             List<Task> currentTasks = tasks.getValue();
             if (currentTasks == null) {
                 currentTasks = new ArrayList<>(); // this should never happen but just in case
@@ -191,5 +213,27 @@ public class TasksModel extends ViewModel {
         }
 
         return answers;
+    }
+
+    public void downloadFullAnswer(long answerId) {
+        MainActivity.requestHandler.getAnswer(answerId, response -> {
+                    Answer parsedAnswer;
+                    try {
+                        parsedAnswer = Answer.fromJson(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    Answer answer = getAnswerById(answerId);
+                    answer.setApproved(parsedAnswer.isApproved());
+                    answer.setChecked(parsedAnswer.isChecked());
+                    answer.setAnswer(parsedAnswer.getAnswer());
+                    tasks.setValue(tasks.getValue()); // maybe it can be better
+                },
+                error -> {
+                    Log.e(TAG, "Error downloading answer content");
+                    Log.e(TAG, error.toString());
+                }
+        );
     }
 }

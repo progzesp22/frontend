@@ -3,6 +3,7 @@ package com.progzesp22.scoutout;
 import android.util.Log;
 
 import com.android.volley.Response;
+import com.progzesp22.scoutout.domain.Answer;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.Team;
@@ -218,8 +219,8 @@ public class MockRequestHandler implements RequestInterface {
     }
 
     @Override
-    public void postAnswer(long taskId, String response, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
-        Log.d(TAG, String.format("POST /answers  %d %s", taskId, response));
+    public void postAnswer(Answer answer, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
+        Log.d(TAG, String.format("POST /answers  %s", answer.toString()));
         try {
             responseCallback.onResponse(new JSONObject("{}"));
         } catch (JSONException e) {
@@ -289,8 +290,8 @@ public class MockRequestHandler implements RequestInterface {
     }
 
     @Override
-    public void patchAnswer(long answerId, Boolean approved, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
-        Log.d(TAG, String.format("PATCH /answers/%d approved: %d", answerId, approved));
+    public void patchAnswer(Answer answer, Response.Listener<JSONObject> responseCallback, Response.ErrorListener errorListener) {
+        Log.d(TAG, String.format("PATCH /answers/%d %s", answer.getId(), answer.toString()));
         try {
             responseCallback.onResponse(new JSONObject("{}"));
         } catch (JSONException e) {

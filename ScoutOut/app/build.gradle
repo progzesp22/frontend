@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.progzesp22.scoutout'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.progzesp22.scoutout"
-        minSdk 24
-        targetSdk 32
+        minSdk 26 // required to use Base64.getEncoder()
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 

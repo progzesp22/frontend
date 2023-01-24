@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
     tools:context=".fragments.LoginFragment">
 
     <TextView
@@ -16,7 +15,7 @@
         android:textColor = "@color/black"
         android:textSize = "24sp"
         android:textStyle="bold|italic"
-        android:text="Task name"/>
+        android:text="@string/previous_answers" />
 
     <ListView
         android:id="@+id/previous_answers_list"
@@ -25,26 +24,22 @@
         android:layout_gravity="center"
         android:layout_marginBottom="0dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/go_to_upload"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="-230dp"
-        android:textColor="@color/white"
-        android:background="@drawable/button_shape"
-        android:text="Upload Task"
+        android:text="@string/upload_answer"
         tools:ignore="ExtraText" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/go_to_task_description"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginBottom="-300dp"
-        android:textColor="@color/white"
-        android:background="@drawable/button_shape"
-        android:text="Task description"
+        android:text="@string/task_description"
         tools:ignore="ExtraText" />
 
     <com.google.android.material.imageview.ShapeableImageView

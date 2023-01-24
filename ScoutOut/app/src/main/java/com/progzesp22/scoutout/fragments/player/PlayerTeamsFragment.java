@@ -1,7 +1,6 @@
 package com.progzesp22.scoutout.fragments.player;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +24,21 @@ import com.progzesp22.scoutout.domain.TeamsModel;
 import com.progzesp22.scoutout.domain.UserModel;
 import com.progzesp22.scoutout.fragments.TeamsAdapter;
 
-import org.json.JSONException;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class PlayerTeamsFragment extends Fragment {
+    private static final String TAG = "PlayerTeamsFragment";
     FragmentPlayerTeamsBinding binding;
     NavController navController;
+    Timer timer;
 
     public PlayerTeamsFragment() {
         // Required empty public constructor
@@ -57,6 +59,21 @@ public class PlayerTeamsFragment extends Fragment {
         GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         Game activeGame = gamesModel.getActiveGame();
 
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                gamesModel.refresh();
+                teamsModel.refresh(activeGame.getId());
+            }
+        }, 0, 5000);
+
+        gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
+            if (activeGame.getState() == Game.GameState.STARTED){
+                NavHostFragment.findNavController(PlayerTeamsFragment.this)
+                        .navigate(R.id.action_playerTeamsFragment_to_listTasksFragment2);
+            }
+        });
         teamsModel.getTeams(activeGame.getId()).observe(getViewLifecycleOwner(), this::displayTeams);
         teamsModel.refresh(activeGame.getId());
         setGameInfoTexts(gamesModel);
@@ -68,16 +85,17 @@ public class PlayerTeamsFragment extends Fragment {
                     gamesModel.getActiveGame().getId(),
                     String.valueOf(binding.newTeamName.getText()),
                     userModel.getUsername(),
-                    members
+                    members,
+                    0
             );
             MainActivity.requestHandler.postTeams(newTeam, response -> {
-                Toast.makeText(view1.getContext(), "Team created successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view1.getContext(), R.string.team_created, Toast.LENGTH_SHORT).show();
+                teamsModel.refresh(activeGame.getId());
             }, error -> {
-                Toast.makeText(view1.getContext(), "Error, team not created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view1.getContext(), R.string.error_team_create, Toast.LENGTH_SHORT).show();
             } );
             binding.newTeamName.setText("");
             teamsModel.setActiveTeam(newTeam);
-            NavHostFragment.findNavController(this).navigate(R.id.action_playerTeamsFragment_to_userGamesFragment);
             });
 
     }
@@ -92,9 +110,25 @@ public class PlayerTeamsFragment extends Fragment {
         binding.gameNameText.setText(gamesModel.getActiveGame().getName());
         binding.gameMasterText.setText(gamesModel.getActiveGame().getGameMaster());
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'\n'HH:mm", Locale.getDefault());
-        binding.startTimeText.setText(dateFormat.format(gamesModel.getActiveGame().getStartTime()));
-        binding.endTimeText.setText(dateFormat.format(gamesModel.getActiveGame().getEndTime()));
+        Date startTime = gamesModel.getActiveGame().getStartTime();
+        Date endTime = gamesModel.getActiveGame().getEndTime();
+        if(startTime != null){
+            binding.startTimeText.setText(dateFormat.format(startTime));
+        } else {
+            binding.startTimeText.setText("");
+        }
+
+        if(endTime != null){
+            binding.endTimeText.setText(dateFormat.format(endTime));
+        } else{
+            binding.endTimeText.setText("");
+        }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        timer.cancel();
+    }
 
 }

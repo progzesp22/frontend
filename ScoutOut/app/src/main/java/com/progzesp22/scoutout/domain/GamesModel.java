@@ -5,7 +5,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.progzesp22.scoutout.MainActivity;
 
@@ -50,12 +49,26 @@ public class GamesModel extends ViewModel {
 
     private void fetch() {
         MainActivity.requestHandler.getGames(response -> {
-            List<Game> currentGames = new ArrayList<>();
+            List<Game> currentGames = games.getValue();
+
+            if (currentGames == null) {
+                currentGames = new ArrayList<>();
+            }
 
             try {
                 for (int i = 0; i < response.length(); i++) {
                     Game parsedGame = Game.fromJson(response.getJSONObject(i));
-                    currentGames.add(parsedGame);
+                    boolean found = false;
+                    for (Game game : currentGames) {
+                        if (game.getId() == parsedGame.getId()) {
+                            game.updateFrom(parsedGame);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        currentGames.add(parsedGame);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -79,15 +92,16 @@ public class GamesModel extends ViewModel {
         for (Game game : currentGames) {
             MainActivity.requestHandler.getGame(game.getId(), response -> {
                 try {
-                    Game.EndCondition endCondition = Game.EndCondition.valueOf(response.getString("endCondition"));
-                    game.setEndCondition(endCondition);
-                    game.setStartTime(Game.dateFormat.parse(response.getString("startTime")));
-                    if (endCondition == Game.EndCondition.TIME) {
-                        game.setEndTime(Game.dateFormat.parse(response.getString("endTime")));
-                    } else if (endCondition == Game.EndCondition.SCORE) {
-                        game.setEndScore(response.getInt("endScore"));
+                    if (response.has("endCondition") && !response.isNull("endCondition")) {
+                        Game.EndCondition endCondition = Game.EndCondition.valueOf(response.getString("endCondition"));
+                        game.setEndCondition(endCondition);
+                        game.setStartTime(Game.dateFormat.parse(response.getString("startTime")));
+                        if (endCondition == Game.EndCondition.TIME) {
+                            game.setEndTime(Game.dateFormat.parse(response.getString("endTime")));
+                        } else if (endCondition == Game.EndCondition.SCORE) {
+                            game.setEndScore(response.getInt("endScore"));
+                        }
                     }
-
                     games.setValue(currentGames);
                 } catch (JSONException | ParseException e) {
                     e.printStackTrace();
@@ -109,4 +123,14 @@ public class GamesModel extends ViewModel {
         });
     }
 
+    public void endGame(Game game) {
+        Game.GameState temp = activeGame.getState();
+        game.setState(Game.GameState.FINISHED);
+        MainActivity.requestHandler.patchGame(game, response -> {
+            refresh();
+        }, error -> {
+            Log.e(TAG, "Error ending game: " + error.toString());
+            game.setState(temp);
+        });
+    }
 }

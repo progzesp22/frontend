@@ -2,11 +2,9 @@ package com.progzesp22.scoutout.fragments.gm;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -43,7 +41,7 @@ public class GMGameFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentGmGameBinding.inflate(inflater, container, false);
@@ -59,10 +57,6 @@ public class GMGameFragment extends Fragment {
 
 
         gamesModel.getGames().observe(getViewLifecycleOwner(), games -> {
-            if (games.size() > 0) {
-                gamesModel.setActiveGame(games.get(0));
-            }
-
             Game activeGame = gamesModel.getActiveGame();
 
             if (activeGame != null) {
@@ -71,18 +65,11 @@ public class GMGameFragment extends Fragment {
                 if (activeGame.getEndCondition() == Game.EndCondition.TIME) {
                     binding.gmGameTimerGroup.setVisibility(View.VISIBLE);
 
-//                    Date endTime = activeGame.getEndTime();
-//                    Date startTime = activeGame.getStartTime();
-
-                    // TODO: ta cześć jest tylko na potrzeby testów
-                    Date now = new Date();
-                    Date endTime = new Date(now.getTime() + 1000 * 60);
-                    Date startTime = new Date();
-
-
+                    Date endTime = activeGame.getEndTime();
+                    Date startTime = activeGame.getStartTime();
 
                     long timeWhole = endTime.getTime() - startTime.getTime();
-                    long timePassed = now.getTime() - startTime.getTime();
+                    long timePassed = new Date().getTime() - startTime.getTime();
 
                     DateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
@@ -110,7 +97,7 @@ public class GMGameFragment extends Fragment {
                     timer.start();
                 }
 
-                tasksModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+                tasksModel.getTasks(activeGame.getId()).observe(getViewLifecycleOwner(), tasks -> {
                     int count = 0;
                     int finished = 0;
                     for (Task task : tasks) {
@@ -134,13 +121,13 @@ public class GMGameFragment extends Fragment {
 
 
             } else {
-                binding.gmGameName.setText("No active game");
+                binding.gmGameName.setText(R.string.no_active_games);
             }
         });
 
         binding.gmGameEndButton.setOnClickListener(v -> {
-            // TODO: zakończenie gry
-            Toast.makeText(getContext(), "End game", Toast.LENGTH_SHORT).show();
+            gamesModel.endGame(gamesModel.getActiveGame());
+            NavHostFragment.findNavController(this).navigate(R.id.userGamesFragment);
         });
 
         binding.gmGameAnswersButton.setOnClickListener(v -> {
@@ -151,7 +138,9 @@ public class GMGameFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        timer.cancel();
+        if(timer != null) {
+            timer.cancel();
+        }
         timer = null;
     }
 }

@@ -1,20 +1,18 @@
 package com.progzesp22.scoutout.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
-import com.progzesp22.scoutout.databinding.FragmentPlayerTasksBinding;
 import com.progzesp22.scoutout.databinding.FragmentRegisterBinding;
 
 
@@ -41,12 +39,12 @@ public class RegisterFragment extends Fragment {
                     binding.username.getText().toString(),
                     binding.password.getText().toString(),
                     response -> {
-                        Toast.makeText(getContext(), "Register successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.register_successful, Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(this).navigateUp();
                     },
                     error -> {
                         Log.e(TAG, error.toString());
-                        Toast.makeText(getContext(), "Register error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.error_register, Toast.LENGTH_SHORT).show();
                     }
             );
         });

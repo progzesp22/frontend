@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Game name"
+            android:text="@string/game_name"
             android:textColor="@color/black"
             android:layout_margin="10dp"
             android:textSize="24sp" />
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Game master"
+            android:text="@string/gm"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:textColor="@android:color/holo_green_dark"
-                android:text="Starting time"
+                android:text="@string/start_time"
                 android:textSize="18sp" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                  android:textColor="@android:color/holo_red_dark"
-                android:text="Ending time"
+                android:text="@string/end_time"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -66,7 +66,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="10dp"
-            android:text="Create your own team"
+            android:text="@string/create_team"
             android:textSize="18sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,7 +113,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="10dp"
-            android:text="Join the existing team"
+            android:text="@string/join_team"
             android:textSize="18sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"

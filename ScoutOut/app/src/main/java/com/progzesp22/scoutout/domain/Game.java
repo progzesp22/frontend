@@ -1,7 +1,5 @@
 package com.progzesp22.scoutout.domain;
 
-import android.annotation.SuppressLint;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +20,6 @@ public class Game extends Entity{
     protected EndCondition endCondition = EndCondition.MANUAL;
     protected long endScore;
 
-    @SuppressLint("NewApi")
     static public final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault());
 
     public Game(long id, String name, String gameMaster, GameState state) {
@@ -49,13 +46,15 @@ public class Game extends Entity{
                 gameMaster,
                 GameState.valueOf(json.getString("state")));
 
+        game.setDescription(json.optString("description", ""));
+
         try{
-            if (json.has("startTime")) {
+            if (json.has("startTime") && !json.isNull("startTime")) {
                 game.setStartTime(dateFormat.parse(json.getString("startTime")));
 
             }
 
-            if (json.has("endCondition")) {
+            if (json.has("endCondition") && !json.isNull("endCondition")) {
                 EndCondition endCondition = EndCondition.valueOf(json.getString("endCondition"));
                 game.setEndCondition(endCondition);
                 if (endCondition == EndCondition.TIME) {
@@ -162,6 +161,17 @@ public class Game extends Entity{
         TIME,
         SCORE,
         TASKS
+    }
+
+    public void updateFrom(Game other){
+        this.name = other.name;
+        this.description = other.description;
+        this.gameMaster = other.gameMaster;
+        this.state = other.state;
+        this.startTime = other.startTime;
+        this.endTime = other.endTime;
+        this.endCondition = other.endCondition;
+        this.endScore = other.endScore;
     }
 
 }

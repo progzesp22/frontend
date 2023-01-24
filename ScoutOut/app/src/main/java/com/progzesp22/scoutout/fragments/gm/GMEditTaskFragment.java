@@ -51,13 +51,41 @@ public class GMEditTaskFragment extends Fragment {
         if(incomingTask == null){
             GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
             long gameId = gamesModel.getActiveGame().getId();
-            task = new Task(Entity.UNKNOWN_ID, "", "", gameId, Task.TaskType.TEXT, new LinkedList<>());
-        } else{
+            task = new Task(Entity.UNKNOWN_ID, "", "", gameId, Task.TaskType.TEXT, 0, new LinkedList<>(), null);
+        } else {
             task = new Task(incomingTask);
         }
 
         binding.titleText.setText(task.getName());
         binding.descriptionText.setText(task.getDescription());
+
+        binding.answerTypeTextRadioButton.setChecked(true);
+        binding.answerTypePictureRadioButton.setChecked(true);
+        binding.answerTypeQRRadioButton.setChecked(true);
+        binding.answerTypeNavigationRadioButton.setChecked(true);
+        binding.answerTypeAudioRadioButton.setChecked(true);
+
+        switch(task.getType()){
+            case TEXT:
+                binding.answerTypeTextRadioButton.setChecked(true);
+                break;
+            case PHOTO:
+                binding.answerTypePictureRadioButton.setChecked(true);
+                break;
+            case QR_CODE:
+                binding.answerTypeQRRadioButton.setChecked(true);
+                binding.taskAnswerText.setText(task.getCorrectAnswer());
+               // task.setCorrectAnswer(String.valueOf(binding.taskAnswerText.getText()));
+                break;
+            case NAV_POS:
+                binding.answerTypeNavigationRadioButton.setChecked(true);
+                break;
+            case AUDIO:
+                binding.answerTypeAudioRadioButton.setChecked(true);
+                break;
+        }
+
+        binding.taskScoreText.setText(Long.toString(task.getMaxScore()));
     }
 
     private void saveToServer(){
@@ -70,9 +98,54 @@ public class GMEditTaskFragment extends Fragment {
         }
     }
 
+    private boolean preSaveProcess(){
+        if(binding.titleText.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), R.string.no_title, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        task.setName(binding.titleText.getText().toString());
+        task.setDescription(binding.descriptionText.getText().toString());
+
+        Task.TaskType taskType;
+        if(binding.answerTypeTextRadioButton.isChecked()) {
+            taskType = Task.TaskType.TEXT;
+        }
+        else if(binding.answerTypeQRRadioButton.isChecked()) {
+            taskType = Task.TaskType.QR_CODE;
+            task.setCorrectAnswer(String.valueOf(binding.taskAnswerText.getText()));
+        }
+        else if(binding.answerTypePictureRadioButton.isChecked()) {
+            taskType = Task.TaskType.PHOTO;
+
+        }
+        else if(binding.answerTypeAudioRadioButton.isChecked()) {
+            taskType = Task.TaskType.PHOTO;
+
+        }
+        else {
+            taskType = Task.TaskType.NAV_POS;
+
+        }
+        task.setType(taskType);
+
+        long maxScore;
+        try {
+            maxScore = Integer.parseInt(binding.taskScoreText.getText().toString());
+        } catch (NumberFormatException ex) {
+            Toast.makeText(getContext(), R.string.wrong_point_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        task.setMaxScore(maxScore);
+
+        return true;
+    }
+
     private void serverCommunicationSuccess(JSONObject response){
-        tasksModel.refresh();
-        Toast.makeText(getContext(), "Sukces", Toast.LENGTH_SHORT).show();
+        GamesModel gamesModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+        tasksModel.refresh(gamesModel.getActiveGame().getId());
+        Toast.makeText(getContext(), R.string.success, Toast.LENGTH_SHORT).show();
         NavHostFragment.findNavController(this).navigateUp();
     }
 
@@ -81,16 +154,56 @@ public class GMEditTaskFragment extends Fragment {
         Log.e("GMTaskEditFragment", error.toString());
     }
 
+    private void showQRInterface(boolean show){
+        if(show){
+            binding.qrAnswerContainer.setVisibility(View.VISIBLE);
+            binding.taskAnswerInfo.setVisibility(View.VISIBLE);
+            binding.taskAnswerText.setVisibility(View.VISIBLE);
+            binding.generateQrButton.setVisibility(View.VISIBLE);
+        } else{
+            binding.qrAnswerContainer.setVisibility(View.GONE);
+            binding.taskAnswerInfo.setVisibility(View.GONE);
+            binding.taskAnswerText.setVisibility(View.GONE);
+            binding.generateQrButton.setVisibility(View.GONE);
+        }
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        loadOrCreateTask(tasksModel.getActiveTask());
+        binding.answerTypeQRRadioButton.setOnClickListener(view1 -> showQRInterface(true));
+        binding.answerTypeAudioRadioButton.setOnClickListener(view1 -> showQRInterface(false));
+        binding.answerTypeNavigationRadioButton.setOnClickListener(view1 -> showQRInterface(false));
+        binding.answerTypeTextRadioButton.setOnClickListener(view1 -> showQRInterface(false));
+        binding.answerTypePictureRadioButton.setOnClickListener(view1 ->showQRInterface(false));
+
+        binding.generateQrButton.setOnClickListener(view1 ->{
+            if(preSaveProcess()){
+                tasksModel.setActiveTask(task);
+                NavHostFragment.findNavController(this).navigate(R.id.gmGenerateQR);
+            }
+        });
 
         binding.button.setOnClickListener(view1 -> {
-            task.setName(binding.titleText.getText().toString());
-            task.setDescription(binding.descriptionText.getText().toString());
-            saveToServer();
+            if(preSaveProcess()){
+                saveToServer();
+            }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        loadOrCreateTask(tasksModel.getActiveTask());
+        if (tasksModel.getActiveTask() != null && tasksModel.getActiveTask().getType() != Task.TaskType.QR_CODE) {
+            showQRInterface(false);
+        } else if (tasksModel.getActiveTask() == null) {
+            showQRInterface(false);
+        } else {
+            showQRInterface(true);
+            binding.taskAnswerText.setText(task.getCorrectAnswer());
+        }
     }
 }

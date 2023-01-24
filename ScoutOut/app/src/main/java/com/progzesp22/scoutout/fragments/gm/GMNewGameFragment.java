@@ -18,19 +18,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.progzesp22.scoutout.MainActivity;
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.SelectDateTimeFragment;
+import com.progzesp22.scoutout.TasksAdapter;
 import com.progzesp22.scoutout.databinding.FragmentGmNewGameBinding;
 import com.progzesp22.scoutout.domain.Entity;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.GamesModel;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.TasksModel;
-import com.progzesp22.scoutout.TasksAdapter;
 import com.progzesp22.scoutout.domain.UserModel;
 
-import java.sql.Timestamp;
+import org.json.JSONException;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -57,6 +57,8 @@ public class GMNewGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+
         binding.tasksList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         binding.gameStartTime.setOnClickListener(view1 -> {
@@ -72,7 +74,7 @@ public class GMNewGameFragment extends Fragment {
             if (binding.endGamePointsRadioButton.isChecked()) {
                 binding.editTextEndCondition.setVisibility(View.VISIBLE);
                 binding.editTextEndCondition.getText().clear();
-                binding.editTextEndCondition.setHint("Wprowadź liczbę");
+                binding.editTextEndCondition.setHint(R.string.enter_number);
                 binding.editTextEndCondition.setEnabled(true);
             } else if (binding.endGameTimeRadioButton.isChecked()) {
                 binding.editTextEndCondition.setVisibility(View.VISIBLE);
@@ -91,7 +93,21 @@ public class GMNewGameFragment extends Fragment {
             }
         });
 
-        binding.addTask.setOnClickListener(view1 -> NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task));
+        binding.addTask.setOnClickListener(view1 -> {
+            if(game.getId() == Entity.UNKNOWN_ID){
+                Toast.makeText(getContext(), R.string.save_game_before_start, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(gameModel.getActiveGame() == null){
+                Toast.makeText(getContext(), R.string.save_game_before_start, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+            tasksModel.setActiveTask(null);
+
+            NavHostFragment.findNavController(this).navigate(R.id.action_add_edit_task);
+        });
 
         binding.saveGameButton.setOnClickListener((group)-> {
             Log.d(TAG, "Save game button clicked");
@@ -109,55 +125,64 @@ public class GMNewGameFragment extends Fragment {
             Log.d(TAG, "Start game button clicked");
 
             if(game.getId() == Entity.UNKNOWN_ID){
-                Toast.makeText(getContext(), "Należy zapisać grę przed wystartowaniem jej", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.save_game_before_start, Toast.LENGTH_SHORT).show();
                 return;
             }
             game.setState(Game.GameState.PENDING);
             MainActivity.requestHandler.patchGame(game, response -> {
                 NavHostFragment.findNavController(this).navigate(R.id.action_open_lobby);
             }, error->{
-                Toast.makeText(getContext(), "Błąd otwierania lobby", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_game_save, Toast.LENGTH_SHORT).show();
             });
         });
 
-        GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
         loadGameOrCreateNew(gameModel.getActiveGame());
 
-        TasksModel model = new ViewModelProvider(requireActivity()).get(TasksModel.class);
-        model.getTasks().observe(getViewLifecycleOwner(), tasks -> {
-            List<Task> filteredTasks  = new ArrayList<>();
-            for(Task task : tasks){
-                if(task.getGameId() == game.getId()){
-                    filteredTasks.add(task);
-                }
-            }
-            displayTasks(filteredTasks);
-        });
-        model.refresh();
+        observeTasks();
+    }
+
+    private void observeTasks() {
+        TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        if(game.getId() != Entity.UNKNOWN_ID){
+            tasksModel.getTasks(game.getId()).observe(getViewLifecycleOwner(), this::displayTasks);
+            tasksModel.refresh(game.getId());
+        }
     }
 
     private void updateExistingGame() {
         Log.d(TAG, "Updating existing game");
         MainActivity.requestHandler.patchGame(game, response -> {
-            Toast.makeText(getContext(), "Zapisano grę", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.game_saved, Toast.LENGTH_SHORT).show();
         }, error->{
-            Toast.makeText(getContext(), "Błąd zapisywania gry", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.error_game_save, Toast.LENGTH_SHORT).show();
         });
     }
 
     private void postNewGame() {
         Log.d(TAG, "Posting new game");
         MainActivity.requestHandler.postGame(game, response -> {
-            Toast.makeText(getContext(), "Zapisano grę", Toast.LENGTH_SHORT).show();
+            try {
+                Game postedGame = Game.fromJson(response);
+                game = postedGame;
+                GamesModel gameModel = new ViewModelProvider(requireActivity()).get(GamesModel.class);
+                gameModel.setActiveGame(game);
+                observeTasks();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), R.string.error_game_save, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(getContext(), R.string.game_saved, Toast.LENGTH_SHORT).show();
         }, error -> {
-            Toast.makeText(getContext(), "Błąd zapisywania gry!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.error_game_save, Toast.LENGTH_SHORT).show();
         });
     }
 
     private boolean updateGameFromInput(Game game) {
         String title = binding.titleText.getText().toString();
         if(title.isEmpty()) {
-            Toast.makeText(getContext(), "Podaj tytuł gry!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.add_game_title, Toast.LENGTH_SHORT).show();
             return true;
         }
         game.setName(title);
@@ -172,7 +197,7 @@ public class GMNewGameFragment extends Fragment {
                 Date startTime = dateFormat.parse(binding.gameStartTextView.getText().toString());
                 game.setStartTime(startTime);
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Nieprawidłowy format daty rozpoczęcia!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.wrong_begindate_format, Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -186,12 +211,12 @@ public class GMNewGameFragment extends Fragment {
                     game.setEndScore(endScore);
                     game.setEndCondition(Game.EndCondition.SCORE);
                 } catch(NumberFormatException e) {
-                    Toast.makeText(getContext(), "Nieprawidłowa liczba punktów!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.wrong_point_number, Toast.LENGTH_SHORT).show();
                     return true;
                 }
             }
             else {
-                Toast.makeText(getContext(), "Nie podałeś liczby punktów!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.no_point_number, Toast.LENGTH_SHORT).show();
                 return true;
             }
 
@@ -202,7 +227,7 @@ public class GMNewGameFragment extends Fragment {
                 game.setEndTime(endTime);
                 game.setEndCondition(Game.EndCondition.TIME);
             } catch(Exception e) {
-                Toast.makeText(getContext(), "Nieprawidłowy format daty zakończenia!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.wrong_enddate_format, Toast.LENGTH_SHORT).show();
                 return true;
             }
         }

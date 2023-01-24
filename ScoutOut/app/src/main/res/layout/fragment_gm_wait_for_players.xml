@@ -12,7 +12,7 @@
         android:layout_height="69dp"
         android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/refresh_teams_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/teamsList"
         app:layout_constraintTop_toTopOf="@+id/teamsList"
         app:layout_constraintVertical_bias="0.96" />
@@ -33,26 +33,12 @@
 
     </ExpandableListView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/refresh_teams_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="@string/refresh"
-        android:focusable="true"
-        android:src="@android:drawable/stat_notify_sync"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/teamsList"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="@+id/teamsList"
-        app:layout_constraintTop_toTopOf="@+id/teamsList"
-        app:layout_constraintVertical_bias="0.95" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -66,11 +52,17 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/waitingTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="10sp"
-            android:text="\nWaiting for Players...\nTeams list:"
+            android:text="@string/waiting_for_players_capital"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/teamsListTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/teams_list"
             android:textSize="16sp" />
     </LinearLayout>
 

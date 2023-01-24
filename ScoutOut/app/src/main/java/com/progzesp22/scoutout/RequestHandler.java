@@ -2,7 +2,6 @@ package com.progzesp22.scoutout;
 
 import android.content.Context;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.progzesp22.scoutout.domain.Answer;
 import com.progzesp22.scoutout.domain.Game;
 import com.progzesp22.scoutout.domain.Task;
 import com.progzesp22.scoutout.domain.Team;
@@ -126,7 +126,16 @@ public class RequestHandler implements RequestInterface {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest request = new MyJsonRequest(Request.Method.POST, url + "user/register", jsonBody, listener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "user/register", jsonBody, listener, errorListener){
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                if (response.data.length == 0) {
+                    byte[] responseData = "{}".getBytes(StandardCharsets.UTF_8);
+                    response = new NetworkResponse(response.statusCode, responseData, response.headers, response.notModified);
+                }
+                return super.parseNetworkResponse(response);
+            }
+        };
         requestQueue.add(request);
     }
 
@@ -260,22 +269,14 @@ public class RequestHandler implements RequestInterface {
         requestQueue.add(jsonArrayRequest);
     }
 
-    /**
-     * Send POST request with new Answer. For response format see documentation.
-     * This method will evolve to be more generic once we go to implement more than plaintext tasks.
-     *
-     * @param taskId           for which task is this answer
-     * @param response         what is the actual answer to the task (for now it is just a String)
-     * @param responseCallback what should be done with response data when it arrives
-     * @param errorListener    what should be done with any errors when they occur
-     */
+
     @Override
-    public void postAnswer(long taskId, String response, Response.Listener<JSONObject> responseCallback,
+    public void postAnswer(Answer answer, Response.Listener<JSONObject> responseCallback,
                            Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
         try {
-            json.put("taskId", taskId);
-            json.put("response", response);
+            json.put("taskId", answer.getTaskId());
+            json.put("response", answer.getAnswer());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -302,8 +303,10 @@ public class RequestHandler implements RequestInterface {
             json.put("description", task.getDescription());
             json.put("gameId", task.getGameId());
             json.put("type", task.getType());
+            json.put("maxScore", task.getMaxScore());
             JSONArray jsonPrerequsiteTasks = new JSONArray(task.getPrerequisiteTasks());
             json.put("prerequisiteTasks", jsonPrerequsiteTasks);
+            json.put("correct_answer", task.getCorrectAnswer());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -331,6 +334,8 @@ public class RequestHandler implements RequestInterface {
             json.put("name", task.getName());
             json.put("description", task.getDescription());
             json.put("type", task.getType());
+            json.put("maxScore", task.getMaxScore());
+            json.put("correct_answer", task.getCorrectAnswer());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -379,29 +384,21 @@ public class RequestHandler implements RequestInterface {
         requestQueue.add(jsonObjectRequest);
     }
 
-    /**
-     * Send PUT request to edit the status of an existing Answer. It's a way for a Game Master to
-     * approve or reject an answers.
-     *
-     * @param answerId         what answer we want to edit
-     * @param approved         true if we want to approve the answer, false if we want to reject it
-     * @param responseCallback what should be done with response data when it arrives
-     * @param errorListener    what should be done with any errors when they occur
-     */
-
     @Override
-    public void patchAnswer(long answerId, Boolean approved, Response.Listener<JSONObject> responseCallback,
+    public void patchAnswer(Answer answer, Response.Listener<JSONObject> responseCallback,
                             Response.ErrorListener errorListener) {
         JSONObject json = new JSONObject();
+
         try {
-            json.put("approved", approved);
+            json.put("approved", answer.isApproved());
+            json.put("score", answer.getScore());
             json.put("checked", true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest jsonObjectRequest = new MyJsonRequest
-                (Request.Method.PATCH, urlRest + "answers/" + answerId, json, responseCallback,
+                (Request.Method.PATCH, urlRest + "answers/" + answer.getId(), json, responseCallback,
                         errorListener);
 
         requestQueue.add(jsonObjectRequest);
@@ -422,6 +419,7 @@ public class RequestHandler implements RequestInterface {
             json.put("startTime", game.getStartTimeString());
             json.put("endCondition", game.getEndCondition());
             json.put("state", game.getState().toString());
+            json.put("description", game.getDescription());
 
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
@@ -472,6 +470,7 @@ public class RequestHandler implements RequestInterface {
             json.put("startTime", game.getStartTimeString());
             json.put("endCondition", game.getEndCondition());
             json.put("state", game.getState().toString());
+            json.put("description", game.getDescription());
 
             if (game.getEndCondition() == Game.EndCondition.TIME) {
                 json.put("endTime", game.getEndTimeString());

@@ -17,14 +17,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.progzesp22.scoutout.databinding.ActivityMainBinding;
 import com.progzesp22.scoutout.domain.UserModel;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET};
+    private final String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.INTERNET, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private static final int REQUEST_PERMISSIONS = 200;
     public static RequestInterface requestHandler;
 
@@ -32,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean mock_requests = true;
+        final boolean mock_requests = false;
         if(mock_requests){
             requestHandler = new MockRequestHandler();
         } else{
@@ -47,10 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
-        Set<Integer> topLevelDestinations = getTopLevelDestinations();
-
-
-        appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).setOpenableLayout(binding.drawerLayout).build();
+        appBarConfiguration = new AppBarConfiguration.Builder().setOpenableLayout(binding.drawerLayout).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSIONS);
@@ -60,25 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    /**
-     * Wszystkie fragmenty, które mają być widoczne w menu nawigacji powinny zostać tutaj dodane.
-     * Nie jestem pewien co to w 100% robi ale z tego co rozumiem to pozwala aby te ekrany były
-     * traktowane na równi z ekranem startowym.
-     */
-    private Set<Integer> getTopLevelDestinations() {
-        HashSet<Integer> set = new HashSet<>();
-        set.add(R.id.selectUserTypeFragment); // user login fragment
-        set.add(R.id.listTasksFragment); // player tasks fragment
-        set.add(R.id.GMlistTasksFragment); // GM tasks fragment
-        set.add(R.id.GMqrGeneratorFragment); // GM players fragment
-        set.add(R.id.GMListToAcceptFragment); // GM players fragment
-        return set;
-    }
-
     private void setupHamburgerMenu(NavController navController) {
         // Powinno być ustawione na pierwszy ekran który ma być widoczny po otworzeniu aplikacji
-        binding.navView.setCheckedItem(R.id.selectUserTypeFragment);
+        binding.navView.setCheckedItem(R.id.loginFragment);
 
         UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
 
@@ -94,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.navView.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.selectUserTypeFragment) {
-                navController.navigate(R.id.selectUserTypeFragment);
+            if (item.getItemId() == R.id.loginFragment) {
+                navController.navigate(R.id.loginFragment);
             } else if (item.getItemId() == R.id.listTasksFragment) {
                 navController.navigate(R.id.listTasksFragment);
             } else if (item.getItemId() == R.id.GMlistTasksFragment) {
