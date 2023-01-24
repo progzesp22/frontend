@@ -11,17 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/LoginScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="220dp"
-        android:textColor = "@color/black"
-        android:textSize = "24sp"
-        android:textStyle="bold|italic"
-        android:text="@string/login_to_your_account"/>
-
     <EditText
         android:id="@+id/username"
         android:layout_width="300dp"
@@ -52,16 +41,6 @@
         android:background="@drawable/button_shape"
         android:text="@string/log_in"/>
 
-    <TextView
-        android:id="@+id/textViewOr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="-75dp"
-        android:textColor = "@color/white"
-        android:textSize = "20sp"
-        android:text="@string/or"/>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"
         android:layout_width="150dp"
@@ -74,7 +53,7 @@
         tools:ignore="ExtraText" />
 
     <com.google.android.material.imageview.ShapeableImageView
-    android:id="@+id/imageView3"
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
