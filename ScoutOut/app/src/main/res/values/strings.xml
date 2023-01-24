@@ -140,4 +140,6 @@
     <string name="take_picture">Zrób zdjęcie</string>
     <string name="qr_scan_result">Wynik skanowania kodu QR</string>
     <string name="correct_answer">Poprawna odpowiedź: </string>
+    <string name="ranking">ranking</string>
+
 </resources>

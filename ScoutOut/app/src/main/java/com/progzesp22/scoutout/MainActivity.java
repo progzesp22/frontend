@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.GMqrGeneratorFragment);
             } else if (item.getItemId() == R.id.GMListToAcceptFragment) {
                 navController.navigate(R.id.GMListToAcceptFragment);
+            } else if (item.getItemId() == R.id.playerTeamRankingsFragment){
+                navController.navigate(R.id.playerTeamRankingsFragment);
             }
 
             binding.drawerLayout.closeDrawer(GravityCompat.START);

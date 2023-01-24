@@ -40,19 +40,6 @@
             android:textAlignment="center"
             android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/waitingTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Scores:"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/teamsListTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Teams list:"
-            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,5 +8,8 @@
         <item
             android:id="@+id/listTasksFragment"
             android:title="@string/menu_nav_player_tasks" />
+        <item
+            android:id="@id/playerTeamRankingsFragment"
+            android:title="@string/ranking" />
     </group>
 </menu>
