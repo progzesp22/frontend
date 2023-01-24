@@ -98,6 +98,12 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/generate_qr_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_qr" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

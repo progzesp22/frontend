@@ -35,7 +35,7 @@ public class Task extends Entity{
         this.id = other.id;
         this.name = other.name;
         this.description = other.description;
-        this.gameId = other.id;
+        this.gameId = other.gameId;
         this.type = other.type;
         this.prerequisites = new ArrayList<>(other.prerequisites);
         this.maxScore = other.maxScore;

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.progzesp22.scoutout.R;
 import com.progzesp22.scoutout.databinding.FragmentGmGenerateQrFragmentBinding;
@@ -20,6 +21,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.progzesp22.scoutout.domain.Task;
+import com.progzesp22.scoutout.domain.TasksModel;
 
 
 public class GMGenerateQRFragment extends Fragment {
@@ -48,8 +51,17 @@ public class GMGenerateQRFragment extends Fragment {
         MultiFormatWriter mWriter = new MultiFormatWriter();
         BitMatrix mMatrix;
         Bitmap mBitmap = null;
+
+        TasksModel tasksModel = new ViewModelProvider(requireActivity()).get(TasksModel.class);
+        Task task = tasksModel.getActiveTask();
+        if(task == null || task.getType() != Task.TaskType.QR_CODE){
+            return;
+        }
+
+        String answer = task.getCorrectAnswer();
+
         try {
-            mMatrix = mWriter.encode(String.valueOf(Math.random()), BarcodeFormat.QR_CODE, 400, 400);
+            mMatrix = mWriter.encode(answer, BarcodeFormat.QR_CODE, 400, 400);
             BarcodeEncoder mEncoder = new BarcodeEncoder();
             mBitmap = mEncoder.createBitmap(mMatrix);
             binding.imageView.setImageBitmap(mBitmap);
